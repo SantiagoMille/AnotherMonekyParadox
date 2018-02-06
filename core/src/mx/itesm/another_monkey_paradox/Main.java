@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 //Prueba de Adrian Hola
 //hola prros, prueba 2
+// Diego
 
 public class Main extends Game {
 
