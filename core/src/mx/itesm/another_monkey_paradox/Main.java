@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-//Prueba de Adrian
+//Prueba de Adrian Hola
 
 public class Main extends Game {
 	@Override
