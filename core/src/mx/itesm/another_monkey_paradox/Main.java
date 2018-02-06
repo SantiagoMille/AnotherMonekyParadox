@@ -8,8 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 //Prueba de Adrian Hola
+//hola prros, prueba 2
 
 public class Main extends Game {
+
 	@Override
 	public void create () {
 		//Pone la Pantalla inicial
