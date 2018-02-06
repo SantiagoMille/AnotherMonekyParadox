@@ -47,8 +47,8 @@ class PantallaMenu implements Screen {
 
     private void crearMenu() {
         stageMenu = new Stage(vista);
-        TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("button_play.png")));
-        TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("button_play_pressed.png")));
+        TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("button_start.png")));
+        TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("button_start_pressed.png")));
 
         ImageButton btnPlay = new ImageButton(trdPlay, trdPlayPressed);
         btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, ALTO/2-btnPlay.getHeight()/2);
