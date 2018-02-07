@@ -60,7 +60,7 @@ class PantallaSplash implements Screen {
     @Override
     public void render(float delta) {
         //Usar v=d/t o en este caso d=v*t
-        Gdx.gl.glClearColor(1,1,1,1);
+        Gdx.gl.glClearColor(66/255f,74/255f,96/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
