@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -39,6 +40,9 @@ class PantallaMenu implements Screen {
     Texture imgBackground;
     private Sprite spriteBackground;
 
+    //background music
+    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+
     public PantallaMenu(Main main) {
         this.main = main;
     }
@@ -48,6 +52,8 @@ class PantallaMenu implements Screen {
         crearCamara();
         crearMenu();
         batch = new SpriteBatch();
+        musicMenu.setLooping(true);
+        musicMenu.play();
     }
 
     private void crearMenu() {
@@ -133,6 +139,7 @@ class PantallaMenu implements Screen {
         spriteBackground.draw(batch);
         batch.end();
         stageMenu.draw();
+
     }
 
     @Override
