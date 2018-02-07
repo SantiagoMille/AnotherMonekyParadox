@@ -68,7 +68,7 @@ class PantallaSplash implements Screen {
         sprite.draw(batch);
         batch.end();
 
-        float delay = 1; // seconds
+        float delay = 3; // seconds
         Timer.schedule(new Timer.Task(){
             @Override
             public void run() {

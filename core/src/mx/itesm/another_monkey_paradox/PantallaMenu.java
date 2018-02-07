@@ -52,29 +52,21 @@ class PantallaMenu implements Screen {
         TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("button_start_pressed.png")));
 
         ImageButton btnPlay = new ImageButton(trdPlay, trdPlayPressed);
-        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, ALTO/2-btnPlay.getHeight()/2);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2);
 
         //Boton Leaderboard
         TextureRegionDrawable trdLead = new TextureRegionDrawable(new TextureRegion(new Texture("but-lead.png")));
         TextureRegionDrawable trdLeadPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-lead-push.png")));
 
         ImageButton btnLead = new ImageButton(trdLead, trdLeadPush);
-        btnLead.setPosition(ANCHO/2-btnLead.getWidth()/2, ALTO/2-btnLead.getHeight()/2);
+        btnLead.setPosition(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2);
 
         //Boton Config
         TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(new Texture("but-config.png")));
         TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-config-push.png")));
 
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
-        btnConfig.setPosition(ANCHO/2-btnConfig.getWidth()/2, ALTO/2-btnConfig.getHeight()/2);
-
-        //Boton Survival Mode
-        TextureRegionDrawable trdSM = new TextureRegionDrawable(new TextureRegion(new Texture("but-sm.png")));
-        TextureRegionDrawable trdSMPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-sm-push.png")));
-
-        ImageButton btnSM = new ImageButton(trdSM, trdSMPush);
-        btnSM.setPosition(ANCHO/2-btnSM.getWidth()/2, ALTO/2-btnSM.getHeight()/2);
-
+        btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
 
         //Click en boton Play
         btnPlay.addListener(new ClickListener(){
@@ -106,20 +98,9 @@ class PantallaMenu implements Screen {
             }
         });
 
-        //Click en boton Survival Mode
-        btnSM.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaJuego(main));
-            }
-        });
-
         stageMenu.addActor(btnPlay);
         stageMenu.addActor(btnLead);
         stageMenu.addActor(btnConfig);
-        stageMenu.addActor(btnSM);
 
         Gdx.input.setInputProcessor(stageMenu);
     }
