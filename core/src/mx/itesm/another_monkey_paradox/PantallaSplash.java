@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
@@ -26,6 +28,11 @@ class PantallaSplash implements Screen {
     //Escena
     private SpriteBatch batch;
 
+    //To draw sprite of monkey
+    Texture imgMonkey;
+    private Sprite sprite;
+
+
     public PantallaSplash(Main main) {
         this.main = main;
     }
@@ -34,6 +41,13 @@ class PantallaSplash implements Screen {
     public void show() {
         crearCamara();
         batch = new SpriteBatch();
+        crearSpriteMonkey();
+    }
+
+    private void crearSpriteMonkey() {
+        imgMonkey = new Texture("Monkey.png");
+        sprite = new Sprite(imgMonkey);
+        sprite.setPosition(ANCHO/2-sprite.getWidth()/2, ALTO/2-sprite.getHeight()/2);
     }
 
     private void crearCamara() {
@@ -46,13 +60,15 @@ class PantallaSplash implements Screen {
     @Override
     public void render(float delta) {
         //Usar v=d/t o en este caso d=v*t
-        Gdx.gl.glClearColor(.1f,.1f,.9f,1);
+        Gdx.gl.glClearColor(1,1,1,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
+        batch.begin();
+        sprite.draw(batch);
+        batch.end();
 
         float delay = 1; // seconds
-
         Timer.schedule(new Timer.Task(){
             @Override
             public void run() {
