@@ -2,10 +2,10 @@ package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -35,6 +35,9 @@ class PantallaMenu implements Screen {
 
     private SpriteBatch batch;
 
+    //For Background
+    Texture imgBackground;
+    private Sprite spriteBackground;
 
     public PantallaMenu(Main main) {
         this.main = main;
@@ -49,6 +52,11 @@ class PantallaMenu implements Screen {
 
     private void crearMenu() {
         stageMenu = new Stage(vista);
+
+        imgBackground = new Texture("Background.png");
+        spriteBackground = new Sprite(imgBackground);
+        spriteBackground.setPosition(0, 0);
+
         //Boton Play
         TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("button_start.png")));
         TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("button_start_pressed.png")));
@@ -121,6 +129,9 @@ class PantallaMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
+        batch.begin();
+        spriteBackground.draw(batch);
+        batch.end();
         stageMenu.draw();
     }
 
