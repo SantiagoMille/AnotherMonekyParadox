@@ -36,8 +36,7 @@ class PantallaJuego implements Screen {
     public void show() {
         crearCamara();
         batch = new SpriteBatch();
-
-        Gdx.input.setInputProcessor(new Procesadorentrada());
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
 
     private void crearCamara() {
@@ -81,7 +80,7 @@ class PantallaJuego implements Screen {
 
     }
 
-    private class Procesadorentrada implements InputProcessor {
+    private class ProcesadorEntrada implements InputProcessor {
         @Override
         public boolean keyDown(int keycode) {
             return false;

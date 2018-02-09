@@ -2,7 +2,6 @@ package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,34 +12,33 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
- * Created by santi on 1/30/2018.
+ * Created by santi on 2/9/2018.
  */
 
-class PantallaSplash implements Screen {
+public class PantallaScores implements Screen{
 
-    private final Main main;
+        private final Main main;
 
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 780;
+        public static final float ANCHO = 1280;
+        public static final float ALTO = 780;
 
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-    //Escena
-    private SpriteBatch batch;
+        //Camara
+        private OrthographicCamera camara;
+        private Viewport vista;
+        //Escena
+        private SpriteBatch batch;
 
-    //To draw sprite of monkey
-    Texture imgMonkey;
-    private Sprite sprite;
+        //To draw sprite of monkey
+        Texture imgMonkey;
+        private Sprite sprite;
 
-    public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
 
-    public PantallaSplash(Main main) {
+    public PantallaScores(Main main) {
         this.main = main;
     }
 
-    @Override
-    public void show() {
+        @Override
+        public void show() {
         crearCamara();
         batch = new SpriteBatch();
         crearSpriteMonkey();
@@ -74,7 +72,6 @@ class PantallaSplash implements Screen {
         Timer.schedule(new Timer.Task(){
             @Override
             public void run() {
-                musicMenu.play();
                 main.setScreen(new PantallaMenu(main));
             }
         }, delay);

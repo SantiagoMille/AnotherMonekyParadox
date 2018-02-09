@@ -40,9 +40,6 @@ class PantallaMenu implements Screen {
     Texture imgBackground;
     private Sprite spriteBackground;
 
-    //background music
-    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
-
     public PantallaMenu(Main main) {
         this.main = main;
     }
@@ -52,8 +49,6 @@ class PantallaMenu implements Screen {
         crearCamara();
         crearMenu();
         batch = new SpriteBatch();
-        musicMenu.setLooping(true);
-        musicMenu.play();
     }
 
     private void crearMenu() {
@@ -110,6 +105,7 @@ class PantallaMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
+                dispose();
                 main.setScreen(new PantallaDeveloper(main));
             }
         });
@@ -164,6 +160,6 @@ class PantallaMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        PantallaSplash.musicMenu.dispose();
     }
 }
