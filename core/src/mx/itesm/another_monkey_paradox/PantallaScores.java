@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -66,31 +67,47 @@ public class PantallaScores implements Screen{
         Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreference");
         String names = prefs.getString("names", null);
         if(names==null){
-            prefs.putString("names", "Astro");
-            names = "Astro";
+           // prefs.putString("names", "Astro");
+            names = "Astro,";
         }
-        int scores = prefs.getInteger("highscores", 0);
-        if(scores==0){
-            prefs.putInteger("highscores", 10000);
-            scores = 10000;
+        String scores = prefs.getString("highscores", null);
+        if(scores==null){
+            //prefs.putString("highscores", "10000");
+            scores = "10000,";
         }
 
-        Table table = new Table();
-        table.setSkin(skin);
+        Table table = new Table(skin);
+        table.defaults().pad(10f);
         table.setFillParent(true);
+        table.setPosition(table.getX(),table.getY()+250);
 
-        Label nameLabel = new Label("Name:", skin);
-        nameLabel.setFontScale(5f,5f);
-        TextField nameText = new TextField("", skin);
-        Label addressLabel = new Label("Address:", skin);
-        addressLabel.setFontScale(5f,5f);
-        TextField addressText = new TextField("", skin);
+        /**
+         * Se hace el titulo de scores
+         */
+        Label scoresTitle = new Label("HIGHSCORES", skin);
+        scoresTitle.setFontScale(3f,3f);
+        scoresTitle.setAlignment(Align.center);
 
-        table.add(nameLabel);
-        table.add(nameText).width(500).height(100);
+        /**
+         * Se crean las columnas con puntuajes
+         */
+        Label columnName;
+        Label columnScore;
+
+        String[] allScores = scores.split(",");
+        String[] allNames = names.split(",");
+        int i=0;
+
+        table.add(scoresTitle).colspan(2).fillX().height(150);
         table.row();
-        table.add(addressLabel);
-        table.add(addressText).width(500).height(100);
+        for(String name:allNames){
+            columnName=new Label(name, skin);
+            columnName.setFontScale(3f,3f);
+            columnScore= new Label(allScores[i], skin);
+            columnScore.setFontScale(3f,3f);
+            i++;
+            table.row();
+        }
 
         stageMenu.addActor(table);
 
