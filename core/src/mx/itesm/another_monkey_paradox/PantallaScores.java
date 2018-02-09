@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
@@ -60,11 +61,7 @@ public class PantallaScores implements Screen{
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("Background.png");
-        spriteBackground = new Sprite(imgBackground);
-        spriteBackground.setPosition(0, 0);
-
-        Skin skin = new Skin();
+        Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreference");
         String names = prefs.getString("names", null);
@@ -79,10 +76,22 @@ public class PantallaScores implements Screen{
         }
 
         Table table = new Table();
-        table.setSkin(new Skin());
+        table.setSkin(skin);
         table.setFillParent(true);
-        //table.add(names);
-        //table.add(scores+"");
+
+        Label nameLabel = new Label("Name:", skin);
+        nameLabel.setFontScale(5f,5f);
+        TextField nameText = new TextField("", skin);
+        Label addressLabel = new Label("Address:", skin);
+        addressLabel.setFontScale(5f,5f);
+        TextField addressText = new TextField("", skin);
+
+        table.add(nameLabel);
+        table.add(nameText).width(500).height(100);
+        table.row();
+        table.add(addressLabel);
+        table.add(addressText).width(500).height(100);
+
         stageMenu.addActor(table);
 
         Gdx.input.setInputProcessor(stageMenu);
@@ -102,9 +111,6 @@ public class PantallaScores implements Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
-        batch.begin();
-        spriteBackground.draw(batch);
-        batch.end();
         stageMenu.draw();
 
     }
