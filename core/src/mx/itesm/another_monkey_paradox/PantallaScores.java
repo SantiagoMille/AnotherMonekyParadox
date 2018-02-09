@@ -69,13 +69,6 @@ public class PantallaScores implements Screen{
         batch.end();
 
         float delay = 3; // seconds
-        Timer.schedule(new Timer.Task(){
-            @Override
-            public void run() {
-                main.setScreen(new PantallaMenu(main));
-            }
-        }, delay);
-
     }
 
     @Override

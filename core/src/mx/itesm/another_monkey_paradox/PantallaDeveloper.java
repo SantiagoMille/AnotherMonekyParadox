@@ -53,7 +53,7 @@ class PantallaDeveloper implements Screen {
         crearMenu();
         batch = new SpriteBatch();
         musicMenu.setLooping(true);
-        musicMenu.play();
+        //musicMenu.play();
     }
 
     private void crearMenu() {
