@@ -1,12 +1,22 @@
 package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -17,37 +27,65 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class PantallaScores implements Screen{
 
-        private final Main main;
+    private final Main main;
 
-        public static final float ANCHO = 1280;
-        public static final float ALTO = 780;
+    public static final float ANCHO = 1280;
+    public static final float ALTO = 780;
 
-        //Camara
-        private OrthographicCamera camara;
-        private Viewport vista;
-        //Escena
-        private SpriteBatch batch;
+    //Camara
+    private OrthographicCamera camara;
+    private Viewport vista;
 
-        //To draw sprite of monkey
-        Texture imgMonkey;
-        private Sprite sprite;
+    //Escena
+    private Stage stageMenu;
 
+    private SpriteBatch batch;
+
+    //For Background
+    Texture imgBackground;
+    private Sprite spriteBackground;
 
     public PantallaScores(Main main) {
         this.main = main;
     }
 
-        @Override
-        public void show() {
+    @Override
+    public void show() {
         crearCamara();
+        crearMenu();
         batch = new SpriteBatch();
-        crearSpriteMonkey();
+
     }
 
-    private void crearSpriteMonkey() {
-        imgMonkey = new Texture("Monkey.png");
-        sprite = new Sprite(imgMonkey);
-        sprite.setPosition(ANCHO/2-sprite.getWidth()/2, ALTO/2-sprite.getHeight()/2);
+    private void crearMenu() {
+        stageMenu = new Stage(vista);
+
+        imgBackground = new Texture("Background.png");
+        spriteBackground = new Sprite(imgBackground);
+        spriteBackground.setPosition(0, 0);
+
+        Skin skin = new Skin();
+
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreference");
+        String names = prefs.getString("names", null);
+        if(names==null){
+            prefs.putString("names", "Astro");
+            names = "Astro";
+        }
+        int scores = prefs.getInteger("highscores", 0);
+        if(scores==0){
+            prefs.putInteger("highscores", 10000);
+            scores = 10000;
+        }
+
+        Table table = new Table();
+        table.setSkin(new Skin());
+        table.setFillParent(true);
+        //table.add(names);
+        //table.add(scores+"");
+        stageMenu.addActor(table);
+
+        Gdx.input.setInputProcessor(stageMenu);
     }
 
     private void crearCamara() {
@@ -65,10 +103,10 @@ public class PantallaScores implements Screen{
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        sprite.draw(batch);
+        spriteBackground.draw(batch);
         batch.end();
+        stageMenu.draw();
 
-        float delay = 3; // seconds
     }
 
     @Override
@@ -88,11 +126,10 @@ public class PantallaScores implements Screen{
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
+        PantallaSplash.musicMenu.dispose();
     }
 }

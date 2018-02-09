@@ -33,7 +33,7 @@ class PantallaSplash implements Screen {
     Texture imgMonkey;
     private Sprite sprite;
 
-    public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+    public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba1.mp3"));
 
     public PantallaSplash(Main main) {
         this.main = main;
