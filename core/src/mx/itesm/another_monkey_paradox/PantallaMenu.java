@@ -82,6 +82,13 @@ class PantallaMenu implements Screen {
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
         btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
 
+        //Boton Tutorial
+        TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(new Texture("but-tut.png")));
+        TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-tut-push.png")));
+
+        ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
+        btnTut.setPosition(ANCHO*9/10-btnTut.getWidth()/2, ALTO*9/10-btnTut.getHeight()/2);
+
         //Click en boton Play
         btnPlay.addListener(new ClickListener(){
             @Override
@@ -104,6 +111,17 @@ class PantallaMenu implements Screen {
             }
         });
 
+        //Click en boton Tutorial
+        btnTut.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Gdx.app.log("ClickListener","Si se clickeoooo");
+                dispose();
+                main.setScreen(new PantallaTutorial(main));
+            }
+        });
+
         //Click en boton Config
         btnConfig.addListener(new ClickListener(){
             @Override
@@ -113,11 +131,14 @@ class PantallaMenu implements Screen {
                 dispose();
                 main.setScreen(new PantallaDeveloper(main));
             }
+
+
         });
 
         stageMenu.addActor(btnPlay);
         stageMenu.addActor(btnLead);
         stageMenu.addActor(btnConfig);
+        stageMenu.addActor(btnTut);
 
         Gdx.input.setInputProcessor(stageMenu);
     }

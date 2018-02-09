@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by adrian on 2/9/2018.
  */
 
-class PantallaDeveloper implements Screen {
+class PantallaTutorial implements Screen {
 
     private final Main main;
 
@@ -43,7 +43,7 @@ class PantallaDeveloper implements Screen {
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
 
-    public PantallaDeveloper(Main main) {
+    public PantallaTutorial(Main main) {
         this.main = main;
     }
 
@@ -63,29 +63,12 @@ class PantallaDeveloper implements Screen {
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
 
-        //Boton Creditos
-        TextureRegionDrawable trdCredit = new TextureRegionDrawable(new TextureRegion(new Texture("but-credit.png")));
-        TextureRegionDrawable trdCreditPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-credit-push.png")));
-
-        ImageButton btnCredit = new ImageButton(trdCredit, trdCreditPush);
-        btnCredit.setPosition(ANCHO*3/4-btnCredit.getWidth()/2, ALTO/4-btnCredit.getHeight()/2);
-
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret.png")));
         TextureRegionDrawable trdReturnPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret-push.png")));
 
         ImageButton btnReturn = new ImageButton(trdReturn, trdReturnPush);
         btnReturn.setPosition(ANCHO/4-btnReturn.getWidth()/2, ALTO/4-btnReturn.getHeight()/2);
-
-        //Click en boton Credits
-        btnCredit.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaJuego(main));
-            }
-        });
 
         //Click en boton Return
         btnReturn.addListener(new ClickListener(){
@@ -98,7 +81,6 @@ class PantallaDeveloper implements Screen {
         });
 
         stageMenu.addActor(btnReturn);
-        stageMenu.addActor(btnCredit);
 
         Gdx.input.setInputProcessor(stageMenu);
     }
