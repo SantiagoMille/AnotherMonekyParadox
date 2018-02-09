@@ -16,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.math.MathUtils;
+
 
 /**
  * Created by santi on 1/30/2018.
@@ -26,7 +28,7 @@ class PantallaMenu implements Screen {
     private final Main main;
 
     public static final float ANCHO = 1280;
-    public static final float ALTO = 780;
+    public static final float ALTO = 720;
 
     //Camara
     private OrthographicCamera camara;
@@ -37,8 +39,8 @@ class PantallaMenu implements Screen {
     private SpriteBatch batch;
 
     //For Background
-    Texture imgBackground;
-    private Sprite spriteBackground;
+    Texture imgBackground, imgLogo;
+    private Sprite spriteBackground, spriteLogo;
 
 
     public PantallaMenu(Main main) {
@@ -60,6 +62,11 @@ class PantallaMenu implements Screen {
         imgBackground = new Texture("Background.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
+
+        imgLogo = new Texture("title.PNG");
+        spriteLogo = new Sprite(imgLogo);
+        spriteLogo.setPosition(ANCHO/2-spriteLogo.getWidth()/2, ALTO-spriteLogo.getHeight());
+
 
         //Boton Play
         TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("button_start.png")));
@@ -152,16 +159,36 @@ class PantallaMenu implements Screen {
 
     @Override
     public void render(float delta) {
+
+        //Actualizar
+        imgLogoRebotando();
+
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(.1f,.4f,.9f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        spriteLogo.draw(batch);
         batch.end();
         stageMenu.draw();
 
+    }
+
+    public void imgLogoRebotando(){
+        int diferencial = 100;
+        float grados = 0f;
+        float y = MathUtils.sinDeg(grados) * 10;
+
+        grados += diferencial;
+
+        spriteLogo.setPosition(ANCHO / 2 - spriteLogo.getWidth() / 2, spriteLogo.getY() + y);
+
+        if (diferencial == 360 || diferencial == 0){
+            diferencial = -diferencial;
+        }
     }
 
     @Override
