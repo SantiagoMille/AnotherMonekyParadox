@@ -42,6 +42,10 @@ class PantallaMenu implements Screen {
     Texture imgBackground, imgLogo;
     private Sprite spriteBackground, spriteLogo;
 
+    //Movimiento del título
+    int diferencial = 5;
+    float grados = 0f;
+
 
     public PantallaMenu(Main main) {
         this.main = main;
@@ -178,15 +182,13 @@ class PantallaMenu implements Screen {
     }
 
     public void imgLogoRebotando(){
-        int diferencial = 100;
-        float grados = 0f;
-        float y = MathUtils.sinDeg(grados) * 10;
+        float y = MathUtils.sinDeg(grados);
 
         grados += diferencial;
 
         spriteLogo.setPosition(ANCHO / 2 - spriteLogo.getWidth() / 2, spriteLogo.getY() + y);
 
-        if (diferencial == 360 || diferencial == 0){
+        if (diferencial == 180 || diferencial == 0){
             diferencial = -diferencial;
         }
     }
