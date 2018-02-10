@@ -6,7 +6,10 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -20,6 +23,13 @@ class PantallaJuego implements Screen {
 
     public static final float ANCHO = 1280;
     public static final float ALTO = 780;
+
+    //For Background
+    Texture imgBackground;
+    private Sprite spriteBackground;
+
+    //Escena
+    private Stage stageNivel;
 
     //Camara
     private OrthographicCamera camara;
@@ -37,6 +47,15 @@ class PantallaJuego implements Screen {
         crearCamara();
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        moverFondo();
+    }
+
+    private void moverFondo() {
+        stageNivel = new Stage(vista);
+
+        imgBackground = new Texture("NIVEL 1.1.png");
+        spriteBackground = new Sprite(imgBackground);
+        spriteBackground.setPosition(0, 0);
     }
 
     private void crearCamara() {
@@ -53,6 +72,9 @@ class PantallaJuego implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
+        batch.begin();
+        spriteBackground.draw(batch);
+        batch.end();
     }
 
     @Override
