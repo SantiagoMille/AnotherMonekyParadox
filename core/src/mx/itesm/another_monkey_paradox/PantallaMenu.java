@@ -116,13 +116,13 @@ class PantallaMenu implements Screen {
         //Boton modo horda
         TextureRegionDrawable trdHorda = new TextureRegionDrawable(new TextureRegion(new Texture("arrow-point-to-right.png")));
         btnHorda = new ImageButton(trdHorda);
-        btnHorda.setSize(80,80);
+        btnHorda.setSize(60,60);
         btnHorda.setPosition(ANCHO-btnHorda.getWidth()-50, ALTO/2-btnHorda.getHeight()/2-10);
 
         //Boton regresar de modo horda
-        TextureRegionDrawable trdRegresarHorda = new TextureRegionDrawable(new TextureRegion(new Texture("left-arrow.png")));
+        TextureRegionDrawable trdRegresarHorda = new TextureRegionDrawable(new TextureRegion(new Texture("arrow-point-to-left.png")));
         btnRegresarHorda = new ImageButton(trdRegresarHorda);
-        btnRegresarHorda.setSize(80,80);
+        btnRegresarHorda.setSize(60,60);
         btnRegresarHorda.setVisible(false);
         btnRegresarHorda.setPosition(50, ALTO/2-btnRegresarHorda.getHeight()/2-10);
 
@@ -208,6 +208,7 @@ class PantallaMenu implements Screen {
         stageMenu.addActor(btnConfig);
         stageMenu.addActor(btnTut);
         stageMenu.addActor(btnHorda);
+        stageMenu.addActor(btnRegresarHorda);
 
         inputMultiplexer.addProcessor(stageMenu);
         //Gdx.input.setInputProcessor(stageMenu);
