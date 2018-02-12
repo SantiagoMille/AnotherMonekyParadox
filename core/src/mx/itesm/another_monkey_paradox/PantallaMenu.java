@@ -1,6 +1,8 @@
 package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -46,6 +48,15 @@ class PantallaMenu implements Screen {
     int diferencial = 3;
     float grados = 0f;
 
+    //Para el swipe y cambiar a modo horda
+    private int distanceSwiped=0;
+    private boolean isSurvivalMode = false;
+    private ImageButton btnRegresarHorda;
+    private ImageButton btnHorda;
+
+    //Para ingresar multiples inputProcessors
+    InputMultiplexer inputMultiplexer = new InputMultiplexer();
+
 
     public PantallaMenu(Main main) {
         this.main = main;
@@ -57,13 +68,15 @@ class PantallaMenu implements Screen {
         crearMenu();
         batch = new SpriteBatch();
         PantallaSplash.musicMenu.setLooping(false);
+        inputMultiplexer.addProcessor(new ProcesadorEntrada());
+        Gdx.input.setInputProcessor(inputMultiplexer);
         PantallaSplash.musicMenu.play();
     }
 
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("Background2.png");
+        imgBackground = new Texture("StoryModeBack.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
 
@@ -100,6 +113,19 @@ class PantallaMenu implements Screen {
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
         btnTut.setPosition(ANCHO*9/10-btnTut.getWidth()/2, ALTO*9/10-btnTut.getHeight()/2);
 
+        //Boton modo horda
+        TextureRegionDrawable trdHorda = new TextureRegionDrawable(new TextureRegion(new Texture("arrow-point-to-right.png")));
+        btnHorda = new ImageButton(trdHorda);
+        btnHorda.setSize(80,80);
+        btnHorda.setPosition(ANCHO-btnHorda.getWidth()-50, ALTO/2-btnHorda.getHeight()/2-10);
+
+        //Boton regresar de modo horda
+        TextureRegionDrawable trdRegresarHorda = new TextureRegionDrawable(new TextureRegion(new Texture("left-arrow.png")));
+        btnRegresarHorda = new ImageButton(trdRegresarHorda);
+        btnRegresarHorda.setSize(80,80);
+        btnRegresarHorda.setVisible(false);
+        btnRegresarHorda.setPosition(50, ALTO/2-btnRegresarHorda.getHeight()/2-10);
+
         //Click en boton Play
         btnPlay.addListener(new ClickListener(){
             @Override
@@ -133,6 +159,37 @@ class PantallaMenu implements Screen {
             }
         });
 
+        //Click en boton Horda
+        btnHorda.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                isSurvivalMode=true;
+                imgBackground = new Texture("SurvivalModeBack.png");
+                spriteBackground = new Sprite(imgBackground);
+                spriteBackground.setPosition(0, 0);
+                btnHorda.setVisible(false);
+                btnRegresarHorda.setVisible(true);
+            }
+
+
+        });
+
+        btnRegresarHorda.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                isSurvivalMode=false;
+                imgBackground = new Texture("StoryModeBack.png");
+                spriteBackground = new Sprite(imgBackground);
+                spriteBackground.setPosition(0, 0);
+                btnRegresarHorda.setVisible(false);
+                btnHorda.setVisible(true);
+            }
+
+
+        });
+
         //Click en boton Config
         btnConfig.addListener(new ClickListener(){
             @Override
@@ -150,8 +207,10 @@ class PantallaMenu implements Screen {
         stageMenu.addActor(btnLead);
         stageMenu.addActor(btnConfig);
         stageMenu.addActor(btnTut);
+        stageMenu.addActor(btnHorda);
 
-        Gdx.input.setInputProcessor(stageMenu);
+        inputMultiplexer.addProcessor(stageMenu);
+        //Gdx.input.setInputProcessor(stageMenu);
     }
 
     private void crearCamara() {
@@ -215,5 +274,73 @@ class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         PantallaSplash.musicMenu.dispose();
+    }
+
+    private class ProcesadorEntrada implements InputProcessor {
+        @Override
+        public boolean keyDown(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            if(!isSurvivalMode){
+                if(screenX>distanceSwiped){
+                    distanceSwiped = screenX;
+                }
+                if(distanceSwiped-screenX>100){
+                    isSurvivalMode=true;
+                    imgBackground = new Texture("SurvivalModeBack.png");
+                    spriteBackground = new Sprite(imgBackground);
+                    spriteBackground.setPosition(0, 0);
+                    btnHorda.setVisible(false);
+                    btnRegresarHorda.setVisible(true);
+                }
+            }else{
+                if(screenX<distanceSwiped){
+                    distanceSwiped = screenX;
+                }
+                if(distanceSwiped+screenX>100){
+                    isSurvivalMode=false;
+                    imgBackground = new Texture("StoryModeBack.png");
+                    spriteBackground = new Sprite(imgBackground);
+                    spriteBackground.setPosition(0, 0);
+                    btnRegresarHorda.setVisible(false);
+                    btnHorda.setVisible(true);
+                }
+            }
+
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
     }
 }

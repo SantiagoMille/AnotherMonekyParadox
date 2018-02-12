@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -55,6 +56,7 @@ public class PantallaScores implements Screen{
     public void show() {
         crearCamara();
         crearMenu();
+        Gdx.input.setInputProcessor(new ProcesadorEntrada());
         batch = new SpriteBatch();
 
     }
@@ -85,7 +87,7 @@ public class PantallaScores implements Screen{
          * Se hace el titulo de scores
          */
         Label scoresTitle = new Label("HIGHSCORES", skin);
-        scoresTitle.setFontScale(3f,3f);
+        scoresTitle.setFontScale(5f,5f);
         scoresTitle.setAlignment(Align.center);
 
         /**
@@ -101,10 +103,12 @@ public class PantallaScores implements Screen{
         table.add(scoresTitle).colspan(2).fillX().height(150);
         table.row();
         for(String name:allNames){
-            columnName=new Label(name, skin);
-            columnName.setFontScale(3f,3f);
+            columnName=new Label(name+": ", skin);
+            columnName.setFontScale(4f,4f);
+            table.add(columnName);
             columnScore= new Label(allScores[i], skin);
-            columnScore.setFontScale(3f,3f);
+            columnScore.setFontScale(4f,4f);
+            table.add(columnScore);
             i++;
             table.row();
         }
@@ -155,4 +159,48 @@ public class PantallaScores implements Screen{
     public void dispose() {
         PantallaSplash.musicMenu.dispose();
     }
+
+    private class ProcesadorEntrada implements InputProcessor {
+        @Override
+        public boolean keyDown(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            main.setScreen(new PantallaMenu(main));
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
+    }
+
 }
