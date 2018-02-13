@@ -86,22 +86,22 @@ class PantallaMenu implements Screen {
 
 
         //Boton Play
-        TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("button_start.png")));
-        TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("button_start_pressed.png")));
+        TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("PlayButton.png")));
+        TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("PlayButton_Pressed.png")));
 
         ImageButton btnPlay = new ImageButton(trdPlay, trdPlayPressed);
         btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2);
 
         //Boton Leaderboard
-        TextureRegionDrawable trdLead = new TextureRegionDrawable(new TextureRegion(new Texture("but-lead.png")));
-        TextureRegionDrawable trdLeadPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-lead-push.png")));
+        TextureRegionDrawable trdLead = new TextureRegionDrawable(new TextureRegion(new Texture("trophy.png")));
+        TextureRegionDrawable trdLeadPush = new TextureRegionDrawable(new TextureRegion(new Texture("trophy_Pressed.png")));
 
         ImageButton btnLead = new ImageButton(trdLead, trdLeadPush);
         btnLead.setPosition(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2);
 
-        //Boton Config
-        TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(new Texture("but-config.png")));
-        TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-config-push.png")));
+        //Boton about
+        TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(new Texture("about-button.png")));
+        TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(new Texture("About-button_Pressed.png")));
 
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
         btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
