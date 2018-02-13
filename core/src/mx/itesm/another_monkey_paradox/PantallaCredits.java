@@ -94,6 +94,54 @@ class PantallaCredits implements Screen {
             }
         });
 
+        Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreference");
+        String names = prefs.getString("names", null);
+        if(names==null){
+            // prefs.putString("names", "Astro");
+            names = "Astro,";
+        }
+        String scores = prefs.getString("highscores", null);
+        if(scores==null){
+            //prefs.putString("highscores", "10000");
+            scores = "10000,";
+        }
+
+        Table table = new Table(skin);
+        table.defaults().pad(10f);
+        table.setFillParent(true);
+        table.setPosition(table.getX(),table.getY()+250);
+
+        /**
+         * Se hace el titulo de scores
+         */
+        Label scoresTitle = new Label("CREDITS", skin);
+        scoresTitle.setFontScale(4f,4f);
+        scoresTitle.setAlignment(Align.center);
+
+        //Se crean las columnas con puntuajes
+        Label columnName;
+        Label columnScore;
+
+        String[] allScores = scores.split(",");
+        String[] allNames = names.split(",");
+        int i=0;
+
+        table.add(scoresTitle).colspan(2).fillX().height(150);
+        table.row();
+        for(String name:allNames){
+            columnName=new Label(name+": ", skin);
+            columnName.setFontScale(3f,3f);
+            table.add(columnName);
+            columnScore= new Label(allScores[i], skin);
+            columnScore.setFontScale(3f,3f);
+            table.add(columnScore);
+            i++;
+            table.row();
+        }
+
+        stageMenu.addActor(table);
 
         stageMenu.addActor(btnReturn);
 
