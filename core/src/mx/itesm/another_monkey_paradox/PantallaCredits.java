@@ -78,7 +78,7 @@ class PantallaCredits implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaTutorial(main));
+                main.setScreen(new PantallaDeveloper(main));
             }
         });
 
