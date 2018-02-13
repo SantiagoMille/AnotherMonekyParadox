@@ -40,10 +40,6 @@ class PantallaCredits implements Screen {
         public static final float ANCHO = 1280;
         public static final float ALTO = 780;
 
-        //Para los creditos
-        private Stage creditsStage;
-        private Table container;
-
         //Camara
         private OrthographicCamera camara;
         private Viewport vista;
@@ -122,8 +118,7 @@ class PantallaCredits implements Screen {
         batch.begin();
         spriteBackground.draw(batch);
         batch.end();
-        //stageMenu.draw();
-        creditsStage.draw();
+        stageMenu.draw();
 
     }
 
