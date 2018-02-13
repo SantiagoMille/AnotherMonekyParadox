@@ -65,7 +65,7 @@ class PantallaSurvival implements Screen {
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
 
-        imgLogo = new Texture("LOGO.png");
+        imgLogo = new Texture("LOGO-2.png");
         spriteLogo = new Sprite(imgLogo);
         spriteLogo.setPosition(ANCHO/2-spriteLogo.getWidth()/2, ALTO-spriteLogo.getHeight()-50);
 
