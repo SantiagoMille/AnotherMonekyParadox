@@ -82,7 +82,7 @@ class PantallaMenu implements Screen {
 
         imgLogo = new Texture("LOGO-2.png");
         spriteLogo = new Sprite(imgLogo);
-        spriteLogo.setPosition(ANCHO/2-spriteLogo.getWidth()/2, ALTO-spriteLogo.getHeight()-50);
+        spriteLogo.setPosition(ANCHO/2-spriteLogo.getWidth()/2, ALTO-spriteLogo.getHeight()-40);
 
 
         //Boton Play
