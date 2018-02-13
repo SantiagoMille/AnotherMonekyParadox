@@ -107,11 +107,11 @@ class PantallaMenu implements Screen {
         btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
 
         //Boton Tutorial
-        TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(new Texture("but-tut.png")));
-        TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-tut-push.png")));
+        TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(new Texture("About2.png")));
+        TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(new Texture("About2.png")));
 
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
-        btnTut.setPosition(ANCHO*9/10-btnTut.getWidth()/2, ALTO*9/10-btnTut.getHeight()/2);
+        btnTut.setPosition(ANCHO*13/14, ALTO*13/14-btnTut.getHeight()/2);
 
         //Boton modo horda
         TextureRegionDrawable trdHorda = new TextureRegionDrawable(new TextureRegion(new Texture("arrow-point-to-right.png")));
@@ -148,14 +148,14 @@ class PantallaMenu implements Screen {
             }
         });
 
-        //Click en boton Tutorial
+        //Click en boton Developer
         btnTut.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaTutorial(main));
+                main.setScreen(new PantallaDeveloper(main));
             }
         });
 
@@ -175,6 +175,7 @@ class PantallaMenu implements Screen {
 
         });
 
+        //Click para regresar al modo historia
         btnRegresarHorda.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -190,14 +191,14 @@ class PantallaMenu implements Screen {
 
         });
 
-        //Click en boton Config
+        //Click en boton Tutorial
         btnConfig.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaDeveloper(main));
+                main.setScreen(new PantallaTutorial(main));
             }
 
 
