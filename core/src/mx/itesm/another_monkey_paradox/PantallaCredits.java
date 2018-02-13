@@ -59,7 +59,7 @@ class PantallaCredits implements Screen {
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("bananas.jpg");
+        imgBackground = new Texture("nebula.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
 
