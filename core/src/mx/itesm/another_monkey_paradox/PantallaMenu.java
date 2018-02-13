@@ -309,25 +309,27 @@ class PantallaMenu implements Screen {
                 if(screenX>distanceSwiped){
                     distanceSwiped = screenX;
                 }
-                if(distanceSwiped-screenX>100){
+                if(distanceSwiped-screenX>200){
                     isSurvivalMode=true;
                     imgBackground = new Texture("SurvivalModeBack.png");
                     spriteBackground = new Sprite(imgBackground);
                     spriteBackground.setPosition(0, 0);
                     btnHorda.setVisible(false);
                     btnRegresarHorda.setVisible(true);
+                    distanceSwiped=screenX;
                 }
             }else{
                 if(screenX<distanceSwiped){
                     distanceSwiped = screenX;
                 }
-                if(distanceSwiped+screenX>100){
+                if(distanceSwiped+screenX>200&&distanceSwiped<screenX){
                     isSurvivalMode=false;
                     imgBackground = new Texture("StoryModeBack.png");
                     spriteBackground = new Sprite(imgBackground);
                     spriteBackground.setPosition(0, 0);
                     btnRegresarHorda.setVisible(false);
                     btnHorda.setVisible(true);
+                    distanceSwiped=screenX;
                 }
             }
 

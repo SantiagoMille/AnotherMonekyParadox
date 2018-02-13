@@ -87,7 +87,7 @@ public class PantallaScores implements Screen{
          * Se hace el titulo de scores
          */
         Label scoresTitle = new Label("HIGHSCORES", skin);
-        scoresTitle.setFontScale(5f,5f);
+        scoresTitle.setFontScale(4f,4f);
         scoresTitle.setAlignment(Align.center);
 
         /**
@@ -104,10 +104,10 @@ public class PantallaScores implements Screen{
         table.row();
         for(String name:allNames){
             columnName=new Label(name+": ", skin);
-            columnName.setFontScale(4f,4f);
+            columnName.setFontScale(3f,3f);
             table.add(columnName);
             columnScore= new Label(allScores[i], skin);
-            columnScore.setFontScale(4f,4f);
+            columnScore.setFontScale(3f,3f);
             table.add(columnScore);
             i++;
             table.row();
@@ -128,7 +128,7 @@ public class PantallaScores implements Screen{
     @Override
     public void render(float delta) {
         //Usar v=d/t o en este caso d=v*t
-        Gdx.gl.glClearColor(66/255f,74/255f,96/255f,1);
+        Gdx.gl.glClearColor(127/255f,135/255f,160/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
