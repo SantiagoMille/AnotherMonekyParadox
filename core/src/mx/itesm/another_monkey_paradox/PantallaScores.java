@@ -28,25 +28,25 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by santi on 2/9/2018.
  */
 
-public class PantallaScores implements Screen{
+public abstract class PantallaScores implements Screen{
 
-    private final Main main;
+    public final Main main;
 
     public static final float ANCHO = 1280;
     public static final float ALTO = 780;
 
     //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
+    public OrthographicCamera camara;
+    public Viewport vista;
 
     //Escena
-    private Stage stageMenu;
+    public Stage stageMenu;
 
-    private SpriteBatch batch;
+    public SpriteBatch batch;
 
     //For Background
-    Texture imgBackground;
-    private Sprite spriteBackground;
+    public Texture imgBackground;
+    public Sprite spriteBackground;
 
     public PantallaScores(Main main) {
         this.main = main;
@@ -61,62 +61,7 @@ public class PantallaScores implements Screen{
 
     }
 
-    private void crearMenu() {
-        stageMenu = new Stage(vista);
-
-        Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
-
-        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreference");
-        String names = prefs.getString("names", null);
-        if(names==null){
-           // prefs.putString("names", "Astro");
-            names = "Astro,";
-        }
-        String scores = prefs.getString("highscores", null);
-        if(scores==null){
-            //prefs.putString("highscores", "10000");
-            scores = "10000,";
-        }
-
-        Table table = new Table(skin);
-        table.defaults().pad(10f);
-        table.setFillParent(true);
-        table.setPosition(table.getX(),table.getY()+250);
-
-        /**
-         * Se hace el titulo de scores
-         */
-        Label scoresTitle = new Label("HIGHSCORES", skin);
-        scoresTitle.setFontScale(4f,4f);
-        scoresTitle.setAlignment(Align.center);
-
-        /**
-         * Se crean las columnas con puntuajes
-         */
-        Label columnName;
-        Label columnScore;
-
-        String[] allScores = scores.split(",");
-        String[] allNames = names.split(",");
-        int i=0;
-
-        table.add(scoresTitle).colspan(2).fillX().height(150);
-        table.row();
-        for(String name:allNames){
-            columnName=new Label(name+": ", skin);
-            columnName.setFontScale(3f,3f);
-            table.add(columnName);
-            columnScore= new Label(allScores[i], skin);
-            columnScore.setFontScale(3f,3f);
-            table.add(columnScore);
-            i++;
-            table.row();
-        }
-
-        stageMenu.addActor(table);
-
-        Gdx.input.setInputProcessor(stageMenu);
-    }
+    abstract void crearMenu();
 
     private void crearCamara() {
         camara = new OrthographicCamera(ANCHO,ALTO);
