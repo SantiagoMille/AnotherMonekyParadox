@@ -58,7 +58,9 @@ class PantallaJuego implements Screen {
     private Viewport vista;
     private SpriteBatch batch;
 
-    //Iconos
+    //
+    private int puntosJugador = 0;
+    private Texto texto;
 
 
     public PantallaJuego(Main main) {
@@ -80,6 +82,9 @@ class PantallaJuego implements Screen {
         imgBackground = new Texture("NIVEL 1.1.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
+
+        //Objeto que dibuja texto
+        texto = new Texto();
 
         //Astro
         imgAstro = new Texture("astro.png");
@@ -222,6 +227,8 @@ class PantallaJuego implements Screen {
         vida1.draw(batch);
         vida2.draw(batch);
         vida3.draw(batch);
+        texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
+        texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
         batch.end();
         stageNivel.draw();
     }
