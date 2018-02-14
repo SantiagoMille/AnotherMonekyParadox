@@ -39,6 +39,11 @@ class PantallaJuego implements Screen {
     private ImageButton right;
     private ImageButton granada;
     private ImageButton arma;
+    private ImageButton pausa;
+
+    //astro
+    Texture imgAstro;
+    Sprite astro;
 
     //Escena
     private Stage stageNivel;
@@ -72,33 +77,50 @@ class PantallaJuego implements Screen {
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
 
+        imgAstro = new Texture("astro.png");
+        astro = new Sprite(imgAstro);
+        astro.setPosition(ANCHO/4-astro.getWidth()/2, ALTO/2-astro.getHeight()/2);
+
         //Boton izquierda
         TextureRegionDrawable btnLeft = new TextureRegionDrawable(new TextureRegion(new Texture("left_arrow.png")));
         TextureRegionDrawable btnLeftPressed = new TextureRegionDrawable(new TextureRegion(new Texture("left_arrow.png")));
 
         left = new ImageButton(btnLeft, btnLeftPressed);
-        left.setPosition(ANCHO/4-left.getWidth(), ALTO/4-left.getHeight());
+        left.setSize(100,100);
+        left.setPosition(75, ALTO/4-left.getHeight()/2 -80);
 
         //Boton derecha
         TextureRegionDrawable btnRight = new TextureRegionDrawable(new TextureRegion(new Texture("right_arrow.png")));
         TextureRegionDrawable btnRightPressed = new TextureRegionDrawable(new TextureRegion(new Texture("right_arrow.png")));
 
         right = new ImageButton(btnRight, btnRightPressed);
-        right.setPosition(ANCHO/4-right.getWidth()/2+15, ALTO/4-right.getHeight()/2);
+        right.setSize(100,100);
+        right.setPosition(75 + right.getWidth()+ 50, ALTO/4-right.getHeight()/2 -80);
 
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(new Texture("granada_icon.png")));
         TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(new Texture("granada_icon.png")));
 
         granada = new ImageButton(btnGranada, btnGranadaPressed);
-        granada.setPosition(ANCHO*3/4-granada.getWidth()/2, ALTO/4-granada.getHeight()/2);
+        granada.setSize(135, 135);
+        granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80);
 
         //boton disparo
         TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(new Texture("bullet_icon.png")));
         TextureRegionDrawable btnArmaPressed = new TextureRegionDrawable(new TextureRegion(new Texture("bullet_icon.png")));
 
         arma = new ImageButton(btnArma, btnArmaPressed);
-        arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + 15, ALTO/4-arma.getHeight()/2);
+        arma.setSize(135, 135);
+        arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80);
+
+        //boton pausa
+        TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(new Texture("pause-button.png")));
+        TextureRegionDrawable btnPausaPressed = new TextureRegionDrawable(new TextureRegion(new Texture("pause-button.png")));
+
+        pausa = new ImageButton(btnPausa, btnPausaPressed);
+        pausa.setSize(55, 55);
+        pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
+
 
         //click en izquierda
         left.addListener(new ClickListener(){
@@ -141,10 +163,21 @@ class PantallaJuego implements Screen {
             }
         });
 
+        pausa.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                //Gdx.app.log("ClickListener","Si se clickeoooo");
+                dispose();
+                main.setScreen(new PantallaJuego(main));
+            }
+        });
+
         stageNivel.addActor(left);
         stageNivel.addActor(right);
         stageNivel.addActor(granada);
         stageNivel.addActor(arma);
+        stageNivel.addActor(pausa);
 
 
     }
@@ -165,6 +198,7 @@ class PantallaJuego implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        astro.draw(batch);
         batch.end();
         stageNivel.draw();
     }
