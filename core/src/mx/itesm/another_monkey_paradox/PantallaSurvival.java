@@ -116,7 +116,7 @@ class PantallaSurvival implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaScores(main));
+                main.setScreen(new PantallaScoresStory(main));
             }
         });
 
@@ -127,7 +127,7 @@ class PantallaSurvival implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaTutorial(main));
+                main.setScreen(new PantallaTutorialStoryMode(main));
             }
         });
 

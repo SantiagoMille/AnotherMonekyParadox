@@ -21,7 +21,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
  * Created by adrian on 2/9/2018.
  */
 
-class PantallaTutorial implements Screen {
+abstract class PantallaTutorial implements Screen {
 
     private final Main main;
 
@@ -43,6 +43,10 @@ class PantallaTutorial implements Screen {
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
 
+    //To write on scree
+    public Texto texto;
+    public String toWrite;
+
     public PantallaTutorial(Main main) {
         this.main = main;
     }
@@ -50,13 +54,16 @@ class PantallaTutorial implements Screen {
     @Override
     public void show() {
         crearCamara();
-        crearMenu();
+        crearMainView();
         batch = new SpriteBatch();
         musicMenu.setLooping(true);
+        crearTexto();
         //musicMenu.play();
     }
 
-    private void crearMenu() {
+    abstract void crearTexto();
+
+    private void crearMainView() {
         stageMenu = new Stage(vista);
 
         imgBackground = new Texture("space.png");
@@ -64,11 +71,10 @@ class PantallaTutorial implements Screen {
         spriteBackground.setPosition(0, 0);
 
         //Boton Return
-        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret.png")));
-        TextureRegionDrawable trdReturnPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret-push.png")));
+        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
 
-        ImageButton btnReturn = new ImageButton(trdReturn, trdReturnPush);
-        btnReturn.setPosition(ANCHO/4-btnReturn.getWidth()/2, ALTO/4-btnReturn.getHeight()/2);
+        ImageButton btnReturn = new ImageButton(trdReturn);
+        btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
 
         //Click en boton Return
         btnReturn.addListener(new ClickListener(){
@@ -101,10 +107,13 @@ class PantallaTutorial implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        escribirTexto(batch);
         batch.end();
         stageMenu.draw();
 
     }
+
+    protected abstract void escribirTexto(SpriteBatch batch);
 
     @Override
     public void resize(int width, int height) {

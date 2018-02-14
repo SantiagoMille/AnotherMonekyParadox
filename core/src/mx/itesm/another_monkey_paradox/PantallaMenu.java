@@ -144,7 +144,11 @@ class PantallaMenu implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaScores(main));
+                if(isSurvivalMode) {
+                    main.setScreen(new PantallaScoresSurvival(main));
+                }else{
+                    main.setScreen(new PantallaScoresStory(main));
+                }
             }
         });
 
@@ -198,7 +202,11 @@ class PantallaMenu implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaTutorial(main));
+                if(isSurvivalMode) {
+                    main.setScreen(new PantallaTutorialSurvivalMode(main));
+                }else{
+                    main.setScreen(new PantallaTutorialStoryMode(main));
+                }
             }
 
 
