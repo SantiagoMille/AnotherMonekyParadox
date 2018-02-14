@@ -76,8 +76,8 @@ public abstract class PantallaScores implements Screen{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
-        stageMenu.draw();
         batch.end();
+        stageMenu.draw();
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -70,6 +71,7 @@ class PantallaDeveloper implements Screen {
         container = new Table();
         stageMenu.addActor(container);
         container.setFillParent(true);
+        container.setPosition(0,20);
 
         Table table = new Table();
 
@@ -98,9 +100,12 @@ class PantallaDeveloper implements Screen {
         };
 
         table.pad(10).defaults().expandX().space(4);
-
+        Label title = new Label("                       Configuraciones\n\n",skin);
+        title.setFontScale(3.5f);
+        title.setAlignment(Align.right);
+        table.add(title).colspan(2).fillX().height(150);
         table.row();
-        table.add(new Label("                                                                   ", skin)).expandX().fillX();
+        table.add(new Label("                                                                                                       ", skin)).expandX().fillX();
 
         TextButton buttonVolumen = new TextButton("Volumen", skin);
         table.add(buttonVolumen);
@@ -117,8 +122,11 @@ class PantallaDeveloper implements Screen {
         table.add(new Label("                                                                                                               ", skin));
 
         table.row();
+        table.add(new Label(" ",skin));
         table.row();
-        table.add(new Label("                                                                   ", skin)).expandX().fillX();
+        table.add(new Label(" ",skin));
+        table.row();
+        table.add(new Label("                                                                                             ", skin)).expandX().fillX();
 
         TextButton buttonSensitivity = new TextButton("Sensitivity", skin);
         table.add(buttonSensitivity);
@@ -147,6 +155,11 @@ class PantallaDeveloper implements Screen {
         container.row().space(10).padBottom(10);
         container.add(new Label("                   .                   .                   .                   .                   .                   .",skin));
         container.add(new Label("                   .                   .                   .                   .                   .                   .                   .",skin));
+        table.row();
+        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
+        table.row();
+        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
+        table.row();
         container.add(creditsButton).left().expandX();
 
         stageMenu.addActor(btnReturn);
