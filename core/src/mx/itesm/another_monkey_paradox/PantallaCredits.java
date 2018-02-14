@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -29,38 +30,43 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.utils.*;
 
+import java.nio.IntBuffer;
+
 /**
  * Created by adrian on 2/9/2018.
  */
 
 class PantallaCredits implements Screen {
 
-        private final Main main;
+    private final Main main;
 
-        public static final float ANCHO = 1280;
-        public static final float ALTO = 780;
+    public static final float ANCHO = 1280;
+    public static final float ALTO = 780;
 
-        //Camara
-        private OrthographicCamera camara;
-        private Viewport vista;
-        //Escena
-        private Stage stageMenu;
+    //Camara
+    private OrthographicCamera camara;
+    private Viewport vista;
+    //Escena
+    private Stage stageMenu;
 
-        private SpriteBatch batch;
+    private SpriteBatch batch;
 
-        //For Background
-        Texture imgBackground;
-        private Sprite spriteBackground;
+    //For Background
+    Texture imgBackground;
+    private Sprite spriteBackground;
 
-        //background music
-        private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+    //background music
+    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+
+    //Fotos
+    private Image foto = new Image();
 
     public PantallaCredits(Main main) {
         this.main = main;
     }
 
-        @Override
-        public void show () {
+    @Override
+    public void show() {
         crearCamara();
         crearMenu();
         batch = new SpriteBatch();
@@ -96,60 +102,64 @@ class PantallaCredits implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
-        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreference");
-        String names = prefs.getString("names", null);
-        if(names==null){
-            // prefs.putString("names", "Astro");
-            names = "Astro,";
-        }
-        String scores = prefs.getString("highscores", null);
-        if(scores==null){
-            //prefs.putString("highscores", "10000");
-            scores = "10000,";
-        }
+        //Fotos
+        foto.setScaling(Scaling.fit);
 
-        Table table = new Table(skin);
-        table.defaults().pad(10f);
-        table.setFillParent(true);
-        table.setPosition(table.getX(),table.getY()+250);
+        //Labels para tablas
+        Label creditsTitle = new Label("CREDITS", skin);
+        creditsTitle.setFontScale(5f, 5f);
+        creditsTitle.setAlignment(Align.center);
 
-        /**
-         * Se hace el titulo de scores
-         */
-        Label scoresTitle = new Label("CREDITS", skin);
-        scoresTitle.setFontScale(4f,4f);
-        scoresTitle.setAlignment(Align.center);
+        Label adriLabel = new Label("Adrian", skin);
+        adriLabel.setFontScale(3.5f, 3.5f);
+        adriLabel.setAlignment(Align.left);
 
-        //Se crean las columnas con puntuajes
-        Label columnName;
-        Label columnScore;
+        Label ferLabel = new Label("Luis Fernando", skin);
+        ferLabel.setFontScale(3.5f, 3.5f);
+        ferLabel.setAlignment(Align.left);
 
-        String[] allScores = scores.split(",");
-        String[] allNames = names.split(",");
-        int i=0;
+        Label santiLabel = new Label("Santiago", skin);
+        santiLabel.setFontScale(3.5f, 3.5f);
+        santiLabel.setAlignment(Align.left);
 
-        table.add(scoresTitle).colspan(2).fillX().height(150);
-        table.row();
-        for(String name:allNames){
-            columnName=new Label(name+": ", skin);
-            columnName.setFontScale(3f,3f);
-            table.add(columnName);
-            columnScore= new Label(allScores[i], skin);
-            columnScore.setFontScale(3f,3f);
-            table.add(columnScore);
-            i++;
-            table.row();
-        }
+        Label diegoLabel = new Label("Diego", skin);
+        diegoLabel.setFontScale(3.5f, 3.5f);
+        diegoLabel.setAlignment(Align.left);
 
-        stageMenu.addActor(table);
+        Label brianLabel = new Label("Brian", skin);
+        brianLabel.setFontScale(3.5f, 3.5f);
+        brianLabel.setAlignment(Align.left);
+
+        //Tabla ISC
+        Table iscTable = new Table();
+        iscTable.add(creditsTitle);
+        iscTable.row();
+        iscTable.add(santiLabel).width(100);
+        iscTable.row();
+        iscTable.add(ferLabel).width(100);
+        iscTable.row();
+        iscTable.add(adriLabel).width(100);
+
+        iscTable.setPosition(ANCHO/2, 3*ALTO/4);
+
+        //Tabla LAD
+        Table ladTable = new Table();
+        ladTable.add(diegoLabel).width(100);
+        ladTable.row();
+        ladTable.add(brianLabel).width(100);
+
+
+        ladTable.setPosition(ANCHO/2, ALTO/4);
+
+        stageMenu.addActor(iscTable);
+        stageMenu.addActor(ladTable);
 
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);
-    }
+}
 
-
-    private void crearCamara() {
+    private void crearCamara(){
         camara = new OrthographicCamera(ANCHO,ALTO);
         camara.position.set(ANCHO/2, ALTO/2,0);
         camara.update();
@@ -167,7 +177,6 @@ class PantallaCredits implements Screen {
         spriteBackground.draw(batch);
         batch.end();
         stageMenu.draw();
-
     }
 
     @Override
@@ -194,4 +203,5 @@ class PantallaCredits implements Screen {
     public void dispose() {
 
     }
+
 }
