@@ -42,6 +42,7 @@ class PantallaDeveloper implements Screen {
     private Viewport vista;
     //Escena
     private Stage stageMenu;
+    private Table container;
 
     private SpriteBatch batch;
 
@@ -68,23 +69,31 @@ class PantallaDeveloper implements Screen {
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
+        Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+
         imgBackground = new Texture("space.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
+
+        container = new Table();
+        stageMenu.addActor(container);
+        container.setFillParent(true);
+
+        Table table = new Table();
+
+        final ScrollPane scroll = new ScrollPane(table, skin);
 
         //Boton Creditos
         TextureRegionDrawable trdCredit = new TextureRegionDrawable(new TextureRegion(new Texture("but-credit.png")));
         TextureRegionDrawable trdCreditPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-credit-push.png")));
 
         ImageButton btnCredit = new ImageButton(trdCredit, trdCreditPush);
-        btnCredit.setPosition(ANCHO*3/4-btnCredit.getWidth()/2, ALTO/4-btnCredit.getHeight()/2);
+        btnCredit.setPosition(ANCHO/2-btnCredit.getWidth()/2, ALTO/8-btnCredit.getHeight()/2);
 
         //Boton Return
-        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret.png")));
-        TextureRegionDrawable trdReturnPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret-push.png")));
-
-        ImageButton btnReturn = new ImageButton(trdReturn, trdReturnPush);
-        btnReturn.setPosition(ANCHO/4-btnReturn.getWidth()/2, ALTO/4-btnReturn.getHeight()/2);
+        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
+        ImageButton btnReturn = new ImageButton(trdReturn);
+        btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
 
         //Click en boton Credits
         btnCredit.addListener(new ClickListener(){
@@ -106,11 +115,77 @@ class PantallaDeveloper implements Screen {
             }
         });
 
+        InputListener stopTouchDown = new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                event.stop();
+                return false;
+            }
+        };
+
+        table.pad(10).defaults().expandX().space(4);
+        for (int i = 0; i < 2; i++) {
+            table.row();
+            table.add(new Label(" ", skin)).expandX().fillX();
+
+            TextButton button = new TextButton("Volumen", skin);
+            table.add(button);
+            button.addListener(new ClickListener() {
+                public void clicked (InputEvent event, float x, float y) {
+                    System.out.println("click " + x + ", " + y);
+                }
+            });
+
+            Slider slider = new Slider(0, 100, 1, false, skin);
+            slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+            table.add(slider);
+
+            table.add(new Label(i + "tres long0 long1 long2 long3 long4 long5 long6 long7 long8 long9 long10 long11 long12", skin));
+        }
+
+        final TextButton flickButton = new TextButton("Flick Scroll", skin.get("default", TextButton.TextButtonStyle.class));
+        flickButton.setChecked(true);
+        flickButton.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                scroll.setFlickScroll(flickButton.isChecked());
+            }
+        });
+
+        final TextButton fadeButton = new TextButton("Fade Scrollbars", skin.get("default", TextButton.TextButtonStyle.class));
+        fadeButton.setChecked(true);
+        fadeButton.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                scroll.setFadeScrollBars(fadeButton.isChecked());
+            }
+        });
+
+        final TextButton smoothButton = new TextButton("Smooth Scrolling", skin.get("default", TextButton.TextButtonStyle.class));
+        smoothButton.setChecked(true);
+        smoothButton.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                scroll.setSmoothScrolling(smoothButton.isChecked());
+            }
+        });
+
+        final TextButton onTopButton = new TextButton("Scrollbars On Top", skin.get("default", TextButton.TextButtonStyle.class));
+        onTopButton.addListener(new ChangeListener() {
+            public void changed (ChangeEvent event, Actor actor) {
+                scroll.setScrollbarsOnTop(onTopButton.isChecked());
+            }
+        });
+
+        container.add(scroll).expand().fill().colspan(4);
+        container.row().space(10).padBottom(10);
+        container.add(flickButton).right().expandX();
+        container.add(onTopButton);
+        container.add(smoothButton);
+        container.add(fadeButton).left().expandX();
+
 
         stageMenu.addActor(btnReturn);
         stageMenu.addActor(btnCredit);
 
         Gdx.input.setInputProcessor(stageMenu);
+
     }
 
     private void crearCamara() {
@@ -125,7 +200,7 @@ class PantallaDeveloper implements Screen {
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(.1f,.4f,.9f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        stageMenu.act(Gdx.graphics.getDeltaTime());
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
