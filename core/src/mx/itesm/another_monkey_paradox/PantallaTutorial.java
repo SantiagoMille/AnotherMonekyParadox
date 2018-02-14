@@ -69,6 +69,7 @@ abstract class PantallaTutorial implements Screen {
         imgBackground = new Texture("space.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
+        spriteBackground.setAlpha(0.7f);
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));

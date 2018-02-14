@@ -46,10 +46,6 @@ class PantallaDeveloper implements Screen {
 
     private SpriteBatch batch;
 
-    //For Background
-    Texture imgBackground;
-    private Sprite spriteBackground;
-
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
 
@@ -71,10 +67,6 @@ class PantallaDeveloper implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
-        imgBackground = new Texture("space.png");
-        spriteBackground = new Sprite(imgBackground);
-        spriteBackground.setPosition(0, 0);
-
         container = new Table();
         stageMenu.addActor(container);
         container.setFillParent(true);
@@ -83,34 +75,17 @@ class PantallaDeveloper implements Screen {
 
         final ScrollPane scroll = new ScrollPane(table, skin);
 
-        //Boton Creditos
-        TextureRegionDrawable trdCredit = new TextureRegionDrawable(new TextureRegion(new Texture("but-credit.png")));
-        TextureRegionDrawable trdCreditPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-credit-push.png")));
-
-        ImageButton btnCredit = new ImageButton(trdCredit, trdCreditPush);
-        btnCredit.setPosition(ANCHO/2-btnCredit.getWidth()/2, ALTO/8-btnCredit.getHeight()/2);
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
         ImageButton btnReturn = new ImageButton(trdReturn);
         btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
 
-        //Click en boton Credits
-        btnCredit.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaCredits(main));
-            }
-        });
-
         //Click en boton Return
         btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                //Gdx.app.log("ClickListener","Si se clickeoooo");
                 main.setScreen(new PantallaMenu(main));
             }
         });
@@ -123,66 +98,58 @@ class PantallaDeveloper implements Screen {
         };
 
         table.pad(10).defaults().expandX().space(4);
-        for (int i = 0; i < 2; i++) {
-            table.row();
-            table.add(new Label(" ", skin)).expandX().fillX();
 
-            TextButton button = new TextButton("Volumen", skin);
-            table.add(button);
-            button.addListener(new ClickListener() {
-                public void clicked (InputEvent event, float x, float y) {
-                    System.out.println("click " + x + ", " + y);
-                }
-            });
+        table.row();
+        table.add(new Label("                                                                   ", skin)).expandX().fillX();
 
-            Slider slider = new Slider(0, 100, 1, false, skin);
-            slider.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-            table.add(slider);
-
-            table.add(new Label(i + "tres long0 long1 long2 long3 long4 long5 long6 long7 long8 long9 long10 long11 long12", skin));
-        }
-
-        final TextButton flickButton = new TextButton("Flick Scroll", skin.get("default", TextButton.TextButtonStyle.class));
-        flickButton.setChecked(true);
-        flickButton.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-                scroll.setFlickScroll(flickButton.isChecked());
+        TextButton buttonVolumen = new TextButton("Volumen", skin);
+        table.add(buttonVolumen);
+        buttonVolumen.addListener(new ClickListener() {
+            public void clicked (InputEvent event, float x, float y) {
+                System.out.println("click " + x + ", " + y);
             }
         });
 
-        final TextButton fadeButton = new TextButton("Fade Scrollbars", skin.get("default", TextButton.TextButtonStyle.class));
-        fadeButton.setChecked(true);
-        fadeButton.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-                scroll.setFadeScrollBars(fadeButton.isChecked());
+        Slider sliderVolumen = new Slider(0, 100, 1, false, skin);
+        sliderVolumen.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+        table.add(sliderVolumen);
+
+        table.add(new Label("                                                                                                               ", skin));
+
+        table.row();
+        table.row();
+        table.add(new Label("                                                                   ", skin)).expandX().fillX();
+
+        TextButton buttonSensitivity = new TextButton("Sensitivity", skin);
+        table.add(buttonSensitivity);
+        buttonSensitivity.addListener(new ClickListener() {
+            public void clicked (InputEvent event, float x, float y) {
+                System.out.println("click " + x + ", " + y);
             }
         });
 
-        final TextButton smoothButton = new TextButton("Smooth Scrolling", skin.get("default", TextButton.TextButtonStyle.class));
-        smoothButton.setChecked(true);
-        smoothButton.addListener(new ChangeListener() {
-            public void changed (ChangeEvent event, Actor actor) {
-                scroll.setSmoothScrolling(smoothButton.isChecked());
-            }
-        });
+        Slider sliderSens = new Slider(0, 100, 1, false, skin);
+        sliderSens.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+        table.add(sliderSens);
 
-        final TextButton onTopButton = new TextButton("Scrollbars On Top", skin.get("default", TextButton.TextButtonStyle.class));
-        onTopButton.addListener(new ChangeListener() {
+        table.add(new Label("                                                                                                               ", skin));
+
+        final TextButton creditsButton = new TextButton("Creditos", skin.get("default", TextButton.TextButtonStyle.class));
+        creditsButton.setChecked(true);
+        creditsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                scroll.setScrollbarsOnTop(onTopButton.isChecked());
+                scroll.setFlickScroll(creditsButton.isChecked());
+                main.setScreen(new PantallaCredits(main));
             }
         });
 
         container.add(scroll).expand().fill().colspan(4);
         container.row().space(10).padBottom(10);
-        container.add(flickButton).right().expandX();
-        container.add(onTopButton);
-        container.add(smoothButton);
-        container.add(fadeButton).left().expandX();
-
+        container.add(new Label("                   .                   .                   .                   .                   .                   .",skin));
+        container.add(new Label("                   .                   .                   .                   .                   .                   .                   .",skin));
+        container.add(creditsButton).left().expandX();
 
         stageMenu.addActor(btnReturn);
-        stageMenu.addActor(btnCredit);
 
         Gdx.input.setInputProcessor(stageMenu);
 
@@ -198,12 +165,11 @@ class PantallaDeveloper implements Screen {
     @Override
     public void render(float delta) {
         //Usar v=d/t o en este caso d=v*t
-        Gdx.gl.glClearColor(.1f,.4f,.9f,1);
+        Gdx.gl.glClearColor(127/255f,135/255f,160/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stageMenu.act(Gdx.graphics.getDeltaTime());
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        spriteBackground.draw(batch);
         batch.end();
         stageMenu.draw();
 

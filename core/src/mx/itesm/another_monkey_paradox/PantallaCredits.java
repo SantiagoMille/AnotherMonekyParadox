@@ -80,14 +80,13 @@ class PantallaCredits implements Screen {
         imgBackground = new Texture("nebula.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
+        spriteBackground.setAlpha(0.4f);
 
 
         //Boton Return
-        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret.png")));
-        TextureRegionDrawable trdReturnPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-ret-push.png")));
-
-        ImageButton btnReturn = new ImageButton(trdReturn, trdReturnPush);
-        btnReturn.setPosition(ANCHO / 4 - btnReturn.getWidth() / 2, ALTO / 4 - btnReturn.getHeight() / 2);
+        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
+        ImageButton btnReturn = new ImageButton(trdReturn);
+        btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
 
 
         //Click en boton Return
@@ -105,55 +104,55 @@ class PantallaCredits implements Screen {
         //Fotos
         foto.setScaling(Scaling.fit);
 
-        //Labels para tablas
-        Label creditsTitle = new Label("CREDITS", skin);
-        creditsTitle.setFontScale(5f, 5f);
-        creditsTitle.setAlignment(Align.center);
 
-        Label adriLabel = new Label("Adrian", skin);
-        adriLabel.setFontScale(3.5f, 3.5f);
-        adriLabel.setAlignment(Align.left);
+        Table table = new Table(skin);
+        table.defaults().pad(10f);
+        table.setFillParent(true);
+        table.setPosition(table.getX(),table.getY()+table.getHeight()+100);
 
-        Label ferLabel = new Label("Luis Fernando", skin);
-        ferLabel.setFontScale(3.5f, 3.5f);
-        ferLabel.setAlignment(Align.left);
+        Label scoresTitle = new Label("                CREDITS", skin);
+        scoresTitle.setFontScale(4f,4f);
+        scoresTitle.setAlignment(Align.center);
 
-        Label santiLabel = new Label("Santiago", skin);
-        santiLabel.setFontScale(3.5f, 3.5f);
-        santiLabel.setAlignment(Align.left);
+        Label adriLabel;
+        Label ferLabel;
+        Label santiLabel;
+        Label diegoLabel;
+        Label brianLabel;
 
-        Label diegoLabel = new Label("Diego", skin);
-        diegoLabel.setFontScale(3.5f, 3.5f);
-        diegoLabel.setAlignment(Align.left);
+        table.add(scoresTitle).colspan(2).fillX().height(150);
+        table.row();
 
-        Label brianLabel = new Label("Brian", skin);
-        brianLabel.setFontScale(3.5f, 3.5f);
-        brianLabel.setAlignment(Align.left);
+        adriLabel=new Label("Adrian\n  ISC", skin);
+        adriLabel.setFontScale(3f,3f);
+        adriLabel.setHeight(1000);
+        adriLabel.setWidth(1000);
+        table.add(adriLabel);
 
-        //Tabla ISC
-        Table iscTable = new Table();
-        iscTable.add(creditsTitle);
-        iscTable.row();
-        iscTable.add(santiLabel).width(100);
-        iscTable.row();
-        iscTable.add(ferLabel).width(100);
-        iscTable.row();
-        iscTable.add(adriLabel).width(100);
+        ferLabel= new Label("Luis Fernando\n       ISC", skin);
+        ferLabel.setFontScale(3f,3f);
+        ferLabel.setHeight(1000);
+        ferLabel.setWidth(1000);
+        table.add(ferLabel);
 
-        iscTable.setPosition(ANCHO/2, 3*ALTO/4);
+        santiLabel = new Label("Luis Santiago\n      ISC", skin);
+        santiLabel.setFontScale(3f, 3f);
+        santiLabel.setHeight(1000);
+        santiLabel.setWidth(1000);
+        table.add(santiLabel);
 
-        //Tabla LAD
-        Table ladTable = new Table();
-        ladTable.add(diegoLabel).width(100);
-        ladTable.row();
-        ladTable.add(brianLabel).width(100);
+        table.row();
+        table.row();
 
+        diegoLabel = new Label("                      Diego\n                     LAD\n\n", skin);
+        diegoLabel.setFontScale(3f, 3f);
+        table.add(diegoLabel);
 
-        ladTable.setPosition(ANCHO/2, ALTO/4);
+        brianLabel = new Label("                      Brian\n                     LAD\n\n", skin);
+        brianLabel.setFontScale(3f, 3f);
+        table.add(brianLabel);
 
-        stageMenu.addActor(iscTable);
-        stageMenu.addActor(ladTable);
-
+        stageMenu.addActor(table);
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);

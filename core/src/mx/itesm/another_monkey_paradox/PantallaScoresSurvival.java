@@ -2,6 +2,8 @@ package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +23,11 @@ public class PantallaScoresSurvival extends PantallaScores {
     @Override
     void crearMenu() {
         super.stageMenu = new Stage(vista);
+
+        imgBackground = new Texture("space.png");
+        spriteBackground = new Sprite(imgBackground);
+        spriteBackground.setPosition(0, 0);
+        spriteBackground.setAlpha(0.7f);
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
