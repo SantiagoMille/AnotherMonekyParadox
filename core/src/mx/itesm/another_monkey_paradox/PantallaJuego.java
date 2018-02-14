@@ -45,13 +45,17 @@ class PantallaJuego implements Screen {
     Texture imgAstro;
     Sprite astro;
 
+    //Vidas
+    private boolean[] vidas = new boolean[] {true, true, true};
+    Texture imgVida;
+    Sprite vida1, vida2, vida3;
+
     //Escena
     private Stage stageNivel;
 
     //Camara
     private OrthographicCamera camara;
     private Viewport vista;
-
     private SpriteBatch batch;
 
     //Iconos
@@ -77,9 +81,26 @@ class PantallaJuego implements Screen {
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
 
+        //Astro
         imgAstro = new Texture("astro.png");
         astro = new Sprite(imgAstro);
         astro.setPosition(ANCHO/4-astro.getWidth()/2, ALTO/2-astro.getHeight()/2);
+
+        //Vidas
+        imgVida = new Texture("vida.png");
+        vida1 = new Sprite(imgVida);
+        vida1.setSize(70,70);
+        vida1.setPosition(20, 680 - vida1.getHeight()/2);
+
+        imgVida = new Texture("vida.png");
+        vida2 = new Sprite(imgVida);
+        vida2.setSize(70,70);
+        vida2.setPosition(100, 680 - vida1.getHeight()/2);
+
+        imgVida = new Texture("vida.png");
+        vida3 = new Sprite(imgVida);
+        vida3.setSize(70,70);
+        vida3.setPosition(180, 680 - vida1.getHeight()/2);
 
         //Boton izquierda
         TextureRegionDrawable btnLeft = new TextureRegionDrawable(new TextureRegion(new Texture("left_arrow.png")));
@@ -120,7 +141,6 @@ class PantallaJuego implements Screen {
         pausa = new ImageButton(btnPausa, btnPausaPressed);
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
-
 
         //click en izquierda
         left.addListener(new ClickListener(){
@@ -199,6 +219,9 @@ class PantallaJuego implements Screen {
         batch.begin();
         spriteBackground.draw(batch);
         astro.draw(batch);
+        vida1.draw(batch);
+        vida2.draw(batch);
+        vida3.draw(batch);
         batch.end();
         stageNivel.draw();
     }
