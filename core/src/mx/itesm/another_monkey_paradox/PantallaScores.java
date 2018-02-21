@@ -56,9 +56,7 @@ public abstract class PantallaScores implements Screen{
     public void show() {
         crearCamara();
         crearMenu();
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
         batch = new SpriteBatch();
-
     }
 
     abstract void crearMenu();
@@ -75,10 +73,11 @@ public abstract class PantallaScores implements Screen{
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(127/255f,135/255f,160/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         batch.setProjectionMatrix(camara.combined);
+        batch.begin();
+        spriteBackground.draw(batch);
+        batch.end();
         stageMenu.draw();
-
     }
 
     @Override
@@ -105,47 +104,5 @@ public abstract class PantallaScores implements Screen{
         PantallaSplash.musicMenu.dispose();
     }
 
-    private class ProcesadorEntrada implements InputProcessor {
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            main.setScreen(new PantallaMenu(main));
-            return false;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
-    }
 
 }

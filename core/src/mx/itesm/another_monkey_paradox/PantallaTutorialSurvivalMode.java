@@ -17,7 +17,7 @@ public class PantallaTutorialSurvivalMode extends PantallaTutorial {
         toWrite = "Survival Mode:\n" +
                 "\n" +
                 "Sobrevive hasta que puedas, pelea contra \n" +
-                "los minions del Dr. Timeetravelov. " +
+                "los minions del Dr. Timetravelov. " +
                 "\n" +
                 "Utiliza las flechas para moverte hacia adelante \n" +
                 "y hacia atras.\n" +
