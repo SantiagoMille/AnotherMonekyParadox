@@ -23,7 +23,7 @@ import com.badlogic.gdx.*;
  * Created by santi on 1/30/2018.
  */
 
-class PantallaJuego implements Screen {
+class PantallaJuego extends Pantalla implements Screen  {
 
     private final Main main;
 
@@ -33,6 +33,8 @@ class PantallaJuego implements Screen {
     //For Background
     Texture imgBackground;
     private Sprite spriteBackground;
+
+    private Fondo fondo;
 
     //Controles del jugador
     private ImageButton left;
@@ -44,6 +46,8 @@ class PantallaJuego implements Screen {
     //astro
     Texture imgAstro;
     Sprite astro;
+
+    private Personaje personaje;
 
     //Vidas
     private boolean[] vidas = new boolean[] {true, true, true};
@@ -71,6 +75,11 @@ class PantallaJuego implements Screen {
     public void show() {
         crearCamara();
         moverFondo();
+        personaje = new Personaje(new Texture("CAMINATA 1.png"),
+                new Texture("CAMINATA 2.png"),
+                new Texture("CAMINATA 3.png"),
+                new Texture("CAMINATA 4.png"));
+        fondo = new Fondo(new Texture("NIVEL 1.1.png"));
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
@@ -216,21 +225,30 @@ class PantallaJuego implements Screen {
 
     @Override
     public void render(float delta) {
+        actualizarObjetos(delta);
+
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(.3f,.6f,.3f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        spriteBackground.draw(batch);
-        astro.draw(batch);
+        //spriteBackground.draw(batch);
+        //astro.draw(batch);
+        fondo.render(batch);
         vida1.draw(batch);
         vida2.draw(batch);
         vida3.draw(batch);
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
+        personaje.render(batch);
         batch.end();
         stageNivel.draw();
+    }
+
+
+    private void actualizarObjetos(float dt) {
+        fondo.mover(-dt * 30);
     }
 
     @Override
