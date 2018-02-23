@@ -67,10 +67,10 @@ class PantallaMenu implements Screen {
         crearCamara();
         crearMenu();
         batch = new SpriteBatch();
-        PantallaSplash.musicMenu.setLooping(false);
+        PantallaSplash.musicMenu.setLooping(true);
+        PantallaSplash.musicMenu.play();
         inputMultiplexer.addProcessor(new ProcesadorEntrada());
         Gdx.input.setInputProcessor(inputMultiplexer);
-        PantallaSplash.musicMenu.play();
     }
 
     private void crearMenu() {
@@ -283,7 +283,7 @@ class PantallaMenu implements Screen {
 
     @Override
     public void dispose() {
-        PantallaSplash.musicMenu.dispose();
+        PantallaSplash.musicMenu.stop();
     }
 
     private class ProcesadorEntrada implements InputProcessor {

@@ -4,10 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
 /**
@@ -78,7 +83,22 @@ public class PantallaScoresSurvival extends PantallaScores {
             table.row();
         }
 
+        //Boton Return
+        TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
+        ImageButton btnReturn = new ImageButton(trdReturn);
+        btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
+
+        //Click en boton Return
+        btnReturn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                main.setScreen(new PantallaMenu(main));
+            }
+        });
+
         stageMenu.addActor(table);
+        stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);
     }
