@@ -22,7 +22,7 @@ class Personaje {
         TextureRegion img3 = new TextureRegion(texture3);
         TextureRegion img4 = new TextureRegion(texture4);
         animacion = new Animation(0.2f, img1, img2, img3, img4);
-        x = PantallaJuego.ANCHO/4-texture1.getWidth()/2;
+        x = PantallaJuego.ANCHO/2-texture1.getWidth()/2;
         y = PantallaJuego.ALTO/2-texture1.getHeight()/2;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
     }
