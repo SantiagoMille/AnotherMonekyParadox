@@ -79,7 +79,8 @@ class PantallaJuego extends Pantalla implements Screen  {
                 new Texture("CAMINATA 2.png"),
                 new Texture("CAMINATA 3.png"),
                 new Texture("CAMINATA 1.png"));
-        fondo = new Fondo(new Texture("NIVEL 1.1.png"));
+
+        fondo = new Fondo(new Texture("FondoNivel1/NIVEL 1 PAN.png"));
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
@@ -88,17 +89,21 @@ class PantallaJuego extends Pantalla implements Screen  {
     private void moverFondo() {
         stageNivel = new Stage(vista);
 
-        imgBackground = new Texture("NIVEL 1.1.png");
+        /*
+        imgBackground = new Texture("FondoNivel1/NIVEL 1 PAN.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
+        */
 
         //Objeto que dibuja texto
         texto = new Texto();
 
+        /*
         //Astro
         imgAstro = new Texture("astro.png");
         astro = new Sprite(imgAstro);
         astro.setPosition(ANCHO/4-astro.getWidth()/2, ALTO/2-astro.getHeight()/2);
+        */
 
         //Vidas
         imgVida = new Texture("vida.png");
