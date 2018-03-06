@@ -75,10 +75,10 @@ class PantallaJuego extends Pantalla implements Screen  {
     public void show() {
         crearCamara();
         moverFondo();
-        personaje = new Personaje(new Texture("CAMINATA 1.png"),
+        personaje = new Personaje(new Texture("CAMINATA 4.png"),
                 new Texture("CAMINATA 2.png"),
                 new Texture("CAMINATA 3.png"),
-                new Texture("CAMINATA 4.png"));
+                new Texture("CAMINATA 1.png"));
         fondo = new Fondo(new Texture("NIVEL 1.1.png"));
         batch = new SpriteBatch();
         Gdx.input.setInputProcessor(new ProcesadorEntrada());
