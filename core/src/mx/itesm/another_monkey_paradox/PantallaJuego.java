@@ -10,9 +10,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -43,9 +47,10 @@ class PantallaJuego extends Pantalla implements Screen  {
     private ImageButton arma;
     private ImageButton pausa;
 
-    //astro
-    Texture imgAstro;
-    Sprite astro;
+    private float stateTime=0;
+
+    private boolean isMovingRight=false;
+    private boolean isMovingLeft = false;
 
     private Personaje personaje;
 
@@ -82,28 +87,15 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo = new Fondo(new Texture("FondoNivel1/NIVEL 1 PAN.png"));
         batch = new SpriteBatch();
-        Gdx.input.setInputProcessor(new ProcesadorEntrada());
+        //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
     }
 
     private void moverFondo() {
         stageNivel = new Stage(vista);
 
-        /*
-        imgBackground = new Texture("FondoNivel1/NIVEL 1 PAN.png");
-        spriteBackground = new Sprite(imgBackground);
-        spriteBackground.setPosition(0, 0);
-        */
-
         //Objeto que dibuja texto
         texto = new Texto();
-
-        /*
-        //Astro
-        imgAstro = new Texture("astro.png");
-        astro = new Sprite(imgAstro);
-        astro.setPosition(ANCHO/4-astro.getWidth()/2, ALTO/2-astro.getHeight()/2);
-        */
 
         //Vidas
         imgVida = new Texture("vida.png");
@@ -120,22 +112,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         vida3 = new Sprite(imgVida);
         vida3.setSize(70,70);
         vida3.setPosition(180, 680 - vida1.getHeight()/2);
-
-        //Boton izquierda
-        TextureRegionDrawable btnLeft = new TextureRegionDrawable(new TextureRegion(new Texture("left_arrow.png")));
-        TextureRegionDrawable btnLeftPressed = new TextureRegionDrawable(new TextureRegion(new Texture("left_arrow.png")));
-
-        left = new ImageButton(btnLeft, btnLeftPressed);
-        left.setSize(100,100);
-        left.setPosition(75, ALTO/4-left.getHeight()/2 -80);
-
-        //Boton derecha
-        TextureRegionDrawable btnRight = new TextureRegionDrawable(new TextureRegion(new Texture("right_arrow.png")));
-        TextureRegionDrawable btnRightPressed = new TextureRegionDrawable(new TextureRegion(new Texture("right_arrow.png")));
-
-        right = new ImageButton(btnRight, btnRightPressed);
-        right.setSize(100,100);
-        right.setPosition(75 + right.getWidth()+ 50, ALTO/4-right.getHeight()/2 -80);
 
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(new Texture("granada_icon.png")));
@@ -161,26 +137,40 @@ class PantallaJuego extends Pantalla implements Screen  {
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
 
-        //click en izquierda
-        left.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Gdx.app.log("ClickListener","Si se clickeoooo");
-                dispose();
-                main.setScreen(new PantallaJuego(main));
-            }
-        });
+        Skin skin = new Skin(); // Texturas para el pad
+        skin.add("fondo", new Texture("Pad/padBack.png"));
+        skin.add("boton", new Texture("Pad/padKnob.png"));
 
-        right.addListener(new ClickListener(){
+        Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
+        estilo.background = skin.getDrawable("fondo");
+        estilo.knob = skin.getDrawable("boton");
+
+        // Crea el pad
+        Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
+        pad.setBounds(20,20,160,160);               // x,y - ancho,alto
+
+        // Comportamiento del pad
+        pad.addListener(new ChangeListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                //Gdx.app.log("ClickListener","Si se clickeoooo");
-                dispose();
-                main.setScreen(new PantallaJuego(main));
+            public void changed(ChangeEvent event, Actor actor) {
+                Touchpad pad = (Touchpad)actor;
+                if (pad.getKnobPercentX() > 0.10) { // Más de 20% de desplazamiento DERECHA
+                    //personaje.setX(personaje.getX()+3);
+                    personaje.setRight(true);
+                    isMovingRight=true;
+                    isMovingLeft = false;
+                } else if ( pad.getKnobPercentX() < -0.10 ) {   // Más de 20% IZQUIERDA
+                    //personaje.setX(personaje.getX()-3);
+                    personaje.setRight(false);
+                    isMovingLeft = true;
+                    isMovingRight = false;
+                } else {
+                    isMovingLeft=false;
+                    isMovingRight=false;
+                }
             }
         });
+        pad.setColor(1,1,1,0.7f);   // Transparente
 
         granada.addListener(new ClickListener(){
             @Override
@@ -212,13 +202,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         });
 
-        stageNivel.addActor(left);
-        stageNivel.addActor(right);
         stageNivel.addActor(granada);
         stageNivel.addActor(arma);
         stageNivel.addActor(pausa);
+        stageNivel.addActor(pad);
 
-
+        Gdx.input.setInputProcessor(stageNivel);
     }
 
     private void crearCamara() {
@@ -230,6 +219,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void render(float delta) {
+        stateTime+=delta;
         actualizarObjetos(delta);
 
         //Usar v=d/t o en este caso d=v*t
@@ -249,11 +239,25 @@ class PantallaJuego extends Pantalla implements Screen  {
         personaje.render(batch);
         batch.end();
         stageNivel.draw();
+
+        TextureRegion currentFrame = (TextureRegion) personaje.getAnimacion().getKeyFrame(stateTime,true);
+
+        if(personaje.isRight()&&currentFrame.isFlipX()){
+            currentFrame.flip(true,false);
+        } else if(!personaje.isRight()&&!currentFrame.isFlipX()){
+            currentFrame.flip(true,false);
+        }
     }
 
-
     private void actualizarObjetos(float dt) {
-        fondo.mover(-dt * 30);
+
+        if(isMovingRight&&!isMovingLeft){
+            personaje.setX(personaje.getX()+(dt*20));
+            fondo.mover(-dt * 20);
+        }else if(isMovingLeft&&!isMovingRight){
+            personaje.setX(personaje.getX()+(dt*-20));
+            fondo.mover(dt * 20);
+        }
     }
 
     @Override
@@ -281,46 +285,4 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     }
 
-    private class ProcesadorEntrada implements InputProcessor {
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            main.setScreen(new PantallaMenu(main));
-            return false;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
-    }
 }

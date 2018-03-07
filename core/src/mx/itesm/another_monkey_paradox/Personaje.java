@@ -15,6 +15,7 @@ class Personaje {
     private Animation animacion;
     private float x, y; // Coordenadas
     private float timerAnimacion;
+    private boolean isRight;
 
     public Personaje(Texture texture1, Texture texture2, Texture texture3, Texture texture4){
         TextureRegion img1 = new TextureRegion(texture1);
@@ -25,6 +26,47 @@ class Personaje {
         x = PantallaJuego.ANCHO/2-texture1.getWidth()/2;
         y = PantallaJuego.ALTO/2-texture1.getHeight()/2;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
+        isRight=true;
+    }
+
+    public boolean isRight() {
+        return isRight;
+    }
+
+    public void setRight(boolean right) {
+        isRight = right;
+    }
+
+    public Animation getAnimacion() {
+        return animacion;
+    }
+
+    public void setAnimacion(Animation animacion) {
+        this.animacion = animacion;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
+    }
+
+    public float getTimerAnimacion() {
+        return timerAnimacion;
+    }
+
+    public void setTimerAnimacion(float timerAnimacion) {
+        this.timerAnimacion = timerAnimacion;
     }
 
     public void render(SpriteBatch batch){
