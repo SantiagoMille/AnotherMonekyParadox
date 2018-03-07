@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -54,6 +55,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private Personaje personaje;
 
+    //Enemigos
+    private Array<Enemigo> listaEnemigos;
+
     //Vidas
     private boolean[] vidas = new boolean[] {true, true, true};
     Texture imgVida;
@@ -81,13 +85,21 @@ class PantallaJuego extends Pantalla implements Screen  {
         crearCamara();
         moverFondo();
         personaje = new Personaje(new Texture("CAMINATA 4.png"),
-                new Texture("CAMINATA 2.png"),
-                new Texture("CAMINATA 3.png"),
-                new Texture("CAMINATA 1.png"));
+                    new Texture("CAMINATA 2.png"),
+                    new Texture("CAMINATA 3.png"),
+                    new Texture("CAMINATA 1.png"));
 
         fondo = new Fondo(new Texture("FondoNivel1/NIVEL 1 PAN.png"));
         batch = new SpriteBatch();
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
+
+        //Lista Enemigos
+        listaEnemigos = new Array<Enemigo>();
+        Enemigo enemigo = new Enemigo(new Texture("caveman1c 1.png"),
+                                        new Texture("caveman1c 2.png"),
+                                        new Texture("caveman1c 3.png"),
+                                        new Texture("caveman1c 4.png"));
+        listaEnemigos.add(enemigo);
 
     }
 
@@ -230,13 +242,23 @@ class PantallaJuego extends Pantalla implements Screen  {
         batch.begin();
         //spriteBackground.draw(batch);
         //astro.draw(batch);
+
         fondo.render(batch);
+
         vida1.draw(batch);
         vida2.draw(batch);
         vida3.draw(batch);
+
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
+
         personaje.render(batch);
+
+        //Dibuja enemigos
+        for(Enemigo e:listaEnemigos){
+            e.render(batch);
+        }
+
         batch.end();
         stageNivel.draw();
 
@@ -259,6 +281,8 @@ class PantallaJuego extends Pantalla implements Screen  {
             fondo.mover(dt * 20);
         }
     }
+
+
 
     @Override
     public void resize(int width, int height) {
