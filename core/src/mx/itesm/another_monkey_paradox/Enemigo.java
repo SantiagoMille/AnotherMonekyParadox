@@ -3,6 +3,7 @@ package mx.itesm.another_monkey_paradox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -33,4 +34,6 @@ class Enemigo {
         TextureRegion frame = (TextureRegion) animacion.getKeyFrame(timerAnimacion);
         batch.draw(frame, x, y);
     }
+
+
 }
