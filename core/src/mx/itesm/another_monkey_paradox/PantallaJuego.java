@@ -277,7 +277,15 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo.mover(-dt * 30);
 
+        /*
+        for(Enemigo enemigo: listaEnemigos) {
+            enemigo.mover(dt);
+            }
+        */
+
     }
+
+
 
     @Override
     public void resize(int width, int height) {
