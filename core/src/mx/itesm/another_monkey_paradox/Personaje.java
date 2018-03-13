@@ -14,7 +14,6 @@ class Personaje {
 
     private Animation animacion;
     private float x, y; // Coordenadas
-    private float timerAnimacion;
     private boolean isRight;
 
     public Personaje(Texture texture1, Texture texture2, Texture texture3, Texture texture4){
@@ -24,7 +23,7 @@ class Personaje {
         TextureRegion img4 = new TextureRegion(texture4);
         animacion = new Animation(0.15f, img1, img2, img3, img4);
         x = PantallaJuego.ANCHO/2-texture1.getWidth()/2;
-        y = PantallaJuego.ALTO/2-texture1.getHeight()/2;
+        y = PantallaJuego.ALTO/4;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
         isRight=true;
     }
@@ -61,16 +60,7 @@ class Personaje {
         this.y = y;
     }
 
-    public float getTimerAnimacion() {
-        return timerAnimacion;
-    }
-
-    public void setTimerAnimacion(float timerAnimacion) {
-        this.timerAnimacion = timerAnimacion;
-    }
-
-    public void render(SpriteBatch batch){
-        timerAnimacion += Gdx.graphics.getDeltaTime();
+    public void render(SpriteBatch batch, float timerAnimacion){
         TextureRegion frame = (TextureRegion) animacion.getKeyFrame(timerAnimacion);
         batch.draw(frame, x, y);
     }

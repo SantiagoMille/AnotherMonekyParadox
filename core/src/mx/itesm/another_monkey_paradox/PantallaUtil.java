@@ -37,7 +37,7 @@ class PantallaUtil extends Pantalla {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         fondo.render(batch);
-        personaje.render(batch);
+        //personaje.render(batch);
         batch.end();
     }
 

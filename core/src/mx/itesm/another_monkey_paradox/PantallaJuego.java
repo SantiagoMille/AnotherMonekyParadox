@@ -253,16 +253,11 @@ class PantallaJuego extends Pantalla implements Screen  {
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
 
-        personaje.render(batch);
-
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
             e.setX(e.getX()+(-30*delta));
         }
-
-        batch.end();
-        stageNivel.draw();
 
         TextureRegion currentFrame = (TextureRegion) personaje.getAnimacion().getKeyFrame(stateTime,true);
 
@@ -273,6 +268,11 @@ class PantallaJuego extends Pantalla implements Screen  {
         }else {
 
         }
+        personaje.render(batch, stateTime);
+
+        batch.end();
+        stageNivel.draw();
+
     }
 
     private void actualizarObjetos(float dt) {
