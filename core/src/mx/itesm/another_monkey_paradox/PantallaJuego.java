@@ -83,7 +83,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     @Override
     public void show() {
         crearCamara();
-        moverFondo();
+        crearMapa();
         personaje = new Personaje(new Texture("CAMINATA 4.png"),
                     new Texture("CAMINATA 2.png"),
                     new Texture("CAMINATA 3.png"),
@@ -95,15 +95,16 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        Enemigo enemigo = new Enemigo(new Texture("caveman1c 1.png"),
-                                        new Texture("caveman1c 2.png"),
-                                        new Texture("caveman1c 3.png"),
-                                        new Texture("caveman1c 4.png"));
+        Enemigo enemigo = new Enemigo(new Texture("Enemigos/CM1 3.png"),
+                                        new Texture("Enemigos/CM1 4.png"),
+                                        new Texture("Enemigos/CM1 2.png"),
+                                        new Texture("Enemigos/CM1 1.png"));
+
         listaEnemigos.add(enemigo);
 
     }
 
-    private void moverFondo() {
+    private void crearMapa() {
         stageNivel = new Stage(vista);
 
         //Objeto que dibuja texto
@@ -257,6 +258,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
+            e.setX(e.getX()+(-30*delta));
         }
 
         batch.end();
@@ -268,6 +270,8 @@ class PantallaJuego extends Pantalla implements Screen  {
             currentFrame.flip(true,false);
         } else if(!personaje.isRight()&&!currentFrame.isFlipX()){
             currentFrame.flip(true,false);
+        }else {
+
         }
     }
 
@@ -281,8 +285,6 @@ class PantallaJuego extends Pantalla implements Screen  {
             fondo.mover(dt * 20);
         }
     }
-
-
 
     @Override
     public void resize(int width, int height) {
