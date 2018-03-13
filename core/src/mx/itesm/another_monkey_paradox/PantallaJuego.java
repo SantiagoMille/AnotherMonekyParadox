@@ -86,7 +86,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         crearMapa();
         personaje = new Personaje(new Texture("Astro/CAMINATA 4.png"),
                     new Texture("Astro/CAMINATA 2.png"),
-                    new Texture("Astro/astro.png"),
                     new Texture("Astro/CAMINATA 3.png"),
                     new Texture("Astro/CAMINATA 1.png"));
 
@@ -266,10 +265,8 @@ class PantallaJuego extends Pantalla implements Screen  {
             currentFrame.flip(true,false);
         } else if(!personaje.isRight()&&!currentFrame.isFlipX()){
             currentFrame.flip(true,false);
-        }else {
-
-        }
-        personaje.render(batch, stateTime);
+        }else {}
+        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
 
         batch.end();
         stageNivel.draw();
