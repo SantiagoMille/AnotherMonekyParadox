@@ -95,10 +95,10 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        Enemigo enemigo = new Enemigo(new Texture("Enemigos/CM1 3.png"),
-                                        new Texture("Enemigos/CM1 4.png"),
-                                        new Texture("Enemigos/CM1 2.png"),
-                                        new Texture("Enemigos/CM1 1.png"));
+        Enemigo enemigo = new Enemigo(new Texture("cavernicola01/CM1 3.png"),
+                                        new Texture("cavernicola01/CM1 4.png"),
+                                        new Texture("cavernicola01/CM1 2.png"),
+                                        new Texture("cavernicola01/CM1 1.png"));
 
         listaEnemigos.add(enemigo);
 
