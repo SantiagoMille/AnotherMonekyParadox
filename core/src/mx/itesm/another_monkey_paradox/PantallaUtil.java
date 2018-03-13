@@ -21,10 +21,11 @@ class PantallaUtil extends Pantalla {
     @Override
     public void show() {
         fondo = new Fondo(new Texture("FondoNivel1/NIVEL 1 PAN.png"));
-        personaje = new Personaje(new Texture("CAMINATA 1.png"),
-                new Texture("CAMINATA 2.png"),
-                new Texture("CAMINATA 3.png"),
-                new Texture("CAMINATA 4.png"));
+        personaje = new Personaje(new Texture("Astro/CAMINATA 1.png"),
+                new Texture("Astro/CAMINATA 2.png"),
+                new Texture("Astro/astro.png"),
+                new Texture("Astro/CAMINATA 3.png"),
+                new Texture("Astro/CAMINATA 4.png"));
     }
 
     @Override

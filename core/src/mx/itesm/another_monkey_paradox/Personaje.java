@@ -16,12 +16,13 @@ class Personaje {
     private float x, y; // Coordenadas
     private boolean isRight;
 
-    public Personaje(Texture texture1, Texture texture2, Texture texture3, Texture texture4){
+    public Personaje(Texture texture1, Texture texture2, Texture standing, Texture texture3, Texture texture4){
         TextureRegion img1 = new TextureRegion(texture1);
         TextureRegion img2 = new TextureRegion(texture2);
+        TextureRegion imgStand = new TextureRegion(standing);
         TextureRegion img3 = new TextureRegion(texture3);
         TextureRegion img4 = new TextureRegion(texture4);
-        animacion = new Animation(0.15f, img1, img2, img3, img4);
+        animacion = new Animation(0.15f, img1, img2, imgStand, img3, img4);
         x = PantallaJuego.ANCHO/2-texture1.getWidth()/2;
         y = PantallaJuego.ALTO/4;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
