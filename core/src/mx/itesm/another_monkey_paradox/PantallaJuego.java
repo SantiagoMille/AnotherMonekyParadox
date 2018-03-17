@@ -61,7 +61,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Vidas
     private boolean[] vidas = new boolean[] {true, true, true};
-    Texture imgVida;
+    private Texture imgVida;
     Sprite vida1, vida2, vida3;
 
     //Escena
@@ -91,9 +91,15 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
+    //Textura botones
+    private Texture botonGranada;
+    private Texture botonDisparo;
+    private Texture botonPausa;
+    private Texture padBack;
+    private Texture padKnob;
+
     //Asset Manager
     private final AssetManager assetManager;
-
 
     public PantallaJuego(Main main) {
         this.main = main;
@@ -105,7 +111,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         crearCamara();
         crearMapa();
-        cargarTexturas();
 
         personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
@@ -121,54 +126,51 @@ class PantallaJuego extends Pantalla implements Screen  {
     }
 
     private void crearMapa() {
+
+        cargarTexturas();
+
         stageNivel = new Stage(vista);
 
         //Objeto que dibuja texto
         texto = new Texto();
 
         //Vidas
-        imgVida = new Texture("vida.png");
         vida1 = new Sprite(imgVida);
         vida1.setSize(70,70);
         vida1.setPosition(20, 680 - vida1.getHeight()/2);
 
-        imgVida = new Texture("vida.png");
         vida2 = new Sprite(imgVida);
         vida2.setSize(70,70);
         vida2.setPosition(100, 680 - vida1.getHeight()/2);
 
-        imgVida = new Texture("vida.png");
         vida3 = new Sprite(imgVida);
         vida3.setSize(70,70);
         vida3.setPosition(180, 680 - vida1.getHeight()/2);
 
         //Boton granadas
-        TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(new Texture("granada_icon.png")));
-        TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(new Texture("granada_icon.png")));
+        TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
 
-        granada = new ImageButton(btnGranada, btnGranadaPressed);
+        granada = new ImageButton(btnGranada);
         granada.setSize(135, 135);
         granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80);
 
         //boton disparo
-        TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(new Texture("bullet_icon.png")));
-        TextureRegionDrawable btnArmaPressed = new TextureRegionDrawable(new TextureRegion(new Texture("bullet_icon.png")));
+        TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(botonDisparo));
 
-        arma = new ImageButton(btnArma, btnArmaPressed);
+        arma = new ImageButton(btnArma);
         arma.setSize(135, 135);
         arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80);
 
         //boton pausa
-        TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(new Texture("pause-button.png")));
-        TextureRegionDrawable btnPausaPressed = new TextureRegionDrawable(new TextureRegion(new Texture("pause-button.png")));
+        TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(botonPausa));
 
-        pausa = new ImageButton(btnPausa, btnPausaPressed);
+        pausa = new ImageButton(btnPausa);
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
 
         Skin skin = new Skin(); // Texturas para el pad
-        skin.add("fondo", new Texture("Pad/padBack.png"));
-        skin.add("boton", new Texture("Pad/padKnob.png"));
+        skin.add("fondo", padBack);
+        skin.add("boton", padKnob);
 
         Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
         estilo.background = skin.getDrawable("fondo");
@@ -240,14 +242,15 @@ class PantallaJuego extends Pantalla implements Screen  {
     }
 
     private void cargarTexturas(){
+
+        //Textura del nivel 1
+        assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
+
         //Textura de Astro
         assetManager.load("Astro/CAMINATA 4.png", Texture.class);
         assetManager.load("Astro/CAMINATA 2.png", Texture.class);
         assetManager.load("Astro/CAMINATA 3.png", Texture.class);
         assetManager.load("Astro/CAMINATA 1.png", Texture.class);
-
-        //Textura del nivel 1
-        assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
 
         //Textura de cavernicola01
         assetManager.load("cavernicola01/CM1 3.png", Texture.class);
@@ -255,21 +258,39 @@ class PantallaJuego extends Pantalla implements Screen  {
         assetManager.load("cavernicola01/CM1 2.png", Texture.class);
         assetManager.load("cavernicola01/CM1 1.png", Texture.class);
 
+        //Textura vida
+        assetManager.load("vida.png", Texture.class);
+
+        //Textura botones
+        assetManager.load("granada_icon.png", Texture.class);
+        assetManager.load("bullet_icon.png", Texture.class);
+        assetManager.load("pause-button.png", Texture.class);
+        assetManager.load("Pad/padBack.png", Texture.class);
+        assetManager.load("Pad/padKnob.png", Texture.class);
+
         // Se bloquea hasta cargar los recursos
         assetManager.finishLoading();
 
         // Cuando termina de cargar las texturas, las leemos
+        fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
+
         astroCaminata0 = assetManager.get("Astro/CAMINATA 4.png");
         astroCaminata1 = assetManager.get("Astro/CAMINATA 2.png");
         astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
         astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
 
-        fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
-
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
         canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
         canervicola01Frame3 = assetManager.get("cavernicola01/CM1 1.png");
+
+        imgVida = assetManager.get("vida.png");
+
+        botonGranada = assetManager.get("granada_icon.png");
+        botonDisparo = assetManager.get("bullet_icon.png");
+        botonPausa = assetManager.get("pause-button.png");
+        padBack = assetManager.get("Pad/padBack.png");
+        padKnob = assetManager.get("Pad/padKnob.png");
     }
 
     private void crearCamara() {
