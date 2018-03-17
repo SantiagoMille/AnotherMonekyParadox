@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -41,7 +42,7 @@ class PantallaMenu implements Screen {
     private SpriteBatch batch;
 
     //For Background
-    Texture imgBackground, imgLogo;
+    Texture imgBackground, imgLogo, backgroundStory, backgroundSurvival;
     private Sprite spriteBackground, spriteLogo;
 
     //Movimiento del título
@@ -57,9 +58,22 @@ class PantallaMenu implements Screen {
     //Para ingresar multiples inputProcessors
     InputMultiplexer inputMultiplexer = new InputMultiplexer();
 
+    //Textura de botones
+    private Texture botonPlay;
+    private Texture botonPlayPressed;
+    private Texture botonLeaderboard;
+    private Texture botonLeaderboardPressed;
+    private Texture botonAbout;
+    private Texture botonAboutPressed;
+    private Texture botonTutorial;
+    private Texture botonTutorialPressed;
+
+    //Asset Manager
+    private final AssetManager assetManager;
 
     public PantallaMenu(Main main) {
         this.main = main;
+        assetManager = main.getAssetManager();
     }
 
     @Override
@@ -74,41 +88,42 @@ class PantallaMenu implements Screen {
     }
 
     private void crearMenu() {
+
+        cargarTexturas();
+
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("StoryModeBack.png");
-        spriteBackground = new Sprite(imgBackground);
+        spriteBackground = new Sprite(backgroundStory);
         spriteBackground.setPosition(0, 0);
 
-        imgLogo = new Texture("LOGO-2.png");
         spriteLogo = new Sprite(imgLogo);
         spriteLogo.setPosition(ANCHO/2-spriteLogo.getWidth()/2, ALTO-spriteLogo.getHeight()-40);
 
 
         //Boton Play
-        TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(new Texture("PlayButton.png")));
-        TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(new Texture("PlayButton_Pressed.png")));
+        TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(botonPlay));
+        TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(botonPlayPressed));
 
         ImageButton btnPlay = new ImageButton(trdPlay, trdPlayPressed);
         btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2);
 
         //Boton Leaderboard
-        TextureRegionDrawable trdLead = new TextureRegionDrawable(new TextureRegion(new Texture("trophy.png")));
-        TextureRegionDrawable trdLeadPush = new TextureRegionDrawable(new TextureRegion(new Texture("trophy_Pressed.png")));
+        TextureRegionDrawable trdLead = new TextureRegionDrawable(new TextureRegion(botonLeaderboard));
+        TextureRegionDrawable trdLeadPush = new TextureRegionDrawable(new TextureRegion(botonLeaderboardPressed));
 
         ImageButton btnLead = new ImageButton(trdLead, trdLeadPush);
         btnLead.setPosition(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2);
 
         //Boton about
-        TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(new Texture("about-button.png")));
-        TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(new Texture("About-button_Pressed.png")));
+        TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(botonAbout));
+        TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(botonAboutPressed));
 
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
         btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
 
         //Boton Tutorial
-        TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(new Texture("About2.png")));
-        TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(new Texture("About2.png")));
+        TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(botonTutorial));
+        TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(botonTutorialPressed));
 
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
         btnTut.setPosition(ANCHO*13/14, ALTO*13/14-btnTut.getHeight()/2);
@@ -169,8 +184,7 @@ class PantallaMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 isSurvivalMode=true;
-                imgBackground = new Texture("SurvivalModeBack.png");
-                spriteBackground = new Sprite(imgBackground);
+                spriteBackground = new Sprite(backgroundSurvival);
                 spriteBackground.setPosition(0, 0);
                 btnHorda.setVisible(false);
                 btnRegresarHorda.setVisible(true);
@@ -185,8 +199,7 @@ class PantallaMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 isSurvivalMode=false;
-                imgBackground = new Texture("StoryModeBack.png");
-                spriteBackground = new Sprite(imgBackground);
+                spriteBackground = new Sprite(backgroundStory);
                 spriteBackground.setPosition(0, 0);
                 btnRegresarHorda.setVisible(false);
                 btnHorda.setVisible(true);
@@ -221,6 +234,36 @@ class PantallaMenu implements Screen {
 
         inputMultiplexer.addProcessor(stageMenu);
         //Gdx.input.setInputProcessor(stageMenu);
+    }
+
+    private void cargarTexturas(){
+        //Cargar las texturas
+        assetManager.load("LOGO-2.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
+        assetManager.load("PlayButton_Pressed.png", Texture.class);
+        assetManager.load("trophy.png", Texture.class);
+        assetManager.load("trophy_Pressed.png", Texture.class);
+        assetManager.load("about-button.png", Texture.class);
+        assetManager.load("About-button_Pressed.png", Texture.class);
+        assetManager.load("About2.png", Texture.class);
+        assetManager.load("StoryModeBack.png", Texture.class);
+        assetManager.load("SurvivalModeBack.png", Texture.class);
+
+        // Se bloquea hasta cargar los recursos
+        assetManager.finishLoading();
+
+        // Cuando termina de cargar las texturas, las leemos
+        imgLogo = assetManager.get("LOGO-2.png");
+        botonPlay = assetManager.get("PlayButton.png");
+        botonPlayPressed = assetManager.get("PlayButton_Pressed.png");
+        botonLeaderboard = assetManager.get("trophy.png");
+        botonLeaderboardPressed = assetManager.get("trophy_Pressed.png");
+        botonAbout = assetManager.get("about-button.png");
+        botonAboutPressed = assetManager.get("About-button_Pressed.png");
+        botonTutorial = assetManager.get("About2.png");
+        botonTutorialPressed = assetManager.get("About2.png");
+        backgroundStory = assetManager.get("StoryModeBack.png");
+        backgroundSurvival = assetManager.get("SurvivalModeBack.png");
     }
 
     private void crearCamara() {
@@ -284,6 +327,29 @@ class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         PantallaSplash.musicMenu.stop();
+        imgLogo.dispose();
+        botonPlay.dispose();
+        botonPlayPressed.dispose();
+        botonLeaderboard.dispose();
+        botonLeaderboardPressed.dispose();
+        botonAbout.dispose();
+        botonAboutPressed.dispose();
+        botonTutorial.dispose();
+        botonTutorialPressed.dispose();
+        backgroundStory.dispose();
+        backgroundSurvival.dispose();
+
+        //Ahora el assetManager también libera los recursos
+        assetManager.unload("LOGO-2.png");
+        assetManager.unload("PlayButton.png");
+        assetManager.unload("PlayButton_Pressed.png");
+        assetManager.unload("trophy.png");
+        assetManager.unload("trophy_Pressed.png");
+        assetManager.unload("about-button.png");
+        assetManager.unload("About-button_Pressed.png");
+        assetManager.unload("About2.png");
+        assetManager.unload("StoryModeBack.png");
+        assetManager.unload("SurvivalModeBack.png");
     }
 
     private class ProcesadorEntrada implements InputProcessor {
@@ -320,8 +386,7 @@ class PantallaMenu implements Screen {
                 }
                 if(distanceSwiped-screenX>200){
                     isSurvivalMode=true;
-                    imgBackground = new Texture("SurvivalModeBack.png");
-                    spriteBackground = new Sprite(imgBackground);
+                    spriteBackground = new Sprite(backgroundSurvival);
                     spriteBackground.setPosition(0, 0);
                     btnHorda.setVisible(false);
                     btnRegresarHorda.setVisible(true);
@@ -333,8 +398,7 @@ class PantallaMenu implements Screen {
                 }
                 if(distanceSwiped+screenX>200&&distanceSwiped<screenX){
                     isSurvivalMode=false;
-                    imgBackground = new Texture("StoryModeBack.png");
-                    spriteBackground = new Sprite(imgBackground);
+                    spriteBackground = new Sprite(backgroundStory);
                     spriteBackground.setPosition(0, 0);
                     btnRegresarHorda.setVisible(false);
                     btnHorda.setVisible(true);

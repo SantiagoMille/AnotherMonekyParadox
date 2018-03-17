@@ -376,7 +376,28 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void dispose() {
-        //El assetManager libera los recursos
+        //Libera la memoria utlizada por los recursos
+        fondoNivel01.dispose();
+
+        astroCaminata0.dispose();
+        astroCaminata1.dispose();
+        astroCaminata2.dispose();
+        astroCaminata3.dispose();
+
+        canervicola01Frame0.dispose();
+        canervicola01Frame1.dispose();
+        canervicola01Frame2.dispose();
+        canervicola01Frame3.dispose();
+
+        imgVida.dispose();
+
+        botonGranada.dispose();
+        botonDisparo.dispose();
+        botonPausa.dispose();
+        padBack.dispose();
+        padKnob.dispose();
+
+        //El assetManager también libera los recursos
         assetManager.unload("FondoNivel1/NIVEL 1 PAN.png");
         assetManager.unload("Astro/CAMINATA 4.png");
         assetManager.unload("Astro/CAMINATA 2.png");
