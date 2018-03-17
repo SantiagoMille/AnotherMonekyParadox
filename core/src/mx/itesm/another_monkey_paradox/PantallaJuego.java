@@ -3,6 +3,7 @@ package mx.itesm.another_monkey_paradox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -71,35 +72,50 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Viewport vista;
     private SpriteBatch batch;
 
-    //
+    // Puntaje y texto
     private int puntosJugador = 0;
     private Texto texto;
+
+    //Textura de Astro
+    private Texture astroCaminata0;
+    private Texture astroCaminata1;
+    private Texture astroCaminata2;
+    private Texture astroCaminata3;
+
+    //Textura de Cavernicola 01
+    private Texture canervicola01Frame0;
+    private Texture canervicola01Frame1;
+    private Texture canervicola01Frame2;
+    private Texture canervicola01Frame3;
+
+    //Textura Fondos de los niveles
+    private Texture fondoNivel01;
+
+    //Asset Manager
+    private final AssetManager assetManager;
 
 
     public PantallaJuego(Main main) {
         this.main = main;
+        assetManager = main.getAssetManager();
     }
 
     @Override
     public void show() {
+
         crearCamara();
         crearMapa();
-        personaje = new Personaje(new Texture("Astro/CAMINATA 4.png"),
-                    new Texture("Astro/CAMINATA 2.png"),
-                    new Texture("Astro/CAMINATA 3.png"),
-                    new Texture("Astro/CAMINATA 1.png"));
+        cargarTexturas();
 
-        fondo = new Fondo(new Texture("FondoNivel1/NIVEL 1 PAN.png"));
+        personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
+
+        fondo = new Fondo(fondoNivel01);
         batch = new SpriteBatch();
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        Enemigo enemigo = new Enemigo(new Texture("cavernicola01/CM1 3.png"),
-                                        new Texture("cavernicola01/CM1 4.png"),
-                                        new Texture("cavernicola01/CM1 2.png"),
-                                        new Texture("cavernicola01/CM1 1.png"));
-
+        Enemigo enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
         listaEnemigos.add(enemigo);
 
     }
@@ -223,6 +239,39 @@ class PantallaJuego extends Pantalla implements Screen  {
         Gdx.input.setInputProcessor(stageNivel);
     }
 
+    private void cargarTexturas(){
+        //Textura de Astro
+        assetManager.load("Astro/CAMINATA 4.png", Texture.class);
+        assetManager.load("Astro/CAMINATA 2.png", Texture.class);
+        assetManager.load("Astro/CAMINATA 3.png", Texture.class);
+        assetManager.load("Astro/CAMINATA 1.png", Texture.class);
+
+        //Textura del nivel 1
+        assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
+
+        //Textura de cavernicola01
+        assetManager.load("cavernicola01/CM1 3.png", Texture.class);
+        assetManager.load("cavernicola01/CM1 4.png", Texture.class);
+        assetManager.load("cavernicola01/CM1 2.png", Texture.class);
+        assetManager.load("cavernicola01/CM1 1.png", Texture.class);
+
+        // Se bloquea hasta cargar los recursos
+        assetManager.finishLoading();
+
+        // Cuando termina de cargar las texturas, las leemos
+        astroCaminata0 = assetManager.get("Astro/CAMINATA 4.png");
+        astroCaminata1 = assetManager.get("Astro/CAMINATA 2.png");
+        astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
+        astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
+
+        fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
+
+        canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
+        canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
+        canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
+        canervicola01Frame3 = assetManager.get("cavernicola01/CM1 1.png");
+    }
+
     private void crearCamara() {
         camara = new OrthographicCamera(ANCHO,ALTO);
         camara.position.set(ANCHO/2, ALTO/2,0);
@@ -306,7 +355,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void dispose() {
-
     }
 
 }
