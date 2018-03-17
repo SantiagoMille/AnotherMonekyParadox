@@ -376,6 +376,22 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void dispose() {
+        //El assetManager libera los recursos
+        assetManager.unload("FondoNivel1/NIVEL 1 PAN.png");
+        assetManager.unload("Astro/CAMINATA 4.png");
+        assetManager.unload("Astro/CAMINATA 2.png");
+        assetManager.unload("Astro/CAMINATA 3.png");
+        assetManager.unload("Astro/CAMINATA 1.png");
+        assetManager.unload("cavernicola01/CM1 3.png");
+        assetManager.unload("cavernicola01/CM1 4.png");
+        assetManager.unload("cavernicola01/CM1 2.png");
+        assetManager.unload("cavernicola01/CM1 1.png");
+        assetManager.unload("vida.png");
+        assetManager.unload("granada_icon.png");
+        assetManager.unload("bullet_icon.png");
+        assetManager.unload("pause-button.png");
+        assetManager.unload("Pad/padBack.png");
+        assetManager.unload("Pad/padKnob.png");
     }
 
 }
