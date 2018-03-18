@@ -148,7 +148,7 @@ class PantallaMenu implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaJuego(main));
+                main.setScreen(new PantallaCargandoStoryMode(main));
             }
         });
 

@@ -243,6 +243,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private void cargarTexturas(){
 
+        /*
+        ESTOS ASSETS SE CARGARAN EN LA PantallaCargandoStoryMode
         //Textura del nivel 1
         assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
 
@@ -270,7 +272,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         // Se bloquea hasta cargar los recursos
         assetManager.finishLoading();
+        */
 
+        //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
         fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
 
