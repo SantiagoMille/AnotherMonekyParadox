@@ -87,10 +87,11 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("Pad/padBack.png", Texture.class);
         assetManager.load("Pad/padKnob.png", Texture.class);
 
+        //Textura armas
+        assetManager.load("banana.png", Texture.class);
+
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
-
-
     }
 
     @Override

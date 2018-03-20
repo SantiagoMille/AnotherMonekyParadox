@@ -101,6 +101,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture padBack;
     private Texture padKnob;
 
+    //Textura armas
+    private Texture bananaShot;
+
     //Asset Manager
     private final AssetManager assetManager;
 
@@ -222,7 +225,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                Bala nueva = new Bala(new Texture("banana.png"));
+                Bala nueva = new Bala(bananaShot);
                 nueva.set(personaje.getX()+105,personaje.getY()+55);
                 listaBalas.add(nueva);
             }
@@ -300,6 +303,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         botonPausa = assetManager.get("pause-button.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
+
+        bananaShot = assetManager.get("banana.png");
     }
 
     private void crearCamara() {
