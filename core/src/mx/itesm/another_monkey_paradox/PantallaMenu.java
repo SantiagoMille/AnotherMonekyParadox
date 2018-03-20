@@ -327,7 +327,7 @@ class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         PantallaSplash.musicMenu.stop();
-        imgLogo.dispose();
+        /*imgLogo.dispose();
         botonPlay.dispose();
         botonPlayPressed.dispose();
         botonLeaderboard.dispose();
@@ -349,7 +349,7 @@ class PantallaMenu implements Screen {
         assetManager.unload("About-button_Pressed.png");
         assetManager.unload("About2.png");
         assetManager.unload("StoryModeBack.png");
-        assetManager.unload("SurvivalModeBack.png");
+        assetManager.unload("SurvivalModeBack.png");*/
     }
 
     private class ProcesadorEntrada implements InputProcessor {
