@@ -57,6 +57,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     private boolean isMovingRight=false;
     private boolean isMovingLeft = false;
 
+    private boolean isFliped;
+
     private Personaje personaje;
 
     //Enemigos
@@ -222,9 +224,15 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                Bala nueva = new Bala(new Texture("banana.png"));
-                nueva.set(personaje.getX()+105,personaje.getY()+55);
-                listaBalas.add(nueva);
+                if(!isFliped) {
+                    Bala nueva = new Bala(new Texture("banana.png"),false);
+                    nueva.set(personaje.getX() + 105, personaje.getY() + 68);
+                    listaBalas.add(nueva);
+                } else {
+                    Bala nueva = new Bala(new Texture("banana.png"),true);
+                    nueva.set(personaje.getX(), personaje.getY() + 68);
+                    listaBalas.add(nueva);
+                }
             }
         });
 
@@ -342,8 +350,10 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         if(personaje.isRight()&&currentFrame.isFlipX()){
             currentFrame.flip(true,false);
+            isFliped = false;
         } else if(!personaje.isRight()&&!currentFrame.isFlipX()){
             currentFrame.flip(true,false);
+            isFliped = true;
         }else {}
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
 
@@ -370,10 +380,18 @@ class PantallaJuego extends Pantalla implements Screen  {
                 fondo.mover(dt * 20);
             }
         }
-
+        int i=0;
         for(Bala bala:listaBalas){
-            bala.mover(-dt*2);
+            if(bala.getX()>camara.position.x+ANCHO/2||bala.getX()<camara.position.x-ANCHO/2){
+                listaBalas.removeIndex(i);
+            }
+            if(bala.fliped){
+                bala.mover(dt*2);
+            } else {
+                bala.mover(-dt * 2);
+            }
             bala.getSprite().rotate(10);
+            i++;
         }
 
     }
