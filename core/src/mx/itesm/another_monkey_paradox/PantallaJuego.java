@@ -103,6 +103,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture padBack;
     private Texture padKnob;
 
+    //Textura disparo
+    private Texture bananaDisparo;
+
     //Asset Manager
     private final AssetManager assetManager;
 
@@ -225,11 +228,11 @@ class PantallaJuego extends Pantalla implements Screen  {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(!isFliped) {
-                    Bala nueva = new Bala(new Texture("banana.png"),false);
+                    Bala nueva = new Bala(bananaDisparo,false);
                     nueva.set(personaje.getX() + 105, personaje.getY() + 68);
                     listaBalas.add(nueva);
                 } else {
-                    Bala nueva = new Bala(new Texture("banana.png"),true);
+                    Bala nueva = new Bala(bananaDisparo,true);
                     nueva.set(personaje.getX(), personaje.getY() + 68);
                     listaBalas.add(nueva);
                 }
@@ -308,6 +311,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         botonPausa = assetManager.get("pause-button.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
+
+        bananaDisparo = assetManager.get("banana.png");
     }
 
     private void crearCamara() {
