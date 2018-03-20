@@ -20,7 +20,7 @@ public class PantallaTutorialStoryMode extends PantallaTutorial {
                 "Astro esta en busca de cobrar venganza contra \n" +
                 "el Dr. Timetravelov.\n" +
                 "\n" +
-                "Utiliza las flechas para moverte hacia adelante \n" +
+                "Utiliza el joystick para moverte hacia adelante \n" +
                 "y hacia atras.\n" +
                 "Utiliza los botones para lanzar bananas.";
     }
