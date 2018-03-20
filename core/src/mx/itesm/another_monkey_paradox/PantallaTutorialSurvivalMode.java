@@ -19,7 +19,7 @@ public class PantallaTutorialSurvivalMode extends PantallaTutorial {
                 "Sobrevive hasta que puedas, pelea contra \n" +
                 "los minions del Dr. Timetravelov. " +
                 "\n" +
-                "Utiliza las flechas para moverte hacia adelante \n" +
+                "Utiliza el joystick para moverte hacia adelante \n" +
                 "y hacia atras.\n" +
                 "Utiliza los botones para lanzar bananas.";
     }
