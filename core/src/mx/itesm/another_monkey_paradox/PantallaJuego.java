@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -352,9 +353,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         if(isMovingRight&&!isMovingLeft){
             personaje.setX(personaje.getX()+(dt*20));
             fondo.mover(-dt * 20);
+
         }else if(isMovingLeft&&!isMovingRight){
-            personaje.setX(personaje.getX()+(dt*-20));
-            fondo.mover(dt * 20);
+            if(personaje.getX()>(camara.position.x - ANCHO/2)){
+                personaje.setX(personaje.getX()+(dt*-20));
+            }
+            if(fondo.getImagenA().getX()>0) {
+                fondo.mover(dt * 20);
+            }
         }
     }
 

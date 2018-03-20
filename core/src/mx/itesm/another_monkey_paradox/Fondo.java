@@ -13,6 +13,15 @@ class Fondo {
     private Sprite imagenA;
     //private Sprite imagenB;
 
+
+    public Sprite getImagenA() {
+        return imagenA;
+    }
+
+    public void setImagenA(Sprite imagenA) {
+        this.imagenA = imagenA;
+    }
+
     public Fondo(Texture texture){
         imagenA = new Sprite(texture);
         imagenA.setPosition(0,0);
