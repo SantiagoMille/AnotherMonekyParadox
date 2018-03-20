@@ -103,6 +103,6 @@ class PantallaSplash implements Screen {
 
     @Override
     public void dispose() {
-
+        imgMonkey.dispose();
     }
 }
