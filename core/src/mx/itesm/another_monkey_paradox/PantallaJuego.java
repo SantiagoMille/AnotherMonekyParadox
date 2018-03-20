@@ -209,8 +209,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                dispose();
-                main.setScreen(new PantallaJuego(main));
+
             }
         });
 
@@ -219,8 +218,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                dispose();
-                main.setScreen(new PantallaJuego(main));
+
             }
         });
 
@@ -229,7 +227,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaJuego(main));
+                main.setScreen(new PantallaMenu(main));
                 dispose();
             }
         });
