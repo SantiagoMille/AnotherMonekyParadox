@@ -43,6 +43,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private Fondo fondo;
 
+    private Array<Bala> listaBalas;
+
     //Controles del jugador
     private ImageButton left;
     private ImageButton right;
@@ -123,6 +125,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         listaEnemigos = new Array<Enemigo>();
         Enemigo enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
         listaEnemigos.add(enemigo);
+
+        //Lista Balas
+        listaBalas = new Array<Bala>();
 
     }
 
@@ -217,6 +222,9 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
+                Bala nueva = new Bala(new Texture("banana.png"));
+                nueva.set(personaje.getX()+105,personaje.getY()+55);
+                listaBalas.add(nueva);
             }
         });
 
@@ -339,6 +347,10 @@ class PantallaJuego extends Pantalla implements Screen  {
         }else {}
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
 
+        for(Bala bala: listaBalas){
+            bala.render(batch);
+        }
+
         batch.end();
         stageNivel.draw();
 
@@ -358,6 +370,12 @@ class PantallaJuego extends Pantalla implements Screen  {
                 fondo.mover(dt * 20);
             }
         }
+
+        for(Bala bala:listaBalas){
+            bala.mover(-dt*2);
+            bala.getSprite().rotate(10);
+        }
+
     }
 
     @Override
