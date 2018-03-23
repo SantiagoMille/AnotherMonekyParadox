@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -106,6 +107,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Textura disparo
     private Texture bananaDisparo;
 
+    private Enemigo enemigo;
+
     //Asset Manager
     private final AssetManager assetManager;
 
@@ -128,7 +131,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        Enemigo enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
+        enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
         listaEnemigos.add(enemigo);
 
         //Lista Balas
@@ -366,6 +369,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             bala.render(batch);
         }
 
+
         batch.end();
         stageNivel.draw();
 
@@ -399,7 +403,36 @@ class PantallaJuego extends Pantalla implements Screen  {
             i++;
         }
 
+        verificarVidaEnemigos();
+        verificarColisionBalaEnemigo();
+
     }
+
+    private void verificarVidaEnemigos() {
+        for(int i = listaEnemigos.size-1;i>=0;i--){
+            if(listaEnemigos.get(i).getEstado()== Enemigo.Estado.MUERTO){
+                listaEnemigos.removeIndex(i);
+            }
+        }
+    }
+
+    private void verificarColisionBalaEnemigo() {
+        for(int j =listaBalas.size-1; j>=0;j--){
+            //prueba con cada enemigo
+            Bala bala = listaBalas.get(j);
+            for(int i =listaEnemigos.size-1;i>=0;i--){
+                enemigo = listaEnemigos.get(i);
+                Rectangle rectEnemigo = new Rectangle(enemigo.getX(), enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    listaEnemigos.removeIndex(i);
+                    enemigo.setEstado(Enemigo.Estado.MURIENDO);
+                    listaBalas.removeIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+
 
     @Override
     public void resize(int width, int height) {
