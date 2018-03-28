@@ -70,11 +70,13 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Enemigos
     private Array<Enemigo> listaEnemigos;
+    private int vidaEnemigo = 100;
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     private Texture imgVida;
     Sprite vida;
+    int contador = 0;
 
     //Escena
     private Stage stageNivel;
@@ -336,6 +338,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         if(estado != EstadoJuego.PAUSADO) {
             actualizarObjetos(delta);
+
         }
 
         //Usar v=d/t o en este caso d=v*t
@@ -352,6 +355,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
 
+        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
@@ -375,7 +379,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             currentFrame.flip(true,false);
             isFliped = true;
         }else {}
-        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
+
 
         for(Bala bala: listaBalas){
             bala.render(batch);
@@ -425,34 +429,56 @@ class PantallaJuego extends Pantalla implements Screen  {
             i++;
         }
 
-        verificarVidaEnemigos();
         verificarColisionBalaEnemigo();
+        verificarColisionPersonajeEnemigo();
 
     }
 
     private void verificarVidaEnemigos() {
         for(int i = listaEnemigos.size-1;i>=0;i--){
-            if(listaEnemigos.get(i).getEstado()== Enemigo.Estado.MUERTO){
+            if(listaEnemigos.get(i).getVida() == 0){
                 listaEnemigos.removeIndex(i);
+                puntosJugador += 10;
             }
         }
     }
 
     private void verificarColisionBalaEnemigo() {
         for(int j =listaBalas.size-1; j>=0;j--){
-            //prueba con cada enemigo
             Bala bala = listaBalas.get(j);
             for(int i =listaEnemigos.size-1;i>=0;i--){
                 enemigo = listaEnemigos.get(i);
-                Rectangle rectEnemigo = new Rectangle(enemigo.getX(), enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaEnemigos.removeIndex(i);
-                    enemigo.setEstado(Enemigo.Estado.MURIENDO);
                     listaBalas.removeIndex(i);
-                    break;
+                    vidaEnemigo = vidaEnemigo - 25;
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
+                }
+                verificarVidaEnemigos();
+            }
+        }
+    }
+
+    private void verificarColisionPersonajeEnemigo() {
+
+
+        for (int i = listaEnemigos.size - 1; i >= 0; i--) {
+            Rectangle rectEnemigo = new Rectangle(enemigo.getX() + 30, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+            Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+                if (rectEnemigo.overlaps(rectPersonaje)) {
+                    for (int j = vidas.size() - 1; j >= 0; j--) {
+                        if (contador >= 50){
+                            if (vidas.get(j).isActiva()) {
+                            vidas.get(j).setActiva(false);
+                            System.out.println(vidas.get(j));
+                            contador = 0;
+                        }
+                    }
                 }
             }
         }
+        contador++;
     }
 
 
