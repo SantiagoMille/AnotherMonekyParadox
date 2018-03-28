@@ -28,6 +28,9 @@ public class PantallaScoresStory extends PantallaScores {
     void crearMenu() {
         super.stageMenu = new Stage(vista);
 
+        title = new Texto();
+        title.setText("HIGHSCORES STORY MODE");
+
         imgBackground = new Texture("space.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
@@ -55,9 +58,9 @@ public class PantallaScoresStory extends PantallaScores {
         /**
          * Se hace el titulo de scores
          */
-        Label scoresTitle = new Label("HIGHSCORES STORY MODE", skin);
-        scoresTitle.setFontScale(4f,4f);
-        scoresTitle.setAlignment(Align.center);
+        //Label scoresTitle = new Label("HIGHSCORES STORY MODE", skin);
+        //scoresTitle.setFontScale(4f,4f);
+        //scoresTitle.setAlignment(Align.center);
 
         /**
          * Se crean las columnas con puntuajes
@@ -69,7 +72,7 @@ public class PantallaScoresStory extends PantallaScores {
         String[] allNames = names.split(",");
         int i=0;
 
-        table.add(scoresTitle).colspan(2).fillX().height(150);
+        //table.add(scoresTitle).colspan(2).fillX().height(150);
         table.row();
         for(String name:allNames){
             columnName=new Label(name+": ", skin);

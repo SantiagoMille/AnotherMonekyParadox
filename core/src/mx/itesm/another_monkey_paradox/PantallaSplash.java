@@ -38,7 +38,7 @@ class PantallaSplash implements Screen {
     private AssetManager assetManager;
 
 
-    public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba1.mp3"));
+    public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
     public PantallaSplash(Main main) {
 

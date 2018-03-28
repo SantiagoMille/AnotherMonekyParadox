@@ -42,6 +42,8 @@ public abstract class PantallaScores implements Screen{
     //Escena
     public Stage stageMenu;
 
+    public Texto title;
+
     public SpriteBatch batch;
 
     //For Background
@@ -76,6 +78,7 @@ public abstract class PantallaScores implements Screen{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        title.mostratMensaje(batch,"",ANCHO/2+20,ALTO-50);
         batch.end();
         stageMenu.draw();
     }

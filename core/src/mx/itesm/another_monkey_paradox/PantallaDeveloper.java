@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -45,15 +46,17 @@ class PantallaDeveloper implements Screen {
     private Stage stageMenu;
     private Table container;
 
-
+    private float sensitivity = 0;
+    private float difficulty = 0;
 
     private Texto titulo;
 
+    private Preferences prefs;
 
     private SpriteBatch batch;
 
     //background music
-    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
     public PantallaDeveloper(Main main) {
         this.main = main;
@@ -71,6 +74,8 @@ class PantallaDeveloper implements Screen {
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
+        prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         container = new Table();
@@ -86,13 +91,15 @@ class PantallaDeveloper implements Screen {
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
         ImageButton btnReturn = new ImageButton(trdReturn);
-        btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
+        btnReturn.setPosition(ANCHO-80, ALTO-30-btnReturn.getHeight());
 
         //Click en boton Return
         btnReturn.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                prefs.putFloat("Difficulty",difficulty);
+                prefs.putFloat("Sensitivity",sensitivity);
                 main.setScreen(new PantallaMenu(main));
             }
         });
@@ -100,21 +107,32 @@ class PantallaDeveloper implements Screen {
         InputListener stopTouchDown = new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 event.stop();
+                difficulty = x;
+                return false;
+            }
+        };
+
+        InputListener stopTouchDown2 = new InputListener() {
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                event.stop();
+                sensitivity = x;
                 return false;
             }
         };
 
         table.pad(10).defaults().expandX().space(4);
-        //Label title = new Label("                       Configuraciones\n\n",skin);
         titulo = new Texto();
 
-        //title.setFontScale(3.5f);
-        //title.setAlignment(Align.right);
-        //table.add(title).colspan(2).fillX().height(150);
-        table.row();
-        table.add(new Label("                                                                                                       ", skin)).expandX().fillX();
 
-        TextButton buttonVolumen = new TextButton("Volumen", skin);
+        table.row();
+        table.row();
+        table.row();
+        table.row();
+        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
+        table.row();
+        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
+
+        TextButton buttonVolumen = new TextButton("Difficulty", skin);
         table.add(buttonVolumen);
         buttonVolumen.addListener(new ClickListener() {
             public void clicked (InputEvent event, float x, float y) {
@@ -122,9 +140,9 @@ class PantallaDeveloper implements Screen {
             }
         });
 
-        Slider sliderVolumen = new Slider(0, 100, 1, false, skin);
-        sliderVolumen.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-        table.add(sliderVolumen);
+        Slider sliderDif = new Slider(0, 100, 1, false, skin);
+        sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+        table.add(sliderDif);
 
         table.add(new Label("                                                                                                               ", skin));
 
@@ -144,7 +162,7 @@ class PantallaDeveloper implements Screen {
         });
 
         Slider sliderSens = new Slider(0, 100, 1, false, skin);
-        sliderSens.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+        sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.
         table.add(sliderSens);
 
         table.add(new Label("                                                                                                               ", skin));
@@ -154,14 +172,15 @@ class PantallaDeveloper implements Screen {
         creditsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 scroll.setFlickScroll(creditsButton.isChecked());
+                prefs.putFloat("Difficulty",difficulty);
+                prefs.putFloat("Sensitivity",sensitivity);
                 main.setScreen(new PantallaCredits(main));
             }
         });
 
         container.add(scroll).expand().fill().colspan(4);
         container.row().space(10).padBottom(10);
-        container.add(new Label("                   .                   .                   .                   .                   .                   .",skin));
-        container.add(new Label("                   .                   .                   .                   .                   .                   .                   .",skin));
+        container.add(new Label("  ",skin));
         table.row();
         table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
         table.row();
@@ -172,6 +191,10 @@ class PantallaDeveloper implements Screen {
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);
+
+        float ddiiff = prefs.getFloat("Difficulty");
+        sliderDif.setX(ddiiff);
+        sliderSens.setX(prefs.getFloat("Sensitivity"));
 
     }
 
@@ -185,12 +208,12 @@ class PantallaDeveloper implements Screen {
     @Override
     public void render(float delta) {
         //Usar v=d/t o en este caso d=v*t
-        Gdx.gl.glClearColor(127/255f,135/255f,160/255f,1);
+        Gdx.gl.glClearColor(80/255f,90/255f,95/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stageMenu.act(Gdx.graphics.getDeltaTime());
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        titulo.mostratMensaje(batch,"Configuraciones",ANCHO/2-50,ALTO-50);
+        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/2,ALTO-50);
         batch.end();
         stageMenu.draw();
 

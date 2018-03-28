@@ -32,6 +32,8 @@ import com.badlogic.gdx.utils.*;
 
 import java.nio.IntBuffer;
 
+import javax.xml.soap.Text;
+
 /**
  * Created by adrian on 2/9/2018.
  */
@@ -56,7 +58,9 @@ class PantallaCredits implements Screen {
     private Sprite spriteBackground;
 
     //background music
-    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
+
+    private Texto title, Adrian, Santi, Fer, Diego, Brian;
 
     //Fotos
     private Image foto = new Image();
@@ -77,19 +81,21 @@ class PantallaCredits implements Screen {
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("nebula.png");
+        title = new Texto();
+        Adrian = new Texto();
+        Santi = new Texto();
+        Fer = new Texto();
+        Brian = new Texto();
+        Diego = new Texto();
+
+        imgBackground = new Texture("space.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
-        spriteBackground.setAlpha(0.4f);
-
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
         ImageButton btnReturn = new ImageButton(trdReturn);
         btnReturn.setPosition(30, ALTO-30-btnReturn.getHeight());
-
-
-        //Click en boton Return
         btnReturn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -99,59 +105,9 @@ class PantallaCredits implements Screen {
             }
         });
 
-        Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
-
         //Fotos
         foto.setScaling(Scaling.fit);
 
-        Table table = new Table(skin);
-        table.defaults().pad(10f);
-        table.setFillParent(true);
-        table.setPosition(table.getX(),table.getY()+table.getHeight()+100);
-
-        Label scoresTitle = new Label("                CREDITS", skin);
-        scoresTitle.setFontScale(4f,4f);
-        scoresTitle.setAlignment(Align.center);
-
-        Label adriLabel;
-        Label ferLabel;
-        Label santiLabel;
-        Label diegoLabel;
-        Label brianLabel;
-
-        table.add(scoresTitle).colspan(2).fillX().height(150);
-        table.row();
-
-        adriLabel=new Label("Adrian\n  ISC", skin);
-        adriLabel.setFontScale(3f,3f);
-        adriLabel.setHeight(1000);
-        adriLabel.setWidth(1000);
-        table.add(adriLabel);
-
-        ferLabel= new Label("Luis Fernando\n       ISC", skin);
-        ferLabel.setFontScale(3f,3f);
-        ferLabel.setHeight(1000);
-        ferLabel.setWidth(1000);
-        table.add(ferLabel);
-
-        santiLabel = new Label("Luis Santiago\n      ISC", skin);
-        santiLabel.setFontScale(3f, 3f);
-        santiLabel.setHeight(1000);
-        santiLabel.setWidth(1000);
-        table.add(santiLabel);
-
-        table.row();
-        table.row();
-
-        diegoLabel = new Label("                      Diego\n                     LAD\n\n", skin);
-        diegoLabel.setFontScale(3f, 3f);
-        table.add(diegoLabel);
-
-        brianLabel = new Label("                      Brian\n                     LAD\n\n", skin);
-        brianLabel.setFontScale(3f, 3f);
-        table.add(brianLabel);
-
-        stageMenu.addActor(table);
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);
@@ -173,6 +129,12 @@ class PantallaCredits implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        title.mostratMensaje(batch,"CREDITS",ANCHO/2,ALTO-60);
+        Santi.mostratMensaje(batch,"Luis Santiago Mille  -  ISC",400,ALTO-180);
+        Brian.mostratMensaje(batch,"Brian Saggiante  -  LAD",370,ALTO-300);
+        Fer.mostratMensaje(batch,"Luis Fernando Cedenio  -  ISC",430,ALTO-420);
+        Adrian.mostratMensaje(batch,"Adrian Mendez  -  ISC",350,ALTO-540);
+        Diego.mostratMensaje(batch,"Diego Cervantes  -  LAD",380,ALTO-660);
         batch.end();
         stageMenu.draw();
     }

@@ -41,7 +41,7 @@ abstract class PantallaTutorial implements Screen {
     private Sprite spriteBackground;
 
     //background music
-    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba.mp3"));
+    private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
     //To write on scree
     public Texto texto;
