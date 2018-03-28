@@ -492,21 +492,23 @@ class PantallaJuego extends Pantalla implements Screen  {
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista,batch);
             // Crear rectángulo transparente
-            Pixmap pixmap = new Pixmap((int)(ANCHO*0.7f), (int)(ALTO*0.8f), Pixmap.Format.RGBA8888 );
-            pixmap.setColor( 1f, 1f, 1f, 0.65f );
+            Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
+            pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
             pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture texturaRectangulo = new Texture( pixmap );
             pixmap.dispose();
             Image imgRectangulo = new Image(texturaRectangulo);
-            imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+            imgRectangulo.setPosition(ANCHO/2 - imgRectangulo.getWidth()/2, ALTO*2.75f/10f);
             this.addActor(imgRectangulo);
 
+
             // Salir
-            Texture texturaBtnSalir = new Texture("go-back.png");
+            Texture texturaBtnSalir = new Texture("granada_icon.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
-            btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2, ALTO/2);
+            btnSalir.setSize(155, 155);
+            btnSalir.setPosition(ANCHO*5.5f/10f, ALTO*3f/10f);
             btnSalir.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -517,11 +519,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             this.addActor(btnSalir);
 
             // Continuar
-            Texture texturaBtnContinuar = new Texture("go-back.png");
+            Texture texturaBtnContinuar = new Texture("granada_icon.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO/4);
+            btnContinuar.setSize(155, 155);
+            btnContinuar.setPosition(ANCHO*3.5f/10f, ALTO*3f/10f);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
