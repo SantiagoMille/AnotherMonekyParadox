@@ -86,6 +86,8 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
         assetManager.load("Pad/padKnob.png", Texture.class);
+        assetManager.load("go-back.png", Texture.class);
+        assetManager.load("home.png", Texture.class);
 
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
