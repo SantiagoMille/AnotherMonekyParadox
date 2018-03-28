@@ -70,6 +70,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Enemigos
     private Array<Enemigo> listaEnemigos;
+    private int vidaEnemigo = 100;
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
@@ -425,14 +426,13 @@ class PantallaJuego extends Pantalla implements Screen  {
             i++;
         }
 
-        verificarVidaEnemigos();
         verificarColisionBalaEnemigo();
 
     }
 
     private void verificarVidaEnemigos() {
         for(int i = listaEnemigos.size-1;i>=0;i--){
-            if(listaEnemigos.get(i).getEstado()== Enemigo.Estado.MUERTO){
+            if(listaEnemigos.get(i).getVida() == 0){
                 listaEnemigos.removeIndex(i);
             }
         }
@@ -440,17 +440,17 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private void verificarColisionBalaEnemigo() {
         for(int j =listaBalas.size-1; j>=0;j--){
-            //prueba con cada enemigo
             Bala bala = listaBalas.get(j);
             for(int i =listaEnemigos.size-1;i>=0;i--){
                 enemigo = listaEnemigos.get(i);
-                Rectangle rectEnemigo = new Rectangle(enemigo.getX(), enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaEnemigos.removeIndex(i);
-                    enemigo.setEstado(Enemigo.Estado.MURIENDO);
                     listaBalas.removeIndex(i);
-                    break;
+                    vidaEnemigo = vidaEnemigo - 25;
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
                 }
+                verificarVidaEnemigos();
             }
         }
     }
