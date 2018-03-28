@@ -21,6 +21,7 @@ class Enemigo {
     private float timerAnimacion;
     private Estado estado;
     private float timerMuriendo;
+    private int vida = 100;
 
     private static final float VX = -200;
 
@@ -73,6 +74,14 @@ class Enemigo {
 
     public enum Estado{
         VIVO, MURIENDO, MUERTO;
+    }
+
+    public void setVida(int x){
+        this.vida = x;
+    }
+
+    public int getVida(){
+        return this.vida;
     }
 
 }

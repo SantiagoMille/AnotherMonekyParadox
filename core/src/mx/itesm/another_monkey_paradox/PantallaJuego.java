@@ -70,11 +70,13 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Enemigos
     private Array<Enemigo> listaEnemigos;
+    private int vidaEnemigo = 100;
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     private Texture imgVida;
     Sprite vida;
+    int contador = 0;
 
     //Escena
     private Stage stageNivel;
@@ -336,6 +338,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         if(estado != EstadoJuego.PAUSADO) {
             actualizarObjetos(delta);
+
         }
 
         //Usar v=d/t o en este caso d=v*t
@@ -352,6 +355,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
 
+        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
@@ -375,7 +379,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             currentFrame.flip(true,false);
             isFliped = true;
         }else {}
-        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
+
 
         for(Bala bala: listaBalas){
             bala.render(batch);
@@ -425,34 +429,56 @@ class PantallaJuego extends Pantalla implements Screen  {
             i++;
         }
 
-        verificarVidaEnemigos();
         verificarColisionBalaEnemigo();
+        verificarColisionPersonajeEnemigo();
 
     }
 
     private void verificarVidaEnemigos() {
         for(int i = listaEnemigos.size-1;i>=0;i--){
-            if(listaEnemigos.get(i).getEstado()== Enemigo.Estado.MUERTO){
+            if(listaEnemigos.get(i).getVida() == 0){
                 listaEnemigos.removeIndex(i);
+                puntosJugador += 10;
             }
         }
     }
 
     private void verificarColisionBalaEnemigo() {
         for(int j =listaBalas.size-1; j>=0;j--){
-            //prueba con cada enemigo
             Bala bala = listaBalas.get(j);
             for(int i =listaEnemigos.size-1;i>=0;i--){
                 enemigo = listaEnemigos.get(i);
-                Rectangle rectEnemigo = new Rectangle(enemigo.getX(), enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaEnemigos.removeIndex(i);
-                    enemigo.setEstado(Enemigo.Estado.MURIENDO);
                     listaBalas.removeIndex(i);
-                    break;
+                    vidaEnemigo = vidaEnemigo - 25;
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
+                }
+                verificarVidaEnemigos();
+            }
+        }
+    }
+
+    private void verificarColisionPersonajeEnemigo() {
+
+
+        for (int i = listaEnemigos.size - 1; i >= 0; i--) {
+            Rectangle rectEnemigo = new Rectangle(enemigo.getX() + 30, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+            Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+                if (rectEnemigo.overlaps(rectPersonaje)) {
+                    for (int j = vidas.size() - 1; j >= 0; j--) {
+                        if (contador >= 50){
+                            if (vidas.get(j).isActiva()) {
+                            vidas.get(j).setActiva(false);
+                            System.out.println(vidas.get(j));
+                            contador = 0;
+                        }
+                    }
                 }
             }
         }
+        contador++;
     }
 
 
@@ -492,21 +518,23 @@ class PantallaJuego extends Pantalla implements Screen  {
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
             super(vista,batch);
             // Crear rectángulo transparente
-            Pixmap pixmap = new Pixmap((int)(ANCHO*0.7f), (int)(ALTO*0.8f), Pixmap.Format.RGBA8888 );
-            pixmap.setColor( 1f, 1f, 1f, 0.65f );
+            Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
+            pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
             pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture texturaRectangulo = new Texture( pixmap );
             pixmap.dispose();
             Image imgRectangulo = new Image(texturaRectangulo);
-            imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+            imgRectangulo.setPosition(ANCHO/2 - imgRectangulo.getWidth()/2, ALTO*2.75f/10f);
             this.addActor(imgRectangulo);
 
+
             // Salir
-            Texture texturaBtnSalir = new Texture("go-back.png");
+            Texture texturaBtnSalir = new Texture("granada_icon.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
-            btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2, ALTO/2);
+            btnSalir.setSize(155, 155);
+            btnSalir.setPosition(ANCHO*5.5f/10f, ALTO*3f/10f);
             btnSalir.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -517,11 +545,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             this.addActor(btnSalir);
 
             // Continuar
-            Texture texturaBtnContinuar = new Texture("go-back.png");
+            Texture texturaBtnContinuar = new Texture("granada_icon.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO/4);
+            btnContinuar.setSize(155, 155);
+            btnContinuar.setPosition(ANCHO*3.5f/10f, ALTO*3f/10f);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
