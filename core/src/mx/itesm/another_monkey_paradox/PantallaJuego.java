@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -28,6 +29,8 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.*;
+
+import java.util.ArrayList;
 
 /**
  * Created by santi on 1/30/2018.
@@ -49,8 +52,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Array<Bala> listaBalas;
 
     //Controles del jugador
-    private ImageButton left;
-    private ImageButton right;
+
     private ImageButton granada;
     private ImageButton arma;
     private ImageButton pausa;
@@ -62,15 +64,17 @@ class PantallaJuego extends Pantalla implements Screen  {
     private boolean isMovingRight=false;
     private boolean isMovingLeft = false;
 
+    private boolean isFliped;
+
     private Personaje personaje;
 
     //Enemigos
     private Array<Enemigo> listaEnemigos;
 
     //Vidas
-    private boolean[] vidas = new boolean[] {true, true, true};
+    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     private Texture imgVida;
-    Sprite vida1, vida2, vida3;
+    Sprite vida;
 
     //Escena
     private Stage stageNivel;
@@ -110,11 +114,17 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture padBack;
     private Texture padKnob;
 
+
     // PAUSA
     private EscenaPausa escenaPausa;
 
     // Estados del juego
     private EstadoJuego estado;
+
+    //Textura disparo
+    private Texture bananaDisparo;
+
+    private Enemigo enemigo;
 
     //Asset Manager
     private final AssetManager assetManager;
@@ -137,7 +147,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        Enemigo enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
+        enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
         listaEnemigos.add(enemigo);
 
         //Lista Balas
@@ -158,18 +168,13 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Objeto que dibuja texto
         texto = new Texto();
 
-        //Vidas
-        vida1 = new Sprite(imgVida);
-        vida1.setSize(70,70);
-        vida1.setPosition(20, 680 - vida1.getHeight()/2);
-
-        vida2 = new Sprite(imgVida);
-        vida2.setSize(70,70);
-        vida2.setPosition(100, 680 - vida1.getHeight()/2);
-
-        vida3 = new Sprite(imgVida);
-        vida3.setSize(70,70);
-        vida3.setPosition(180, 680 - vida1.getHeight()/2);
+        for(int i=0;i<3;i++){
+            if(i<3) {
+                vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70,true));
+            }else{
+                vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70, false));
+            }
+        }
 
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
@@ -254,9 +259,15 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                Bala nueva = new Bala(new Texture("banana.png"));
-                nueva.set(personaje.getX()+105,personaje.getY()+55);
-                listaBalas.add(nueva);
+                if(!isFliped) {
+                    Bala nueva = new Bala(bananaDisparo,false);
+                    nueva.set(personaje.getX() + 105, personaje.getY() + 68);
+                    listaBalas.add(nueva);
+                } else {
+                    Bala nueva = new Bala(bananaDisparo,true);
+                    nueva.set(personaje.getX(), personaje.getY() + 68);
+                    listaBalas.add(nueva);
+                }
             }
         });
 
@@ -308,6 +319,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         botonHome = assetManager.get("home.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
+
+        bananaDisparo = assetManager.get("banana.png");
     }
 
     private void crearCamara() {
@@ -336,10 +349,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo.render(batch);
 
-        vida1.draw(batch);
-        vida2.draw(batch);
-        vida3.draw(batch);
-
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
 
@@ -350,12 +359,21 @@ class PantallaJuego extends Pantalla implements Screen  {
             e.setX(e.getX()+(-30*delta));
         }}
 
+        for(PowerUp e:vidas){
+            if(e.isActiva()){
+                e.render(batch);
+            }
+            //e.setX(e.getX()+(-30*delta));
+        }
+
         TextureRegion currentFrame = (TextureRegion) personaje.getAnimacion().getKeyFrame(stateTime,true);
 
         if(personaje.isRight()&&currentFrame.isFlipX()){
             currentFrame.flip(true,false);
+            isFliped = false;
         } else if(!personaje.isRight()&&!currentFrame.isFlipX()){
             currentFrame.flip(true,false);
+            isFliped = true;
         }else {}
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
 
@@ -363,8 +381,10 @@ class PantallaJuego extends Pantalla implements Screen  {
             bala.render(batch);
         }
 
+
         // Botón pausa
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
+
 
         stageNivel.draw();
 
@@ -391,13 +411,50 @@ class PantallaJuego extends Pantalla implements Screen  {
                 fondo.mover(dt * 20);
             }
         }
-
+        int i=0;
         for(Bala bala:listaBalas){
-            bala.mover(-dt*2);
+            if(bala.getX()>camara.position.x+ANCHO/2||bala.getX()<camara.position.x-ANCHO/2){
+                listaBalas.removeIndex(i);
+            }
+            if(bala.fliped){
+                bala.mover(dt*2);
+            } else {
+                bala.mover(-dt * 2);
+            }
             bala.getSprite().rotate(10);
+            i++;
         }
 
+        verificarVidaEnemigos();
+        verificarColisionBalaEnemigo();
+
     }
+
+    private void verificarVidaEnemigos() {
+        for(int i = listaEnemigos.size-1;i>=0;i--){
+            if(listaEnemigos.get(i).getEstado()== Enemigo.Estado.MUERTO){
+                listaEnemigos.removeIndex(i);
+            }
+        }
+    }
+
+    private void verificarColisionBalaEnemigo() {
+        for(int j =listaBalas.size-1; j>=0;j--){
+            //prueba con cada enemigo
+            Bala bala = listaBalas.get(j);
+            for(int i =listaEnemigos.size-1;i>=0;i--){
+                enemigo = listaEnemigos.get(i);
+                Rectangle rectEnemigo = new Rectangle(enemigo.getX(), enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    listaEnemigos.removeIndex(i);
+                    enemigo.setEstado(Enemigo.Estado.MURIENDO);
+                    listaBalas.removeIndex(i);
+                    break;
+                }
+            }
+        }
+    }
+
 
     @Override
     public void resize(int width, int height) {

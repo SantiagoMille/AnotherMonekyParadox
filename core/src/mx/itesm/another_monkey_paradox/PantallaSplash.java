@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -33,10 +34,16 @@ class PantallaSplash implements Screen {
     Texture imgMonkey;
     private Sprite sprite;
 
+    //Asset Manager
+    private AssetManager assetManager;
+
+
     public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("prueba1.mp3"));
 
     public PantallaSplash(Main main) {
+
         this.main = main;
+        this.assetManager = main.getAssetManager();
     }
 
     @Override
@@ -44,10 +51,13 @@ class PantallaSplash implements Screen {
         crearCamara();
         batch = new SpriteBatch();
         crearSpriteMonkey();
+        cargarRecursos();
     }
 
     private void crearSpriteMonkey() {
-        imgMonkey = new Texture("Monkey.png");
+        assetManager.load("Monkey.png", Texture.class);
+        assetManager.finishLoading();
+        imgMonkey = assetManager.get("Monkey.png");
         sprite = new Sprite(imgMonkey);
         sprite.setPosition(ANCHO/2-sprite.getWidth()/2, ALTO/2-sprite.getHeight()/2);
     }
@@ -61,6 +71,9 @@ class PantallaSplash implements Screen {
 
     @Override
     public void render(float delta) {
+
+        actualizarCarga();
+
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(66/255f,74/255f,96/255f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -70,6 +83,7 @@ class PantallaSplash implements Screen {
         sprite.draw(batch);
         batch.end();
 
+        /*
         float delay = 1; // seconds
         Timer.schedule(new Timer.Task(){
             @Override
@@ -78,8 +92,33 @@ class PantallaSplash implements Screen {
                 main.setScreen(new PantallaMenu(main));
             }
         }, delay);
+        */
 
     }
+
+    private void cargarRecursos(){
+        assetManager.load("LOGO-2.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
+        assetManager.load("PlayButton_Pressed.png", Texture.class);
+        assetManager.load("trophy.png", Texture.class);
+        assetManager.load("trophy_Pressed.png", Texture.class);
+        assetManager.load("about-button.png", Texture.class);
+        assetManager.load("About-button_Pressed.png", Texture.class);
+        assetManager.load("About2.png", Texture.class);
+        assetManager.load("StoryModeBack.png", Texture.class);
+        assetManager.load("SurvivalModeBack.png", Texture.class);
+    }
+
+    //Revisa cómo va la carga de assets
+    private void actualizarCarga(){
+        if (assetManager.update()){ //regresa true si ya terminó la carga
+            main.setScreen(new PantallaMenu(main));
+        } else {
+            //Aún no termina, preguntar cómo va
+            float avance = assetManager.getProgress();
+        }
+    }
+
 
     @Override
     public void resize(int width, int height) {

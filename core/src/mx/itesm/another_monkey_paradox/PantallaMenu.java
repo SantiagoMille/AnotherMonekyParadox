@@ -237,6 +237,7 @@ class PantallaMenu implements Screen {
     }
 
     private void cargarTexturas(){
+        /*
         //Cargar las texturas
         assetManager.load("LOGO-2.png", Texture.class);
         assetManager.load("PlayButton.png", Texture.class);
@@ -251,6 +252,7 @@ class PantallaMenu implements Screen {
 
         // Se bloquea hasta cargar los recursos
         assetManager.finishLoading();
+        */
 
         // Cuando termina de cargar las texturas, las leemos
         imgLogo = assetManager.get("LOGO-2.png");

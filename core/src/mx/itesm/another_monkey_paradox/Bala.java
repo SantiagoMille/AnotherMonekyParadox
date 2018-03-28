@@ -15,6 +15,8 @@ public class Bala {
     private Estado estado;
     private float timerMuriendo;
 
+    public boolean fliped;
+
     public static float getVX() {
         return VX;
     }
@@ -34,8 +36,9 @@ public class Bala {
         }
     }
 
-    public Bala(Texture textura){
+    public Bala(Texture textura, boolean fliped){
         sprite = new Sprite(textura);
+        this.fliped = fliped;
         estado=Estado.VIVO;
     }
 
