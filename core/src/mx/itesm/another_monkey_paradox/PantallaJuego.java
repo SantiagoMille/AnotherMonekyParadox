@@ -7,15 +7,18 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -53,6 +56,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     private ImageButton granada;
     private ImageButton arma;
     private ImageButton pausa;
+    private ImageButton home;
+    private ImageButton continua;
 
     private float stateTime=0;
 
@@ -102,8 +107,19 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture botonGranada;
     private Texture botonDisparo;
     private Texture botonPausa;
+
+    private Texture botonContinua;
+    private Texture botonHome;
+
     private Texture padBack;
     private Texture padKnob;
+
+
+    // PAUSA
+    private EscenaPausa escenaPausa;
+
+    // Estados del juego
+    private EstadoJuego estado;
 
     //Textura disparo
     private Texture bananaDisparo;
@@ -128,7 +144,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo = new Fondo(fondoNivel01);
         batch = new SpriteBatch();
-        //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
@@ -137,6 +152,10 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Balas
         listaBalas = new Array<Bala>();
+
+        estado = EstadoJuego.JUGANDO;
+
+        //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
     }
 
@@ -177,6 +196,20 @@ class PantallaJuego extends Pantalla implements Screen  {
         pausa = new ImageButton(btnPausa);
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
+
+        //boton continua
+        TextureRegionDrawable btnContinua = new TextureRegionDrawable(new TextureRegion(botonContinua));
+
+        continua = new ImageButton(btnContinua);
+        continua.setSize(55, 55);
+        continua.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
+
+        //boton Home
+        TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(botonHome));
+
+        home = new ImageButton(btnContinua);
+        home.setSize(55, 55);
+        home.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
 
         Skin skin = new Skin(); // Texturas para el pad
         skin.add("fondo", padBack);
@@ -243,7 +276,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaMenu(main));
+                estado = EstadoJuego.PAUSADO;
+                //main.setScreen((Screen) new EscenaPausa(vista,batch));
+                if(escenaPausa == null){
+                    escenaPausa = new EscenaPausa(vista,batch);
+                }
+                Gdx.input.setInputProcessor(escenaPausa);
                 dispose();
             }
         });
@@ -277,6 +315,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         botonGranada = assetManager.get("granada_icon.png");
         botonDisparo = assetManager.get("bullet_icon.png");
         botonPausa = assetManager.get("pause-button.png");
+        botonContinua = assetManager.get("go-back.png");
+        botonHome = assetManager.get("home.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
 
@@ -293,7 +333,10 @@ class PantallaJuego extends Pantalla implements Screen  {
     @Override
     public void render(float delta) {
         stateTime+=delta;
-        actualizarObjetos(delta);
+
+        if(estado != EstadoJuego.PAUSADO) {
+            actualizarObjetos(delta);
+        }
 
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(.3f,.6f,.3f,1);
@@ -312,8 +355,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
+            if(estado == EstadoJuego.JUGANDO){
             e.setX(e.getX()+(-30*delta));
-        }
+        }}
 
         for(PowerUp e:vidas){
             if(e.isActiva()){
@@ -338,8 +382,18 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
 
-        batch.end();
+        // Botón pausa
+        batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
+
+
         stageNivel.draw();
+
+        batch.end();
+
+        // Botón PAUSA
+        if (estado==EstadoJuego.PAUSADO) {
+            escenaPausa.draw(); // Solo si está pausado muestra la imagen
+        }
 
     }
 
@@ -424,43 +478,104 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void dispose() {
-        //Libera la memoria utlizada por los recursos
-        fondoNivel01.dispose();
 
-        astroCaminata0.dispose();
-        astroCaminata1.dispose();
-        astroCaminata2.dispose();
-        astroCaminata3.dispose();
-
-        canervicola01Frame0.dispose();
-        canervicola01Frame1.dispose();
-        canervicola01Frame2.dispose();
-        canervicola01Frame3.dispose();
-
-        imgVida.dispose();
-
-        botonGranada.dispose();
-        botonDisparo.dispose();
-        botonPausa.dispose();
-        padBack.dispose();
-        padKnob.dispose();
-
-        //El assetManager también libera los recursos
-        assetManager.unload("FondoNivel1/NIVEL 1 PAN.png");
-        assetManager.unload("Astro/CAMINATA 4.png");
-        assetManager.unload("Astro/CAMINATA 2.png");
-        assetManager.unload("Astro/CAMINATA 3.png");
-        assetManager.unload("Astro/CAMINATA 1.png");
-        assetManager.unload("cavernicola01/CM1 3.png");
-        assetManager.unload("cavernicola01/CM1 4.png");
-        assetManager.unload("cavernicola01/CM1 2.png");
-        assetManager.unload("cavernicola01/CM1 1.png");
-        assetManager.unload("vida.png");
-        assetManager.unload("granada_icon.png");
-        assetManager.unload("bullet_icon.png");
-        assetManager.unload("pause-button.png");
-        assetManager.unload("Pad/padBack.png");
-        assetManager.unload("Pad/padKnob.png");
     }
 
+    enum EstadoJuego {
+        JUGANDO,
+        PAUSADO
+    }
+
+    private class EscenaPausa extends Stage{
+
+        // La escena que se muestra cuando está pausado
+        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+            super(vista,batch);
+            // Crear rectángulo transparente
+            Pixmap pixmap = new Pixmap((int)(ANCHO*0.7f), (int)(ALTO*0.8f), Pixmap.Format.RGBA8888 );
+            pixmap.setColor( 1f, 1f, 1f, 0.65f );
+            pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
+            Texture texturaRectangulo = new Texture( pixmap );
+            pixmap.dispose();
+            Image imgRectangulo = new Image(texturaRectangulo);
+            imgRectangulo.setPosition(0.15f*ANCHO, 0.1f*ALTO);
+            this.addActor(imgRectangulo);
+
+            // Salir
+            Texture texturaBtnSalir = new Texture("go-back.png");
+            TextureRegionDrawable trdSalir = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnSalir));
+            ImageButton btnSalir = new ImageButton(trdSalir);
+            btnSalir.setPosition(ANCHO/2-btnSalir.getWidth()/2, ALTO/2);
+            btnSalir.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al menú
+                    main.setScreen(new PantallaMenu(main));
+                }
+            });
+            this.addActor(btnSalir);
+
+            // Continuar
+            Texture texturaBtnContinuar = new Texture("go-back.png");
+            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
+                    new TextureRegion(texturaBtnContinuar));
+            ImageButton btnContinuar = new ImageButton(trdContinuar);
+            btnContinuar.setPosition(ANCHO/2-btnContinuar.getWidth()/2, ALTO/4);
+            btnContinuar.addListener(new ClickListener(){
+                @Override
+                public void clicked(InputEvent event, float x, float y) {
+                    // Regresa al juego
+                    estado = EstadoJuego.JUGANDO;
+                    Gdx.input.setInputProcessor(stageNivel);
+                }
+            });
+            this.addActor(btnContinuar);
+        }
+    }
+
+    private class ProcesadorEntrada implements InputProcessor {
+
+        @Override
+        public boolean keyDown(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyUp(int keycode) {
+            return false;
+        }
+
+        @Override
+        public boolean keyTyped(char character) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            return false;
+        }
+
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            return false;
+        }
+
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            return false;
+        }
+
+        @Override
+        public boolean scrolled(int amount) {
+            return false;
+        }
+
+    }
 }
+
