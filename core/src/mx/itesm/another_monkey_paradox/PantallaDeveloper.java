@@ -129,7 +129,7 @@ class PantallaDeveloper implements Screen {
         };
 
         table.pad(10).defaults().expandX().space(4);
-        titulo = new Texto();
+        titulo = new Texto(1,1,1);
 
 
         table.row();

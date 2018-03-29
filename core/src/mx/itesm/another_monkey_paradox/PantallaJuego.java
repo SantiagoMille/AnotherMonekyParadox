@@ -174,7 +174,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         stageNivel = new Stage(vista);
 
         //Objeto que dibuja texto
-        texto = new Texto();
+        texto = new Texto(1,1,1);
 
         for(int i=0;i<3;i++){
             if(i<3) {

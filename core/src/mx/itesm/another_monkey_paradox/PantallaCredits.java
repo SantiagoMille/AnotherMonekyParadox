@@ -81,12 +81,12 @@ class PantallaCredits implements Screen {
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
-        title = new Texto();
-        Adrian = new Texto();
-        Santi = new Texto();
-        Fer = new Texto();
-        Brian = new Texto();
-        Diego = new Texto();
+        title = new Texto(1,1,1);
+        Adrian = new Texto(1,1,1);
+        Santi = new Texto(1,1,1);
+        Fer = new Texto(1,1,1);
+        Brian = new Texto(1,1,1);
+        Diego = new Texto(1,1,1);
 
         imgBackground = new Texture("space2.png");
         adrian = new Texture("pp.jpg");

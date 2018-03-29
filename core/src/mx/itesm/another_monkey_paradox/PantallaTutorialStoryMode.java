@@ -14,7 +14,7 @@ public class PantallaTutorialStoryMode extends PantallaTutorial {
 
     @Override
     void crearTexto() {
-        texto = new Texto();
+        texto = new Texto(0,0,0);
         toWrite = "Astro is seeking revenge agains Dr. Timetravelov...\n\n" +
                 "- Use the joystick to move forwards and \n  backwards. \n" +
                 "- Use the blue button to shoot bananas.\n" +

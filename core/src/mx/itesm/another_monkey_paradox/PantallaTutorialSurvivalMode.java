@@ -14,7 +14,7 @@ public class PantallaTutorialSurvivalMode extends PantallaTutorial {
 
     @Override
     void crearTexto() {
-        texto = new Texto();
+        texto = new Texto(0.7f,0.7f,0.7f);
         toWrite = "Survival Mode:\n" +
                 "\n" +
                 "Sobrevive hasta que puedas, pelea contra \n" +

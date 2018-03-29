@@ -29,7 +29,7 @@ public class PantallaScoresSurvival extends PantallaScores {
     void crearMenu() {
         super.stageMenu = new Stage(vista);
 
-        title = new Texto();
+        title = new Texto(1,1,1);
         title.setText("HIGHSCORES STORY MODE");
 
         imgBackground = new Texture("logros.png");
