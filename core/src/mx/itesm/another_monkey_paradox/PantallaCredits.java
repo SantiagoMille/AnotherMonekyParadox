@@ -54,8 +54,8 @@ class PantallaCredits implements Screen {
     private SpriteBatch batch;
 
     //For Background
-    Texture imgBackground;
-    private Sprite spriteBackground;
+    Texture imgBackground, adrian, diego, fernando, brian, santi;
+    private Sprite spriteBackground, adr, die, fer, bri, san;
 
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
@@ -89,8 +89,31 @@ class PantallaCredits implements Screen {
         Diego = new Texto();
 
         imgBackground = new Texture("space.png");
+        adrian = new Texture("pp.jpg");
+        santi = new Texture("pp.jpg");
+        fernando = new Texture("pp.jpg");
+        diego = new Texture("pp.jpg");
+        brian = new Texture("pp.jpg");
+
         spriteBackground = new Sprite(imgBackground);
-        spriteBackground.setPosition(0, 0);
+        spriteBackground.setAlpha(0.7f);
+        adr = new Sprite(adrian);
+        bri = new Sprite(brian);
+        die = new Sprite(diego);
+        fer = new Sprite(fernando);
+        san = new Sprite(santi);
+
+        adr.setScale(.15f);
+        san.setScale(.15f);
+        die.setScale(.15f);
+        fer.setScale(.15f);
+        bri.setScale(.15f);
+
+        adr.setPosition(600, 250);
+        bri.setPosition(600, 130);
+        die.setPosition(600, 20);
+        san.setPosition(600, -100);
+        fer.setPosition(600, -220);
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
@@ -129,6 +152,12 @@ class PantallaCredits implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        adr.draw(batch);
+        san.draw(batch);
+        fer.draw(batch);
+        bri.draw(batch);
+        die.draw(batch);
+
         title.mostratMensaje(batch,"CREDITS",ANCHO/2,ALTO-60);
         Santi.mostratMensaje(batch,"Luis Santiago Mille  -  ISC",400,ALTO-180);
         Brian.mostratMensaje(batch,"Brian Saggiante  -  LAD",370,ALTO-300);

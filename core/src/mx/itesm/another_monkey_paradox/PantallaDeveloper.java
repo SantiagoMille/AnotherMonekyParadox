@@ -55,6 +55,10 @@ class PantallaDeveloper implements Screen {
 
     private SpriteBatch batch;
 
+
+    Texture imgBackground;
+    private Sprite spriteBackground;
+
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
@@ -78,10 +82,14 @@ class PantallaDeveloper implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
+        imgBackground = new Texture("pantalla_config.png");
+        spriteBackground = new Sprite(imgBackground);
+        spriteBackground.setAlpha(0.7f);
+
         container = new Table();
         stageMenu.addActor(container);
         container.setFillParent(true);
-        container.setPosition(0,20);
+        container.setPosition(0,30);
 
         Table table = new Table();
 
@@ -213,6 +221,7 @@ class PantallaDeveloper implements Screen {
         stageMenu.act(Gdx.graphics.getDeltaTime());
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
+        spriteBackground.draw(batch);
         titulo.mostratMensaje(batch,"SETTINGS",ANCHO/2,ALTO-50);
         batch.end();
         stageMenu.draw();

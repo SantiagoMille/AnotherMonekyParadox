@@ -45,7 +45,9 @@ abstract class PantallaTutorial implements Screen {
 
     //To write on scree
     public Texto texto;
+    public Texto title;
     public String toWrite;
+    String toWriteTitle;
 
     public PantallaTutorial(Main main) {
         this.main = main;
@@ -66,10 +68,10 @@ abstract class PantallaTutorial implements Screen {
     private void crearMainView() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("space.png");
+        imgBackground = new Texture("space2.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
-        spriteBackground.setAlpha(0.7f);
+        //spriteBackground.setAlpha(0.7f);
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
