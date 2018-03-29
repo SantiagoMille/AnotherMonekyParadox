@@ -15,18 +15,14 @@ public class PantallaTutorialStoryMode extends PantallaTutorial {
     @Override
     void crearTexto() {
         texto = new Texto();
-        toWrite = "Story Mode:\n" +
-                "\n" +
-                "Astro esta en busca de cobrar venganza contra \n" +
-                "el Dr. Timetravelov.\n" +
-                "\n" +
-                "Utiliza el joystick para moverte hacia adelante \n" +
-                "y hacia atras.\n" +
-                "Utiliza los botones para lanzar bananas.";
+        toWrite = "Astro is seeking revenge agains Dr. Timetravelov...\n\n" +
+                "- Use the joystick to move forwards and \n  backwards. \n" +
+                "- Use the blue button to shoot bananas.\n" +
+                "- Use the red button to throw banana grenades.";
     }
 
     @Override
     protected void escribirTexto(SpriteBatch batch) {
-        texto.mostratMensaje(batch,toWrite,ANCHO/2,ALTO-120);
+        texto.mostratMensaje(batch,toWrite,ANCHO/2,ALTO-230);
     }
 }

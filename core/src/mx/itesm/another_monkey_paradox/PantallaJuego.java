@@ -375,13 +375,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
 
-        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
-        //Dibuja enemigos
-        for(Enemigo e:listaEnemigos){
-            e.render(batch);
-            if(estado == EstadoJuego.JUGANDO){
-            e.setX(e.getX()+(-30*delta));
-        }}
 
         for(PowerUp e:vidas){
             if(e.isActiva()){
@@ -405,10 +398,19 @@ class PantallaJuego extends Pantalla implements Screen  {
             bala.render(batch);
         }
 
+
         //Granadas
         for(Granada Granada: listaGranadas){
             Granada.render(batch);
         }
+
+        personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
+        //Dibuja enemigos
+        for(Enemigo e:listaEnemigos){
+            e.render(batch);
+            if(estado == EstadoJuego.JUGANDO){
+                e.setX(e.getX()+(-30*delta));
+            }}
 
         // Botón pausa
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
@@ -428,8 +430,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Movimiento del personaje
         if(isMovingRight&&!isMovingLeft){
-            personaje.setX(personaje.getX()+(dt*90));
-            fondo.mover(-dt * 20);
+            personaje.setX(personaje.getX()+(dt*75));
+            fondo.mover(-dt * 76);
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){

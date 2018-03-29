@@ -31,10 +31,10 @@ public class PantallaScoresStory extends PantallaScores {
         title = new Texto();
         title.setText("HIGHSCORES STORY MODE");
 
-        imgBackground = new Texture("space.png");
+        imgBackground = new Texture("logros.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
-        spriteBackground.setAlpha(0.7f);
+        //spriteBackground.setAlpha(0.7f);
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
