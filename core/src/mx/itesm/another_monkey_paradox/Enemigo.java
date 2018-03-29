@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import java.awt.Rectangle;
+
 /**
  * Created by Adrian on 02/03/18.
  */
@@ -17,6 +19,8 @@ class Enemigo {
     private Animation animacion;
     private float x, y; // Coordenadas
     private float timerAnimacion;
+    private Estado estado;
+    private float timerMuriendo;
 
     private static final float VX = -200;
 
@@ -28,6 +32,7 @@ class Enemigo {
         animacion = new Animation(0.2f, img1, img2, img3, img4);
         x = PantallaJuego.ANCHO-texture1.getWidth()/2;
         y = PantallaJuego.ALTO/4;
+        estado=Estado.VIVO;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
     }
 
@@ -37,16 +42,26 @@ class Enemigo {
         batch.draw(frame, x, y);
     }
 
-
-    /*
-    public float getX() {
-        return ((TextureRegion) animacion.getKeyFrame(0)).getRegionX();
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+        if (estado==Estado.MURIENDO){
+            timerMuriendo=1;
+        }
     }
 
-    public void setX(float x) {
-        this.x=x;
+    public Estado getEstado(){
+        return this.estado;
     }
-    */
+
+    public int getWidth() {
+        return ((TextureRegion) animacion.getKeyFrame(0)).getRegionWidth();
+    }
+
+    public int getHeight() {
+        return ((TextureRegion) animacion.getKeyFrame(0)).getRegionHeight();
+    }
+
+    public float getY() {return y;}
 
     public float getX(){
         return x;
@@ -54,6 +69,10 @@ class Enemigo {
 
     public void setX(float x){
         this.x = x;
+    }
+
+    public enum Estado{
+        VIVO, MURIENDO, MUERTO;
     }
 
 }

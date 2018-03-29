@@ -65,6 +65,10 @@ class Personaje {
         this.y = y;
     }
 
+    public float getWidth(){return standing.getWidth();}
+
+    public float getHeight(){return standing.getHeight();}
+
     public void render(SpriteBatch batch, float timerAnimacion, boolean isMovingRight, boolean isMovingLeft){
         if(isMovingLeft||isMovingRight){
             TextureRegion frame = (TextureRegion) animacion.getKeyFrame(timerAnimacion);
