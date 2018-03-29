@@ -26,6 +26,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.*;
 
+import java.util.ArrayList;
+
 /**
  * Created by santi on 1/30/2018.
  */
@@ -46,8 +48,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Array<Bala> listaBalas;
 
     //Controles del jugador
-    private ImageButton left;
-    private ImageButton right;
+
     private ImageButton granada;
     private ImageButton arma;
     private ImageButton pausa;
@@ -65,9 +66,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Array<Enemigo> listaEnemigos;
 
     //Vidas
-    private boolean[] vidas = new boolean[] {true, true, true};
+    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     private Texture imgVida;
-    Sprite vida1, vida2, vida3;
+    Sprite vida;
 
     //Escena
     private Stage stageNivel;
@@ -145,18 +146,13 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Objeto que dibuja texto
         texto = new Texto();
 
-        //Vidas
-        vida1 = new Sprite(imgVida);
-        vida1.setSize(70,70);
-        vida1.setPosition(20, 680 - vida1.getHeight()/2);
-
-        vida2 = new Sprite(imgVida);
-        vida2.setSize(70,70);
-        vida2.setPosition(100, 680 - vida1.getHeight()/2);
-
-        vida3 = new Sprite(imgVida);
-        vida3.setSize(70,70);
-        vida3.setPosition(180, 680 - vida1.getHeight()/2);
+        for(int i=0;i<3;i++){
+            if(i<3) {
+                vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70,true));
+            }else{
+                vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70, false));
+            }
+        }
 
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
@@ -259,37 +255,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private void cargarTexturas(){
 
-        /*
-        ESTOS ASSETS SE CARGARAN EN LA PantallaCargandoStoryMode
-        //Textura del nivel 1
-        assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
-
-        //Textura de Astro
-        assetManager.load("Astro/CAMINATA 4.png", Texture.class);
-        assetManager.load("Astro/CAMINATA 2.png", Texture.class);
-        assetManager.load("Astro/CAMINATA 3.png", Texture.class);
-        assetManager.load("Astro/CAMINATA 1.png", Texture.class);
-
-        //Textura de cavernicola01
-        assetManager.load("cavernicola01/CM1 3.png", Texture.class);
-        assetManager.load("cavernicola01/CM1 4.png", Texture.class);
-        assetManager.load("cavernicola01/CM1 2.png", Texture.class);
-        assetManager.load("cavernicola01/CM1 1.png", Texture.class);
-
-        //Textura vida
-        assetManager.load("vida.png", Texture.class);
-
-        //Textura botones
-        assetManager.load("granada_icon.png", Texture.class);
-        assetManager.load("bullet_icon.png", Texture.class);
-        assetManager.load("pause-button.png", Texture.class);
-        assetManager.load("Pad/padBack.png", Texture.class);
-        assetManager.load("Pad/padKnob.png", Texture.class);
-
-        // Se bloquea hasta cargar los recursos
-        assetManager.finishLoading();
-        */
-
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
         fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
@@ -338,10 +303,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo.render(batch);
 
-        vida1.draw(batch);
-        vida2.draw(batch);
-        vida3.draw(batch);
-
         texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
         texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
 
@@ -349,6 +310,13 @@ class PantallaJuego extends Pantalla implements Screen  {
         for(Enemigo e:listaEnemigos){
             e.render(batch);
             e.setX(e.getX()+(-30*delta));
+        }
+
+        for(PowerUp e:vidas){
+            if(e.isActiva()){
+                e.render(batch);
+            }
+            //e.setX(e.getX()+(-30*delta));
         }
 
         TextureRegion currentFrame = (TextureRegion) personaje.getAnimacion().getKeyFrame(stateTime,true);
