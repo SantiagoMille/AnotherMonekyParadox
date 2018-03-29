@@ -1,10 +1,12 @@
 package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -48,6 +50,10 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Sprite spriteBackground;
 
     private Fondo fondo;
+
+    //Sonido
+    private Sound gunSound;
+    private Sound boomSound;
 
     //Armas
     private Array<Bala> listaBalas;
@@ -279,6 +285,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
+                gunSound.play();
                 if(!isFliped) {
                     Bala nueva = new Bala(bananaDisparo,false);
                     nueva.set(personaje.getX() + 105, personaje.getY() + 68);
@@ -336,13 +343,16 @@ class PantallaJuego extends Pantalla implements Screen  {
         botonGranada = assetManager.get("granada_icon.png");
         botonDisparo = assetManager.get("bullet_icon.png");
         botonPausa = assetManager.get("pause-button.png");
-        botonContinua = assetManager.get("go-back.png");
-        botonHome = assetManager.get("home.png");
+        botonContinua = assetManager.get("PlayButton.png");
+        botonHome = assetManager.get("boton Home.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
 
         bananaDisparo = assetManager.get("banana.png");
-        bananaGranada = assetManager.get("banana.png");
+        bananaGranada = assetManager.get("granana.png");
+
+        gunSound = assetManager.get("pew.mp3");
+        boomSound = assetManager.get("boom.mp3");
     }
 
     private void crearCamara() {
@@ -511,6 +521,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = listaEnemigos.get(i);
                 Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    boomSound.play();
                     listaGranadas.removeIndex(i);
                     vidaEnemigo = vidaEnemigo - 100;
                     enemigo.setVida(vidaEnemigo);
@@ -598,12 +609,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             Texture texturaRectangulo = new Texture( pixmap );
             pixmap.dispose();
             Image imgRectangulo = new Image(texturaRectangulo);
-            imgRectangulo.setPosition(ANCHO/2 - imgRectangulo.getWidth()/2, ALTO*2.75f/10f);
+            imgRectangulo.setPosition(ANCHO*0.5f - imgRectangulo.getWidth()*0.5f, ALTO*2.75f/10f);
             this.addActor(imgRectangulo);
 
 
             // Salir
-            Texture texturaBtnSalir = new Texture("granada_icon.png");
+            Texture texturaBtnSalir = new Texture("boton Home.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
@@ -619,7 +630,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             this.addActor(btnSalir);
 
             // Continuar
-            Texture texturaBtnContinuar = new Texture("granada_icon.png");
+            Texture texturaBtnContinuar = new Texture("PlayButton.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
