@@ -104,7 +104,6 @@ class PantallaCredits implements Screen {
         //Fotos
         foto.setScaling(Scaling.fit);
 
-
         Table table = new Table(skin);
         table.defaults().pad(10f);
         table.setFillParent(true);

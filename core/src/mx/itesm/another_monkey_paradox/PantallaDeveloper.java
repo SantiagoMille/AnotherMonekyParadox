@@ -45,6 +45,11 @@ class PantallaDeveloper implements Screen {
     private Stage stageMenu;
     private Table container;
 
+
+
+    private Texto titulo;
+
+
     private SpriteBatch batch;
 
     //background music
@@ -100,10 +105,12 @@ class PantallaDeveloper implements Screen {
         };
 
         table.pad(10).defaults().expandX().space(4);
-        Label title = new Label("                       Configuraciones\n\n",skin);
-        title.setFontScale(3.5f);
-        title.setAlignment(Align.right);
-        table.add(title).colspan(2).fillX().height(150);
+        //Label title = new Label("                       Configuraciones\n\n",skin);
+        titulo = new Texto();
+
+        //title.setFontScale(3.5f);
+        //title.setAlignment(Align.right);
+        //table.add(title).colspan(2).fillX().height(150);
         table.row();
         table.add(new Label("                                                                                                       ", skin)).expandX().fillX();
 
@@ -183,6 +190,7 @@ class PantallaDeveloper implements Screen {
         stageMenu.act(Gdx.graphics.getDeltaTime());
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
+        titulo.mostratMensaje(batch,"Configuraciones",ANCHO/2-50,ALTO-50);
         batch.end();
         stageMenu.draw();
 
