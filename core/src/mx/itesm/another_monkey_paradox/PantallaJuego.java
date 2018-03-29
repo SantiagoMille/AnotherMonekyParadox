@@ -45,6 +45,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
 
+    private boolean firstFilter=true;
+
     //For Background
     Texture imgBackground;
     private Sprite spriteBackground;
@@ -373,7 +375,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         stateTime+=delta;
 
         if(estado != EstadoJuego.PAUSADO) {
-            actualizarObjetos(delta);
+            actualizarObjetos(delta, stateTime);
 
         }
 
@@ -388,8 +390,17 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo.render(batch);
 
-        texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700,1,1,1);
-        texto.mostratMensaje(batch, "SCORE: ", 1050, 700,1,1,1);
+        if(fondo.getImagenA().getX()<-1280&&fondo.getImagenA().getX()>-1382&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
 
 
         for(PowerUp e:vidas){
@@ -409,11 +420,6 @@ class PantallaJuego extends Pantalla implements Screen  {
             isFliped = true;
         }else {}
 
-        //Balas
-        for(Bala bala: listaBalas){
-            bala.render(batch);
-        }
-
 
         //Granadas
         for(Granada Granada: listaGranadas){
@@ -427,14 +433,25 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(estado == EstadoJuego.JUGANDO&&e.right){
                 e.setX(e.getX()+(-50*delta));
             }else if(estado == EstadoJuego.JUGANDO&&!e.right){
-                e.setX(e.getX()+(50*delta));
+                if(personaje.getX()<camara.position.x){
+                    e.setX(e.getX()+(50*delta));
+                }else{
+                    e.setX(e.getX()+(5*delta));
+                }
+
             }
+        }
+
+        for(Bala bala: listaBalas){
+            bala.render(batch);
         }
 
         // Botón pausa
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
 
         stageNivel.draw();
+
+        texto.mostratMensaje(batch, "SCORE: " + puntosJugador, 1050, 700,0,0,0);
 
         batch.end();
 
@@ -445,12 +462,15 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     }
 
-    private void actualizarObjetos(float dt) {
+    private void actualizarObjetos(float dt, float stateTime) {
 
         //Movimiento del personaje
         if(isMovingRight&&!isMovingLeft){
-            personaje.setX(personaje.getX()+(dt*75));
-            fondo.mover(-dt * 76);
+            if(personaje.getX()<camara.position.x){
+                personaje.setX(personaje.getX()+(dt*75));
+            }else {
+                fondo.mover(-dt * 76);
+            }
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){
@@ -491,9 +511,9 @@ class PantallaJuego extends Pantalla implements Screen  {
             j++;
         }
 
-        verificarColisionBalaEnemigo();
-        verificarColisionGranadaEnemigo();
-        verificarColisionPersonajeEnemigo();
+        verificarColisionBalaEnemigo(stateTime);
+        verificarColisionGranadaEnemigo(stateTime);
+        verificarColisionPersonajeEnemigo(stateTime);
 
     }
 
@@ -502,19 +522,27 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(listaEnemigos.get(i).getVida() <= 0){
                 listaEnemigos.removeIndex(i);
                 puntosJugador += 10;
-            }
+                Gdx.app.log("EEHHEHEHEHHE", puntosJugador+"");            }
         }
     }
 
-    private void verificarColisionBalaEnemigo() {
+    private void verificarColisionBalaEnemigo(float dt) {
+        Rectangle rectEnemigo;
+        Bala bala;
+
         for(int j =listaBalas.size-1; j>=0;j--){
-            Bala bala = listaBalas.get(j);
+            bala = listaBalas.get(j);
             for(int i =listaEnemigos.size-1;i>=0;i--){
+
                 enemigo = listaEnemigos.get(i);
-                Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(j);
-                    vidaEnemigo = vidaEnemigo - 25;
+                    vidaEnemigo = enemigo.getVida() - 25;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -523,16 +551,22 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
     }
 
-    private void verificarColisionGranadaEnemigo() {
+    private void verificarColisionGranadaEnemigo(float dt) {
+        Rectangle rectEnemigo;
+        Granada granada;
         for(int j =listaGranadas.size-1; j>=0;j--){
-            Granada granada = listaGranadas.get(j);
+            granada = listaGranadas.get(j);
             for(int i =listaEnemigos.size-1;i>=0;i--){
                 enemigo = listaEnemigos.get(i);
-                Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     boomSound.play();
                     listaGranadas.removeIndex(j);
-                    vidaEnemigo = vidaEnemigo - 100;
+                    vidaEnemigo = enemigo.getVida() - 100;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -541,15 +575,18 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
     }
 
-    private void verificarColisionPersonajeEnemigo() {
-
+    private void verificarColisionPersonajeEnemigo(float dt) {
+        Enemigo x;
+        Rectangle rectEnemigo;
+        Rectangle rectPersonaje;
 
         for (int i = listaEnemigos.size - 1; i >= 0; i--) {
-            Rectangle rectEnemigo = new Rectangle(enemigo.getX() + 30, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-            Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            x = listaEnemigos.get(i);
+            rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+            rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
                 if (rectEnemigo.overlaps(rectPersonaje)) {
                     for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 50){
+                        if (contador >= 60){
                             if (vidas.get(j).isActiva()) {
                             vidas.get(j).setActiva(false);
                             System.out.println(vidas.get(j));
@@ -596,18 +633,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     private class EscenaPausa extends Stage{
 
         private Texto titlee;
-/*
-        public void show(){
-            batch = new SpriteBatch();
-            titlee = new Texto();
-        }
 
-        public void render(float delta) {
-            batch.begin();
-            titlee.mostratMensaje(batch,"PAUSE",ANCHO/2,ALTO/2);
-            batch.end();
-        }
-*/
         // La escena que se muestra cuando está pausado
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
 

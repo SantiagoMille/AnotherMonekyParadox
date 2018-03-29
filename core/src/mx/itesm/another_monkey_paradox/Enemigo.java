@@ -23,6 +23,14 @@ class Enemigo {
     private float timerMuriendo;
     private int vida = 100;
 
+    public Animation getAnimacion() {
+        return animacion;
+    }
+
+    public void setAnimacion(Animation animacion) {
+        this.animacion = animacion;
+    }
+
     public boolean right;
 
     private static final float VX = -200;
