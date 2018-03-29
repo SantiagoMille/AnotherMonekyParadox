@@ -425,9 +425,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         for(Enemigo e:listaEnemigos){
             e.render(batch);
             if(estado == EstadoJuego.JUGANDO&&e.right){
-                e.setX(e.getX()+(-30*delta));
+                e.setX(e.getX()+(-50*delta));
             }else if(estado == EstadoJuego.JUGANDO&&!e.right){
-                e.setX(e.getX()+(30*delta));
+                e.setX(e.getX()+(50*delta));
             }
         }
 
@@ -454,7 +454,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){
-                personaje.setX(personaje.getX()+(dt*-120));
+                personaje.setX(personaje.getX()+(dt*-75));
             }
             if(fondo.getImagenA().getX()>0) {
                 fondo.mover(dt * 20);
@@ -513,7 +513,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = listaEnemigos.get(i);
                 Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaBalas.removeIndex(i);
+                    listaBalas.removeIndex(j);
                     vidaEnemigo = vidaEnemigo - 25;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
@@ -531,7 +531,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     boomSound.play();
-                    listaGranadas.removeIndex(i);
+                    listaGranadas.removeIndex(j);
                     vidaEnemigo = vidaEnemigo - 100;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
