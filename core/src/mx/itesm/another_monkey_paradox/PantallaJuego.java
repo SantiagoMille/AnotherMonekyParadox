@@ -388,8 +388,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         fondo.render(batch);
 
-        texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700);
-        texto.mostratMensaje(batch, "SCORE: ", 1050, 700);
+        texto.mostratMensaje(batch, Integer.toString(puntosJugador), 1150, 700,1,1,1);
+        texto.mostratMensaje(batch, "SCORE: ", 1050, 700,1,1,1);
 
 
         for(PowerUp e:vidas){

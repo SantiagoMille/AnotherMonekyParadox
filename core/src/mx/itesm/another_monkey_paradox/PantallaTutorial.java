@@ -68,7 +68,7 @@ abstract class PantallaTutorial implements Screen {
     private void crearMainView() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("space2.png");
+        imgBackground = new Texture("pantall_tutorial.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
         //spriteBackground.setAlpha(0.7f);

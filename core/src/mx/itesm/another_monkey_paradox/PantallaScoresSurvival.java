@@ -23,6 +23,7 @@ public class PantallaScoresSurvival extends PantallaScores {
 
     public PantallaScoresSurvival(Main main) {
         super(main);
+        survival = true;
     }
 
     @Override
@@ -30,7 +31,6 @@ public class PantallaScoresSurvival extends PantallaScores {
         super.stageMenu = new Stage(vista);
 
         title = new Texto(1,1,1);
-        title.setText("HIGHSCORES STORY MODE");
 
         imgBackground = new Texture("logros.png");
         spriteBackground = new Sprite(imgBackground);

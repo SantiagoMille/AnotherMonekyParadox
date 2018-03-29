@@ -19,16 +19,9 @@ public class Texto {
     }
 
     public  void mostratMensaje(SpriteBatch batch, String mensaje, float x, float y,float r, float g,float b){
-        if(!mensaje.equals("")){
-            glyph = new GlyphLayout(font,mensaje, new Color(r,g,b,1),1000f,50,true);
-            //glyph.setText(font,mensaje);
-        }
-        glyph = new GlyphLayout(font,mensaje, new Color(r,g,b,1),1000f,50,true);
+        glyph = new GlyphLayout(font,mensaje, new Color(r,g,b,1),1000f,1,true);
         float anchoText = glyph.width;
         font.draw(batch,glyph, x-anchoText/2,y);
     }
 
-    public void setText(String mensaje){
-        glyph.setText(font,mensaje);
-    }
 }

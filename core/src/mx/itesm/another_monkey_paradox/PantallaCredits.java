@@ -88,7 +88,7 @@ class PantallaCredits implements Screen {
         Brian = new Texto(1,1,1);
         Diego = new Texto(1,1,1);
 
-        imgBackground = new Texture("space2.png");
+        imgBackground = new Texture("space.png");
         adrian = new Texture("pp.jpg");
         santi = new Texture("pp.jpg");
         fernando = new Texture("pp.jpg");
@@ -158,12 +158,12 @@ class PantallaCredits implements Screen {
         bri.draw(batch);
         die.draw(batch);
 
-        title.mostratMensaje(batch,"CREDITS",ANCHO/2,ALTO-60);
-        Santi.mostratMensaje(batch,"Luis Santiago Mille  -  ISC",400,ALTO-180);
-        Brian.mostratMensaje(batch,"Brian Saggiante  -  LAD",370,ALTO-300);
-        Fer.mostratMensaje(batch,"Luis Fernando Cedenio  -  ISC",430,ALTO-420);
-        Adrian.mostratMensaje(batch,"Adrian Mendez  -  ISC",350,ALTO-540);
-        Diego.mostratMensaje(batch,"Diego Cervantes  -  LAD",380,ALTO-660);
+        title.mostratMensaje(batch,"CREDITS",ANCHO/6,ALTO-60,215/255f,215/255f,215/255f);
+        Santi.mostratMensaje(batch,"Luis Santiago Mille  -  ISC",200,ALTO-180,215/255f,215/255f,215/255f);
+        Brian.mostratMensaje(batch,"Brian Saggiante  -  LAD",140,ALTO-300,215/255f,215/255f,215/255f);
+        Fer.mostratMensaje(batch,"Luis Fernando Cedenio  -  ISC",265,ALTO-420,215/255f,215/255f,215/255f);
+        Adrian.mostratMensaje(batch,"Adrian Mendez  -  ISC",90,ALTO-540,215/255f,215/255f,215/255f);
+        Diego.mostratMensaje(batch,"Diego Cervantes  -  LAD",140,ALTO-660,215/255f,215/255f,215/255f);
         batch.end();
         stageMenu.draw();
     }

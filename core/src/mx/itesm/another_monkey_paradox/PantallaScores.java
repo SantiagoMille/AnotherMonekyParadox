@@ -35,6 +35,8 @@ public abstract class PantallaScores implements Screen{
     public static final float ANCHO = 1280;
     public static final float ALTO = 780;
 
+    public boolean survival;
+
     //Camara
     public OrthographicCamera camara;
     public Viewport vista;
@@ -78,7 +80,11 @@ public abstract class PantallaScores implements Screen{
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
-        title.mostratMensaje(batch,"",ANCHO/2+20,ALTO-50);
+        if(survival) {
+            title.mostratMensaje(batch, "HIGHSCORES SURVIVAL MODE", ANCHO / 3-10, ALTO - 50, 1, 1, 1);
+        }else{
+            title.mostratMensaje(batch, "HIGHSCORES STORY MODE", ANCHO / 3-10, ALTO - 50, 1, 1, 1);
+        }
         batch.end();
         stageMenu.draw();
     }

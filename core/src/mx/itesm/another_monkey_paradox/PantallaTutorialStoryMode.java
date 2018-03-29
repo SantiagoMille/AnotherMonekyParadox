@@ -23,6 +23,6 @@ public class PantallaTutorialStoryMode extends PantallaTutorial {
 
     @Override
     protected void escribirTexto(SpriteBatch batch) {
-        texto.mostratMensaje(batch,toWrite,ANCHO/2,ALTO-230);
+        texto.mostratMensaje(batch,toWrite,ANCHO/2-50,ALTO-100,0f,0f,0f);
     }
 }

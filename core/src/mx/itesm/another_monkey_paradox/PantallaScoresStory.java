@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Align;
 public class PantallaScoresStory extends PantallaScores {
     public PantallaScoresStory(Main main) {
         super(main);
+        survival = false;
     }
 
     @Override
@@ -29,7 +30,6 @@ public class PantallaScoresStory extends PantallaScores {
         super.stageMenu = new Stage(vista);
 
         title = new Texto(1,1,1);
-        title.setText("HIGHSCORES STORY MODE");
 
         imgBackground = new Texture("logros.png");
         spriteBackground = new Sprite(imgBackground);
