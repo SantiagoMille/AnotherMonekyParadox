@@ -23,16 +23,34 @@ class Enemigo {
     private float timerMuriendo;
     private int vida = 100;
 
+    public boolean right;
+
     private static final float VX = -200;
 
-    public Enemigo(Texture texture1, Texture texture2, Texture texture3, Texture texture4){
-        TextureRegion img1 = new TextureRegion(texture1);
-        TextureRegion img2 = new TextureRegion(texture2);
-        TextureRegion img3 = new TextureRegion(texture3);
-        TextureRegion img4 = new TextureRegion(texture4);
-        animacion = new Animation(0.2f, img1, img2, img3, img4);
-        x = PantallaJuego.ANCHO-texture1.getWidth()/2;
-        y = PantallaJuego.ALTO/4;
+    public Enemigo(Texture texture1, Texture texture2, Texture texture3, Texture texture4, boolean right, int mult){
+        if(right) {
+            TextureRegion img1 = new TextureRegion(texture1);
+            TextureRegion img2 = new TextureRegion(texture2);
+            TextureRegion img3 = new TextureRegion(texture3);
+            TextureRegion img4 = new TextureRegion(texture4);
+            this.right = right;
+            animacion = new Animation(0.2f, img1, img2, img3, img4);
+            x = (PantallaJuego.ANCHO - texture1.getWidth() / 2)+(500*mult);
+            y = PantallaJuego.ALTO / 4;
+        }else{
+            TextureRegion img1 = new TextureRegion(texture1);
+            img1.flip(true,false);
+            TextureRegion img2 = new TextureRegion(texture2);
+            img2.flip(true,false);
+            TextureRegion img3 = new TextureRegion(texture3);
+            img3.flip(true,false);
+            TextureRegion img4 = new TextureRegion(texture4);
+            img4.flip(true,false);
+            this.right = right;
+            animacion = new Animation(0.2f, img1, img2, img3, img4);
+            x = (0 - texture1.getWidth())+(-500*mult);
+            y = PantallaJuego.ALTO / 4;
+        }
         estado=Estado.VIVO;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
     }

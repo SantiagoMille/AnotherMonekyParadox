@@ -149,8 +149,14 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3);
-        listaEnemigos.add(enemigo);
+        for(int i=0; i<4;i++){
+            enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+            listaEnemigos.add(enemigo);
+        }
+        for(int i=0; i<4;i++){
+            enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+            listaEnemigos.add(enemigo);
+        }
 
         //Lista Balas
         listaBalas = new Array<Bala>();
@@ -382,9 +388,12 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
-            if(estado == EstadoJuego.JUGANDO){
+            if(estado == EstadoJuego.JUGANDO&&e.right){
                 e.setX(e.getX()+(-30*delta));
-            }}
+            }else if(estado == EstadoJuego.JUGANDO&&!e.right){
+                e.setX(e.getX()+(30*delta));
+            }
+        }
 
         // Botón pausa
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
