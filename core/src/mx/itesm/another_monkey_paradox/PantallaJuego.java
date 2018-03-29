@@ -1,10 +1,12 @@
 package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -49,10 +51,17 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private Fondo fondo;
 
+    //Sonido
+    private Sound gunSound;
+    private Sound boomSound;
+
+    //Armas
     private Array<Bala> listaBalas;
+    private Array<Granada> listaGranadas;
+    //Fisica Granada
+    float velocityY;     // Velocidad de la granada
 
     //Controles del jugador
-
     private ImageButton granada;
     private ImageButton arma;
     private ImageButton pausa;
@@ -123,8 +132,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     // Estados del juego
     private EstadoJuego estado;
 
-    //Textura disparo
+    //Textura Armas
     private Texture bananaDisparo;
+    private Texture bananaGranada;
 
     private Enemigo enemigo;
 
@@ -160,6 +170,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Balas
         listaBalas = new Array<Bala>();
+
+        //Lista Granadas
+        listaGranadas = new Array<Granada>();
 
         estado = EstadoJuego.JUGANDO;
 
@@ -254,19 +267,31 @@ class PantallaJuego extends Pantalla implements Screen  {
         });
         pad.setColor(1,1,1,0.7f);   // Transparente
 
+        // Comportamiento de Boton Granada
         granada.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
+                if(!isFliped) {
+                    Granada grana = new Granada(bananaGranada,false);
+                    grana.set(personaje.getX() + 105, personaje.getY() + 68);
+                    listaGranadas.add(grana);
+                } else {
+                    Granada grana = new Granada(bananaGranada,true);
+                    grana.set(personaje.getX(), personaje.getY() + 68);
+                    listaGranadas.add(grana);
+                }
             }
         });
 
+        // Comportamiento de Boton Disparo
         arma.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
+                gunSound.play();
                 if(!isFliped) {
                     Bala nueva = new Bala(bananaDisparo,false);
                     nueva.set(personaje.getX() + 105, personaje.getY() + 68);
@@ -279,6 +304,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         });
 
+        // Comportamiento de Boton Pausa
         pausa.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -323,12 +349,16 @@ class PantallaJuego extends Pantalla implements Screen  {
         botonGranada = assetManager.get("granada_icon.png");
         botonDisparo = assetManager.get("bullet_icon.png");
         botonPausa = assetManager.get("pause-button.png");
-        botonContinua = assetManager.get("go-back.png");
-        botonHome = assetManager.get("home.png");
+        botonContinua = assetManager.get("PlayButton.png");
+        botonHome = assetManager.get("boton Home.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
 
         bananaDisparo = assetManager.get("banana.png");
+        bananaGranada = assetManager.get("granana.png");
+
+        gunSound = assetManager.get("pew.mp3");
+        boomSound = assetManager.get("boom.mp3");
     }
 
     private void crearCamara() {
@@ -379,9 +409,15 @@ class PantallaJuego extends Pantalla implements Screen  {
             isFliped = true;
         }else {}
 
-
+        //Balas
         for(Bala bala: listaBalas){
             bala.render(batch);
+        }
+
+
+        //Granadas
+        for(Granada Granada: listaGranadas){
+            Granada.render(batch);
         }
 
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
@@ -398,7 +434,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         // Botón pausa
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
 
-
         stageNivel.draw();
 
         batch.end();
@@ -412,6 +447,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private void actualizarObjetos(float dt) {
 
+        //Movimiento del personaje
         if(isMovingRight&&!isMovingLeft){
             personaje.setX(personaje.getX()+(dt*75));
             fondo.mover(-dt * 76);
@@ -424,6 +460,8 @@ class PantallaJuego extends Pantalla implements Screen  {
                 fondo.mover(dt * 20);
             }
         }
+
+        //Balas
         int i=0;
         for(Bala bala:listaBalas){
             if(bala.getX()>camara.position.x+ANCHO/2||bala.getX()<camara.position.x-ANCHO/2){
@@ -438,14 +476,30 @@ class PantallaJuego extends Pantalla implements Screen  {
             i++;
         }
 
+        //Granadas
+        int j=0;
+        for(Granada granada:listaGranadas){
+            if(granada.getX()>camara.position.x+ANCHO/2||granada.getX()<camara.position.x-ANCHO/2){
+                listaGranadas.removeIndex(j);
+            }
+            if(granada.fliped){
+                granada.mover(dt*2);
+            } else {
+                granada.mover(-dt * 2);
+            }
+            granada.getSprite().rotate(10);
+            j++;
+        }
+
         verificarColisionBalaEnemigo();
+        verificarColisionGranadaEnemigo();
         verificarColisionPersonajeEnemigo();
 
     }
 
     private void verificarVidaEnemigos() {
         for(int i = listaEnemigos.size-1;i>=0;i--){
-            if(listaEnemigos.get(i).getVida() == 0){
+            if(listaEnemigos.get(i).getVida() <= 0){
                 listaEnemigos.removeIndex(i);
                 puntosJugador += 10;
             }
@@ -461,6 +515,24 @@ class PantallaJuego extends Pantalla implements Screen  {
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(i);
                     vidaEnemigo = vidaEnemigo - 25;
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
+                }
+                verificarVidaEnemigos();
+            }
+        }
+    }
+
+    private void verificarColisionGranadaEnemigo() {
+        for(int j =listaGranadas.size-1; j>=0;j--){
+            Granada granada = listaGranadas.get(j);
+            for(int i =listaEnemigos.size-1;i>=0;i--){
+                enemigo = listaEnemigos.get(i);
+                Rectangle rectEnemigo = new Rectangle(enemigo.getX()+210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    boomSound.play();
+                    listaGranadas.removeIndex(i);
+                    vidaEnemigo = vidaEnemigo - 100;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -523,9 +595,22 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private class EscenaPausa extends Stage{
 
+        private Texto titlee;
+/*
+        public void show(){
+            batch = new SpriteBatch();
+            titlee = new Texto();
+        }
+
+        public void render(float delta) {
+            batch.begin();
+            titlee.mostratMensaje(batch,"PAUSE",ANCHO/2,ALTO/2);
+            batch.end();
+        }
+*/
         // La escena que se muestra cuando está pausado
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
-            super(vista,batch);
+
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
             pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
@@ -533,12 +618,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             Texture texturaRectangulo = new Texture( pixmap );
             pixmap.dispose();
             Image imgRectangulo = new Image(texturaRectangulo);
-            imgRectangulo.setPosition(ANCHO/2 - imgRectangulo.getWidth()/2, ALTO*2.75f/10f);
+            imgRectangulo.setPosition(ANCHO*0.5f - imgRectangulo.getWidth()*0.5f, ALTO*2.75f/10f);
             this.addActor(imgRectangulo);
 
 
             // Salir
-            Texture texturaBtnSalir = new Texture("granada_icon.png");
+            Texture texturaBtnSalir = new Texture("boton Home.png");
             TextureRegionDrawable trdSalir = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
@@ -554,7 +639,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             this.addActor(btnSalir);
 
             // Continuar
-            Texture texturaBtnContinuar = new Texture("granada_icon.png");
+            Texture texturaBtnContinuar = new Texture("PlayButton.png");
             TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
@@ -572,48 +657,5 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
     }
 
-    private class ProcesadorEntrada implements InputProcessor {
-
-        @Override
-        public boolean keyDown(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyUp(int keycode) {
-            return false;
-        }
-
-        @Override
-        public boolean keyTyped(char character) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override
-        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-            return false;
-        }
-
-        @Override
-        public boolean touchDragged(int screenX, int screenY, int pointer) {
-            return false;
-        }
-
-        @Override
-        public boolean mouseMoved(int screenX, int screenY) {
-            return false;
-        }
-
-        @Override
-        public boolean scrolled(int amount) {
-            return false;
-        }
-
-    }
 }
 

@@ -3,6 +3,7 @@ package mx.itesm.another_monkey_paradox;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -62,6 +63,11 @@ public class PantallaCargandoStoryMode implements Screen {
 
     //Estos son los recursos de la pantalla siguiente (StoryMode)
     private void cargarRecursos() {
+
+        //Sonidos
+        assetManager.load("pew.mp3",Sound.class);
+        assetManager.load("boom.mp3",Sound.class);
+
         //Textura del nivel 1
         assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
 
@@ -86,11 +92,12 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
         assetManager.load("Pad/padKnob.png", Texture.class);
-        assetManager.load("go-back.png", Texture.class);
-        assetManager.load("home.png", Texture.class);
+        assetManager.load("boton Home.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
 
         //Textura armas
         assetManager.load("banana.png", Texture.class);
+        assetManager.load("granana.png", Texture.class);
 
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
