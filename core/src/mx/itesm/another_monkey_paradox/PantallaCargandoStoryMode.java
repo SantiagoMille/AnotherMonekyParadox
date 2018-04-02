@@ -94,6 +94,7 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("Pad/padKnob.png", Texture.class);
         assetManager.load("boton Home.png", Texture.class);
         assetManager.load("PlayButton.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
 
         //Textura armas
         assetManager.load("banana.png", Texture.class);
