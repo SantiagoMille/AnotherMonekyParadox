@@ -251,12 +251,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Touchpad pad = (Touchpad)actor;
-                if (pad.getKnobPercentX() > 0.10) { // Más de 20% de desplazamiento DERECHA
+                if (pad.getKnobPercentX() > 0.25) { // Más de 20% de desplazamiento DERECHA
                     //personaje.setX(personaje.getX()+3);
                     personaje.setRight(true);
                     isMovingRight=true;
                     isMovingLeft = false;
-                } else if ( pad.getKnobPercentX() < -0.10 ) {   // Más de 20% IZQUIERDA
+                } else if ( pad.getKnobPercentX() < -0.25 ) {   // Más de 20% IZQUIERDA
                     //personaje.setX(personaje.getX()-3);
                     personaje.setRight(false);
                     isMovingLeft = true;
@@ -384,11 +384,10 @@ class PantallaJuego extends Pantalla implements Screen  {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.setProjectionMatrix(camara.combined);
-        batch.begin();
-        //spriteBackground.draw(batch);
-        //astro.draw(batch);
 
+        batch.begin();
         fondo.render(batch);
+        texto.mostratMensaje(batch, "SCORE: " + puntosJugador, 1050, 700,1,1,1);
 
         if(fondo.getImagenA().getX()<-1280&&fondo.getImagenA().getX()>-1382&&firstFilter){
             firstFilter=false;
@@ -401,7 +400,6 @@ class PantallaJuego extends Pantalla implements Screen  {
                 listaEnemigos.add(enemigo);
             }
         }
-
 
         for(PowerUp e:vidas){
             if(e.isActiva()){
@@ -450,9 +448,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
 
         stageNivel.draw();
-
-        texto.mostratMensaje(batch, "SCORE: " + puntosJugador, 1050, 700,0,0,0);
-
         batch.end();
 
         // Botón PAUSA
@@ -514,6 +509,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         verificarColisionBalaEnemigo(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionPersonajeEnemigo(stateTime);
+        verificarVidaAstro();
 
     }
 
@@ -586,7 +582,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
                 if (rectEnemigo.overlaps(rectPersonaje)) {
                     for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 60){
+                        if (contador >= 50){
                             if (vidas.get(j).isActiva()) {
                             vidas.get(j).setActiva(false);
                             System.out.println(vidas.get(j));
@@ -597,6 +593,18 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
         contador++;
+    }
+
+    private void verificarVidaAstro(){
+        int vidasFalse = 0;
+        for (int i = vidas.size() - 1; i >= 0; i--){
+            if(vidas.get(i).isActiva() == false){
+                vidasFalse++;
+            }
+        }
+        if(vidasFalse == vidas.size()){
+            main.setScreen(new EscenaAstroMuerto(main));
+        }
     }
 
 

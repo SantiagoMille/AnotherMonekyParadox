@@ -81,11 +81,11 @@ class Enemigo {
     }
 
     public int getWidth() {
-        return ((TextureRegion) animacion.getKeyFrame(0)).getRegionWidth();
+        return ((TextureRegion) animacion.getKeyFrame(3)).getRegionWidth();
     }
 
     public int getHeight() {
-        return ((TextureRegion) animacion.getKeyFrame(0)).getRegionHeight();
+        return ((TextureRegion) animacion.getKeyFrame(3)).getRegionHeight();
     }
 
     public float getY() {return y;}
@@ -109,5 +109,7 @@ class Enemigo {
     public int getVida(){
         return this.vida;
     }
+
+
 
 }
