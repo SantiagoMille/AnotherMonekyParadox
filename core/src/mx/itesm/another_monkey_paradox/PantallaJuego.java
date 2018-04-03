@@ -458,7 +458,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-2592&&firstFilter){
+        if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
             firstFilter=false;
             for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
@@ -468,6 +468,11 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
+        }
+
+        //PANTALLA DE VICTORIA PROVISIONAL
+        if(fondo.getImagenA().getX()<-300&&fondo.getImagenA().getX()>-400&&firstFilter){
+            main.setScreen(new EscenaAstroGanador(main, puntosJugador));
         }
 
         for(PowerUp e:vidas){
@@ -493,6 +498,11 @@ class PantallaJuego extends Pantalla implements Screen  {
             Granada.render(batch);
         }
 
+        //Balas
+        for(Bala bala: listaBalas){
+            bala.render(batch);
+        }
+
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
@@ -509,19 +519,17 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
-        for(Bala bala: listaBalas){
-            bala.render(batch);
-        }
 
+        //Texto Score
         textoGly.setText(font, "Score: "+puntosJugador);
         font.draw(batch,textoGly, ANCHO/2 + 120,ALTO-15);
 
-
+        //Texto Pausa
         if(estado == EstadoJuego.PAUSADO){
-            //pausaText.setText(font, "PAUSED");
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
 
+        //Texto Granadas
         textoGlyGran.setText(fontGran, "Grenades: "+maxGrandas);
         fontGran.draw(batch,textoGlyGran, ANCHO/2 + 340,ALTO-15);
 
