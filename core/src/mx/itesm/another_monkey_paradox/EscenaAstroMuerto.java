@@ -129,6 +129,5 @@ class EscenaAstroMuerto implements Screen {
 
     @Override
     public void dispose() {
-        imgBoton.dispose();
     }
 }

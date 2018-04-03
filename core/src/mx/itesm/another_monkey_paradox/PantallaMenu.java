@@ -329,7 +329,8 @@ class PantallaMenu implements Screen {
     @Override
     public void dispose() {
         PantallaSplash.musicMenu.stop();
-        /*imgLogo.dispose();
+        /*
+        imgLogo.dispose();
         botonPlay.dispose();
         botonPlayPressed.dispose();
         botonLeaderboard.dispose();
@@ -340,6 +341,7 @@ class PantallaMenu implements Screen {
         botonTutorialPressed.dispose();
         backgroundStory.dispose();
         backgroundSurvival.dispose();
+
 
         //Ahora el assetManager también libera los recursos
         assetManager.unload("LOGO-2.png");
