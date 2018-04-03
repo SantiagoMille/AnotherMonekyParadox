@@ -286,14 +286,18 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                if(!isFliped) {
-                    Granada grana = new Granada(bananaGranada,false);
-                    grana.set(personaje.getX() + 105, personaje.getY() + 68);
-                    listaGranadas.add(grana);
-                } else {
-                    Granada grana = new Granada(bananaGranada,true);
-                    grana.set(personaje.getX(), personaje.getY() + 68);
-                    listaGranadas.add(grana);
+                if(maxGrandas>0) {
+                    if (!isFliped) {
+                        Granada grana = new Granada(bananaGranada, false);
+                        grana.set(personaje.getX() + 105, personaje.getY() + 68);
+                        listaGranadas.add(grana);
+                        maxGrandas--;
+                    } else {
+                        Granada grana = new Granada(bananaGranada, true);
+                        grana.set(personaje.getX(), personaje.getY() + 68);
+                        listaGranadas.add(grana);
+                        maxGrandas--;
+                    }
                 }
             }
         });
