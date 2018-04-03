@@ -64,9 +64,7 @@ class EscenaAstroMuerto implements Screen {
     }
 
     private void crearBoton() {
-        assetManager.load("ok-button.png", Texture.class);
-        assetManager.finishLoading();
-        imgBoton = assetManager.get("ok-button.png");
+        imgBoton = assetManager.get("PlayButton.png");
 
         stageNivel = new Stage(vista);
 
@@ -74,8 +72,7 @@ class EscenaAstroMuerto implements Screen {
 
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(imgBoton));
         home = new ImageButton(btnHome);
-        home.setPosition(ANCHO/2-(imgBoton.getWidth()/2), ALTO/4);
-        home.setSize(128, 128);
+        home.setPosition(ANCHO/2-imgBoton.getWidth()/2, ALTO/4-imgBoton.getHeight()/2);
         home.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -104,8 +101,8 @@ class EscenaAstroMuerto implements Screen {
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        texto.mostratMensaje(batch, "You will get it next time", ANCHO/2, ALTO*0.75f,1,1, 1);
         stageNivel.draw();
+        texto.mostratMensaje(batch, "You will get it next time", ANCHO/2, ALTO*0.75f,1,1, 1);
         batch.end();
     }
 
