@@ -44,6 +44,7 @@ public class Granada {
 
     public Granada(Texture textura, boolean fliped){
         sprite = new Sprite(textura);
+        sprite.setSize(50,50);
         this.fliped = fliped;
         estado= Estado.VIVO;
     }

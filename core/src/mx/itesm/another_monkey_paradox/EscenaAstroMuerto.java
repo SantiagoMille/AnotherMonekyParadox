@@ -64,7 +64,9 @@ class EscenaAstroMuerto implements Screen {
     }
 
     private void crearBoton() {
-        imgBoton = assetManager.get("PlayButton.png");
+        assetManager.load("regresar.png", Texture.class);
+        assetManager.finishLoading();
+        imgBoton = assetManager.get("regresar.png");
 
         stageNivel = new Stage(vista);
 
