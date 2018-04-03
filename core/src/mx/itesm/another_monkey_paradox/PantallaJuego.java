@@ -106,6 +106,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     private BitmapFont font;
     public GlyphLayout textoGly;
 
+    public GlyphLayout pausaText;
+
     //Textura de Astro
     private Texture astroCaminata0;
     private Texture astroCaminata1;
@@ -196,6 +198,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Objeto que dibuja texto
         font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
         textoGly = new GlyphLayout(font,"Score");
+
+        pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
         for(int i=0;i<3;i++){
             if(i<3) {
@@ -453,6 +457,11 @@ class PantallaJuego extends Pantalla implements Screen  {
         textoGly.setText(font, "Score: "+puntosJugador);
         font.draw(batch,textoGly, ANCHO/2 + 120,ALTO-15);
 
+        if(estado == EstadoJuego.PAUSADO){
+            //pausaText.setText(font, "PAUSED");
+            font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
+        }
+
         batch.end();
 
         stageNivel.draw();
@@ -652,7 +661,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
-            pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
+            //pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
+            pixmap.setColor( 0f, 0f, 0f, 0.35f );
             pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture texturaRectangulo = new Texture( pixmap );
             pixmap.dispose();
@@ -667,7 +677,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                     new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
             btnSalir.setSize(155, 155);
-            btnSalir.setPosition(ANCHO*5.5f/10f, ALTO*3f/10f);
+            btnSalir.setPosition(ANCHO*5.4f/10f, ALTO*3f/10f);
             btnSalir.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -683,7 +693,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
             btnContinuar.setSize(155, 155);
-            btnContinuar.setPosition(ANCHO*3.5f/10f, ALTO*3f/10f);
+            btnContinuar.setPosition(ANCHO*3.4f/10f, ALTO*3f/10f);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
