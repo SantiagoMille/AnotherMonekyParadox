@@ -59,6 +59,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Sonido
     private Sound gunSound;
     private Sound boomSound;
+    private Sound hitSound;
 
     //Armas
     private Array<Bala> listaBalas;
@@ -380,6 +381,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         gunSound = assetManager.get("pew.mp3");
         boomSound = assetManager.get("boom.mp3");
+        hitSound = assetManager.get("hit.mp3");
     }
 
     private void crearCamara() {
@@ -662,6 +664,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                     for (int j = vidas.size() - 1; j >= 0; j--) {
                         if (contador >= 50){
                             if (vidas.get(j).isActiva()) {
+                                hitSound.play();
                             vidas.get(j).setActiva(false);
                             System.out.println(vidas.get(j));
                             contador = 0;
