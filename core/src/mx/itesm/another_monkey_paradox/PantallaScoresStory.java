@@ -45,7 +45,13 @@ public class PantallaScoresStory extends PantallaScores {
         ArrayList<String> scoress = new ArrayList<String>();
         if(score==null){
             //prefs.putString("highscores", "10000");
-            scoress.add("Astro: 10000");
+            scoress.add("Astro:10000");
+        }else{
+            for(String s: score.split(",")){
+                if(s.length()>1) {
+                    scoress.add(s);
+                }
+            }
         }
 
         Table table = new Table(skin);
@@ -62,7 +68,7 @@ public class PantallaScoresStory extends PantallaScores {
         ArrayList<String> allNames = new ArrayList<String>();
 
         for(String s: scoress) {
-            allScores.add(s.split(":")[0]);
+            allScores.add(s.split(":")[1]);
             allNames.add(s.split(":")[0]);
         }
         int i=0;

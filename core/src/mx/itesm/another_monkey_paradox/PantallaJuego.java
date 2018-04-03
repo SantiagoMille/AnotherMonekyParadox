@@ -30,12 +30,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by santi on 1/30/2018.
@@ -501,7 +504,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(50*delta));
                 }else{
-                    e.setX(e.getX()+(5*delta));
+                    e.setX(e.getX()+(15*delta));
                 }
 
             }
@@ -521,7 +524,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             //pausaText.setText(font, "PAUSED");
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
-        
+
         batch.end();
 
         stageNivel.draw();
@@ -614,7 +617,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - 25;
+                    vidaEnemigo = enemigo.getVida() - 17;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -680,11 +683,51 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
         if(vidasFalse == vidas.size()){
-            Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-            String scoresString = prefs.getString("highscores", null);
-            String[] scores = scoresString.split(",");
-
+            escribirScore();
             main.setScreen(new EscenaAstroMuerto(main));
+        }
+    }
+
+    private void escribirScore() {
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+        String scoresString = prefs.getString("highscores", null);
+        String[] scores;
+        if(scoresString==null){
+            scores = new String[0];
+        }else {
+            scores = scoresString.split(",");
+        }
+        int puntosActuales;
+        int puntosSiguientes;
+        if(scores.length>=10) {
+            for (int i = scores.length - 1; i > 0; i--) {
+                puntosActuales = Integer.parseInt(scores[i].split(":")[1]);
+                puntosSiguientes = Integer.parseInt(scores[i - 1].split(":")[1]);
+                if (puntosJugador > puntosActuales && puntosJugador < puntosSiguientes) {
+                    Date date = new Date(TimeUtils.millis());
+                    String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
+                    scores[i] = dateString + ":" + puntosJugador + "";
+                }
+            }
+            StringBuilder sb = new StringBuilder();
+            for(String s:scores){
+                sb.append(s);
+                sb.append(",");
+            }
+            prefs.putString("highscores",sb.toString());
+            prefs.flush();
+        }
+        else{
+            StringBuilder sb = new StringBuilder();
+            for(String s:scores){
+                sb.append(s);
+                sb.append(",");
+            }
+            Date date = new Date(TimeUtils.millis());
+            String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
+            sb.append(dateString + ":" + puntosJugador + "");
+            prefs.putString("highscores",sb.toString());
+            prefs.flush();
         }
     }
 
