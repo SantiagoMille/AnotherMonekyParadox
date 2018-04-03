@@ -67,6 +67,7 @@ public class PantallaCargandoStoryMode implements Screen {
         //Sonidos
         assetManager.load("pew.mp3",Sound.class);
         assetManager.load("boom.mp3",Sound.class);
+        assetManager.load("hit.mp3", Sound.class);
 
         //Textura del nivel 1
         assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);

@@ -5,12 +5,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -73,6 +75,15 @@ abstract class PantallaTutorial implements Screen {
         spriteBackground.setPosition(0, 0);
         //spriteBackground.setAlpha(0.7f);
 
+        //Cuadro oscuro
+        Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO), Pixmap.Format.RGBA8888 );
+        pixmap.setColor( 164/255f, 164/255f, 164/255f, 0.5f );
+        pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
+        Texture texturaRectangulo = new Texture( pixmap );
+        pixmap.dispose();
+        Image imgRectangulo = new Image(texturaRectangulo);
+        imgRectangulo.setPosition(0,0);
+
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
 
@@ -89,6 +100,7 @@ abstract class PantallaTutorial implements Screen {
             }
         });
 
+        stageMenu.addActor(imgRectangulo);
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);

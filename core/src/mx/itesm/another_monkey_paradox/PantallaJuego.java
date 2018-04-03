@@ -59,6 +59,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Sonido
     private Sound gunSound;
     private Sound boomSound;
+    private Sound hitSound;
 
     //Armas
     private Array<Bala> listaBalas;
@@ -102,6 +103,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     private int puntosJugador = 0;
     private BitmapFont font;
     public GlyphLayout textoGly;
+
+
+    public GlyphLayout pausaText;
 
     //Granada y texto
     private int maxGrandas = 5;
@@ -199,6 +203,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
         textoGly = new GlyphLayout(font,"Score");
         textoGlyGran = new GlyphLayout(font,"Score");
+
+        pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
         for(int i=0;i<3;i++){
             if(i<3) {
@@ -373,6 +379,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         gunSound = assetManager.get("pew.mp3");
         boomSound = assetManager.get("boom.mp3");
+        hitSound = assetManager.get("hit.mp3");
     }
 
     private void crearCamara() {
@@ -510,6 +517,11 @@ class PantallaJuego extends Pantalla implements Screen  {
         textoGlyGran.setText(font, "Grenades: "+maxGrandas);
         font.draw(batch,textoGlyGran, ANCHO/2 + 340,ALTO-15);
 
+        if(estado == EstadoJuego.PAUSADO){
+            //pausaText.setText(font, "PAUSED");
+            font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
+        }
+        
         batch.end();
 
         stageNivel.draw();
@@ -648,6 +660,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                     for (int j = vidas.size() - 1; j >= 0; j--) {
                         if (contador >= 50){
                             if (vidas.get(j).isActiva()) {
+                                hitSound.play();
                             vidas.get(j).setActiva(false);
                             System.out.println(vidas.get(j));
                             contador = 0;
@@ -713,7 +726,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
-            pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
+            //pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
+            pixmap.setColor( 0f, 0f, 0f, 0.35f );
             pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
             Texture texturaRectangulo = new Texture( pixmap );
             pixmap.dispose();
@@ -728,7 +742,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                     new TextureRegion(texturaBtnSalir));
             ImageButton btnSalir = new ImageButton(trdSalir);
             btnSalir.setSize(155, 155);
-            btnSalir.setPosition(ANCHO*5.5f/10f, ALTO*3f/10f);
+            btnSalir.setPosition(ANCHO*5.4f/10f, ALTO*3f/10f);
             btnSalir.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -744,7 +758,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                     new TextureRegion(texturaBtnContinuar));
             ImageButton btnContinuar = new ImageButton(trdContinuar);
             btnContinuar.setSize(155, 155);
-            btnContinuar.setPosition(ANCHO*3.5f/10f, ALTO*3f/10f);
+            btnContinuar.setPosition(ANCHO*3.4f/10f, ALTO*3f/10f);
             btnContinuar.addListener(new ClickListener(){
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
