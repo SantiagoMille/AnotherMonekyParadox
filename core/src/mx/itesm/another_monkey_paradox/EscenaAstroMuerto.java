@@ -77,7 +77,7 @@ class EscenaAstroMuerto implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                main.setScreen(new PantallaMenu(main));
+                main.setScreen(new PantallaSplash(main));
             }
         });
 

@@ -450,14 +450,12 @@ class PantallaJuego extends Pantalla implements Screen  {
             bala.render(batch);
         }
 
-        // Botón pausa
-        batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
-        stageNivel.draw();
-
         textoGly.setText(font, "Score: "+puntosJugador);
-        font.draw(batch,textoGly, ANCHO/2,ALTO/2);
+        font.draw(batch,textoGly, ANCHO/2 + 120,ALTO-15);
 
         batch.end();
+
+        stageNivel.draw();
 
         // Botón PAUSA
         if (estado==EstadoJuego.PAUSADO) {
