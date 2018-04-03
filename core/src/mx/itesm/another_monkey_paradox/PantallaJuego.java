@@ -105,7 +105,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Granada y texto
     private int maxGrandas = 5;
-    private BitmapFont fontGran;
     public GlyphLayout textoGlyGran;
 
 
@@ -198,9 +197,8 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Objeto que dibuja texto
         font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
-        fontGran = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
         textoGly = new GlyphLayout(font,"Score");
-        textoGlyGran = new GlyphLayout(fontGran,"Score");
+        textoGlyGran = new GlyphLayout(font,"Score");
 
         for(int i=0;i<3;i++){
             if(i<3) {
@@ -509,8 +507,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         textoGly.setText(font, "Score: "+puntosJugador);
         font.draw(batch,textoGly, ANCHO/2 + 120,ALTO-15);
 
-        textoGlyGran.setText(fontGran, "Grenades: "+maxGrandas);
-        fontGran.draw(batch,textoGlyGran, ANCHO/2 + 340,ALTO-15);
+        textoGlyGran.setText(font, "Grenades: "+maxGrandas);
+        font.draw(batch,textoGlyGran, ANCHO/2 + 340,ALTO-15);
 
         batch.end();
 
@@ -669,6 +667,10 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
         if(vidasFalse == vidas.size()){
+            Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+            String scoresString = prefs.getString("highscores", null);
+            String[] scores = scoresString.split(",");
+
             main.setScreen(new EscenaAstroMuerto(main));
         }
     }

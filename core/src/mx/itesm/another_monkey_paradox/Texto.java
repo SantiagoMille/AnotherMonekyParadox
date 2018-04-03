@@ -18,6 +18,7 @@ public class Texto {
         font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
     }
 
+
     public  void mostratMensaje(SpriteBatch batch, String mensaje, float x, float y,float r, float g,float b){
         glyph = new GlyphLayout(font,mensaje, new Color(r,g,b,1),1000f,1,true);
         //glyph.setText(font, mensaje);

@@ -15,6 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.ArrayList;
+
 /**
  * Created by santi on 2/13/2018.
  */
@@ -39,15 +41,11 @@ public class PantallaScoresStory extends PantallaScores {
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
         Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-        String names = prefs.getString("names", null);
-        if(names==null){
-            // prefs.putString("names", "Astro");
-            names = "Astro,";
-        }
-        String scores = prefs.getString("highscores", null);
-        if(scores==null){
+        String score = prefs.getString("highscores", null);
+        ArrayList<String> scoress = new ArrayList<String>();
+        if(score==null){
             //prefs.putString("highscores", "10000");
-            scores = "10000,";
+            scoress.add("Astro: 10000");
         }
 
         Table table = new Table(skin);
@@ -56,20 +54,17 @@ public class PantallaScoresStory extends PantallaScores {
         table.setPosition(table.getX(),table.getY()+250);
 
         /**
-         * Se hace el titulo de scores
-         */
-        //Label scoresTitle = new Label("HIGHSCORES STORY MODE", skin);
-        //scoresTitle.setFontScale(4f,4f);
-        //scoresTitle.setAlignment(Align.center);
-
-        /**
          * Se crean las columnas con puntuajes
          */
         Label columnName;
         Label columnScore;
+        ArrayList<String> allScores = new ArrayList<String>();
+        ArrayList<String> allNames = new ArrayList<String>();
 
-        String[] allScores = scores.split(",");
-        String[] allNames = names.split(",");
+        for(String s: scoress) {
+            allScores.add(s.split(":")[0]);
+            allNames.add(s.split(":")[0]);
+        }
         int i=0;
 
         //table.add(scoresTitle).colspan(2).fillX().height(150);
@@ -78,7 +73,7 @@ public class PantallaScoresStory extends PantallaScores {
             columnName=new Label(name+": ", skin);
             columnName.setFontScale(3f,3f);
             table.add(columnName);
-            columnScore= new Label(allScores[i], skin);
+            columnScore= new Label(allScores.get(i), skin);
             columnScore.setFontScale(3f,3f);
             table.add(columnScore);
             i++;
