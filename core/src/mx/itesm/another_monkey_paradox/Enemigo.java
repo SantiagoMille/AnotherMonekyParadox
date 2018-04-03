@@ -43,7 +43,7 @@ class Enemigo {
             TextureRegion img4 = new TextureRegion(texture4);
             this.right = right;
             animacion = new Animation(0.2f, img1, img2, img3, img4);
-            x = (PantallaJuego.ANCHO - texture1.getWidth() / 2)+(500*mult);
+            x = (PantallaJuego.ANCHO - texture1.getWidth() / 2)+(700*mult);
             y = PantallaJuego.ALTO / 4;
         }else{
             TextureRegion img1 = new TextureRegion(texture1);
@@ -56,7 +56,7 @@ class Enemigo {
             img4.flip(true,false);
             this.right = right;
             animacion = new Animation(0.2f, img1, img2, img3, img4);
-            x = (0 - texture1.getWidth())+(-500*mult);
+            x = (0 - texture1.getWidth())+(-700*mult);
             y = PantallaJuego.ALTO / 4;
         }
         estado=Estado.VIVO;
