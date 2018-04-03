@@ -88,8 +88,6 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
-    private Texture imgVida;
-    Sprite vida;
     int contador = 0;
 
     //Escena
@@ -102,9 +100,14 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     // Puntaje y texto
     private int puntosJugador = 0;
-
     private BitmapFont font;
     public GlyphLayout textoGly;
+
+    //Granada y texto
+    private int maxGrandas = 5;
+    private BitmapFont fontGran;
+    public GlyphLayout textoGlyGran;
+
 
     //Textura de Astro
     private Texture astroCaminata0;
@@ -195,7 +198,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Objeto que dibuja texto
         font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
+        fontGran = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
         textoGly = new GlyphLayout(font,"Score");
+        textoGlyGran = new GlyphLayout(fontGran,"Score");
 
         for(int i=0;i<3;i++){
             if(i<3) {
@@ -352,7 +357,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
         canervicola01Frame3 = assetManager.get("cavernicola01/CM1 1.png");
 
-        imgVida = assetManager.get("vida.png");
 
         botonGranada = assetManager.get("granada_icon.png");
         botonDisparo = assetManager.get("bullet_icon.png");
@@ -395,9 +399,57 @@ class PantallaJuego extends Pantalla implements Screen  {
         fondo.render(batch);
 
 
-        if(fondo.getImagenA().getX()<-1280&&fondo.getImagenA().getX()>-1382&&firstFilter){
+        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-2592&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
@@ -452,6 +504,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         textoGly.setText(font, "Score: "+puntosJugador);
         font.draw(batch,textoGly, ANCHO/2 + 120,ALTO-15);
+
+        textoGlyGran.setText(fontGran, "Grenades: "+maxGrandas);
+        fontGran.draw(batch,textoGlyGran, ANCHO/2 + 340,ALTO-15);
 
         batch.end();
 
