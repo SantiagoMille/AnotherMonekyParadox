@@ -49,6 +49,11 @@ class EscenaAstroMuerto implements Screen {
     //Escena
     private Stage stageNivel;
 
+    //Para el bacgraun
+    private Texture imgBacgraun;
+    private Sprite Bacgraun;
+
+
 
     public EscenaAstroMuerto(Main main) {
 
@@ -59,8 +64,17 @@ class EscenaAstroMuerto implements Screen {
     @Override
     public void show() {
         crearCamara();
+        crearBackground();
         crearBoton();
         batch = new SpriteBatch();
+    }
+
+    private void crearBackground(){
+        assetManager.load("pantallaMuerto.png", Texture.class);
+        assetManager.finishLoading();
+        imgBacgraun = assetManager.get("pantallaMuerto.png");
+        Bacgraun = new Sprite(imgBacgraun);
+        Bacgraun.setPosition(0,0);
     }
 
     private void crearBoton() {
@@ -68,13 +82,14 @@ class EscenaAstroMuerto implements Screen {
         assetManager.finishLoading();
         imgBoton = assetManager.get("regresar.png");
 
+
         stageNivel = new Stage(vista);
 
         texto = new Texto(1,1,1);
 
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(imgBoton));
         home = new ImageButton(btnHome);
-        home.setPosition(ANCHO/2-imgBoton.getWidth()/2, ALTO/4-imgBoton.getHeight()/2);
+        home.setPosition(ANCHO/2-imgBoton.getWidth()/2, ALTO/5-imgBoton.getHeight()/2);
         home.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -98,14 +113,14 @@ class EscenaAstroMuerto implements Screen {
     @Override
     public void render(float delta) {
 
-        Gdx.gl.glClearColor(66/255f,74/255f,96/255f,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Bacgraun.setPosition(0,0);
 
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
-        stageNivel.draw();
-        texto.mostratMensaje(batch, "You will get it next time", ANCHO/2, ALTO*0.75f,1,1, 1);
+        Bacgraun.draw(batch);
+        texto.mostratMensaje(batch, "Lol u ded", ANCHO/2, ALTO/2,1,1, 1);
         batch.end();
+        stageNivel.draw();
     }
 
 
