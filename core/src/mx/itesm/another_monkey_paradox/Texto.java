@@ -20,7 +20,7 @@ public class Texto {
 
     public  void mostratMensaje(SpriteBatch batch, String mensaje, float x, float y,float r, float g,float b){
         glyph = new GlyphLayout(font,mensaje, new Color(r,g,b,1),1000f,1,true);
-        glyph.setText(font, mensaje);
+        //glyph.setText(font, mensaje);
         float anchoText = glyph.width;
         font.draw(batch,glyph, x-anchoText/2,y);
     }

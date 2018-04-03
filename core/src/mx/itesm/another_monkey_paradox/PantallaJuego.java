@@ -7,11 +7,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -99,7 +102,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     // Puntaje y texto
     private int puntosJugador = 0;
-    private Texto texto;
+
+    private BitmapFont font;
+    public GlyphLayout textoGly;
 
     //Textura de Astro
     private Texture astroCaminata0;
@@ -189,7 +194,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         stageNivel = new Stage(vista);
 
         //Objeto que dibuja texto
-        texto = new Texto(1,1,1);
+        font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
+        textoGly = new GlyphLayout(font,"Score");
 
         for(int i=0;i<3;i++){
             if(i<3) {
@@ -387,7 +393,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         batch.begin();
         fondo.render(batch);
-        texto.mostratMensaje(batch, "SCORE: " + puntosJugador, 1050, 700,1,1,1);
+
 
         if(fondo.getImagenA().getX()<-1280&&fondo.getImagenA().getX()>-1382&&firstFilter){
             firstFilter=false;
@@ -446,8 +452,11 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         // Botón pausa
         batch.draw(botonPausa, ANCHO*0.75f,ALTO*0.8f);
-
         stageNivel.draw();
+
+        textoGly.setText(font, "Score: "+puntosJugador);
+        font.draw(batch,textoGly, ANCHO/2,ALTO/2);
+
         batch.end();
 
         // Botón PAUSA
@@ -639,8 +648,6 @@ class PantallaJuego extends Pantalla implements Screen  {
     }
 
     private class EscenaPausa extends Stage{
-
-        private Texto titlee;
 
         // La escena que se muestra cuando está pausado
         public EscenaPausa(Viewport vista, SpriteBatch batch) {
