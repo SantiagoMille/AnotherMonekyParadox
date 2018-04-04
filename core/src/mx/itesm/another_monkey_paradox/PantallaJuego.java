@@ -129,6 +129,19 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture canervicola01Frame2;
     private Texture canervicola01Frame3;
 
+    //Textura de Cavernicola 02
+    private Texture canervicola02Frame0;
+    private Texture canervicola02Frame1;
+    private Texture canervicola02Frame2;
+    private Texture canervicola02Frame3;
+
+    //Textura de Cavernicola 03
+    private Texture canervicola03Frame0;
+    private Texture canervicola03Frame1;
+    private Texture canervicola03Frame2;
+    private Texture canervicola03Frame3;
+
+
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
@@ -372,6 +385,16 @@ class PantallaJuego extends Pantalla implements Screen  {
         canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
         canervicola01Frame3 = assetManager.get("cavernicola01/CM1 1.png");
 
+        canervicola02Frame0 = assetManager.get("cavernicola02/CM2 3.png");
+        canervicola02Frame1 = assetManager.get("cavernicola02/CM2 4.png");
+        canervicola02Frame2 = assetManager.get("cavernicola02/CM2 2.png");
+        canervicola02Frame3 = assetManager.get("cavernicola02/CM2 1.png");
+
+        canervicola03Frame0 = assetManager.get("cavernicola03/CM3 3.png");
+        canervicola03Frame1 = assetManager.get("cavernicola03/CM3 4.png");
+        canervicola03Frame2 = assetManager.get("cavernicola03/CM3 2.png");
+        canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
+
 
         botonGranada = assetManager.get("granada_icon.png");
         botonDisparo = assetManager.get("bullet_icon.png");
@@ -415,14 +438,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         fondo.render(batch);
 
 
-/*        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
+        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -431,7 +454,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
@@ -444,11 +467,11 @@ class PantallaJuego extends Pantalla implements Screen  {
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -457,7 +480,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
@@ -477,7 +500,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
-        }*/
+        }
 
 
         //PANTALLA DE VICTORIA PROVISIONAL
@@ -826,6 +849,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void dispose() {
+
 
     }
 
