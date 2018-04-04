@@ -43,7 +43,8 @@ class EscenaAstroGanador implements Screen {
     private AssetManager assetManager;
 
     //Texto
-    private Texto texto;
+    private Texto texto1;
+    private Texto texto2;
 
     //Escena
     private Stage stageNivel;
@@ -86,7 +87,8 @@ class EscenaAstroGanador implements Screen {
 
         stageNivel = new Stage(vista);
 
-        texto = new Texto(1,1,1);
+        texto1 = new Texto(1,1,1);
+        texto2 = new Texto(1,1,1);
 
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(imgBoton));
         home = new ImageButton(btnHome);
@@ -108,12 +110,12 @@ class EscenaAstroGanador implements Screen {
         TextureRegionDrawable btnNext = new TextureRegionDrawable(new TextureRegion(imgBN));
         next = new ImageButton(btnNext);
         next.setSize(155,155);
-        next.setPosition(ANCHO*8/10, ALTO/2);
+        next.setPosition(ANCHO*7/10, ALTO/2);
         next.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                main.setScreen(new PantallaSplash(main));
+                main.setScreen(new PantallaCinematicaL1(main));
             }
         });
 
@@ -138,8 +140,8 @@ class EscenaAstroGanador implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         Background.draw(batch);
-        texto.mostratMensaje(batch, "LEVEL 1 COMPLETED", ANCHO/2-250, ALTO*9/10,1,1, 1);
-        texto.mostratMensaje(batch, "SCORE: " + this.score, ANCHO/2-300, ALTO*8/10,1,1, 1);
+        texto1.mostratMensaje(batch, "LEVEL 1 COMPLETED", ANCHO/2-250, ALTO*9/10,1,1, 1);
+        texto2.mostratMensaje(batch, "SCORE: " + this.score, ANCHO/2-350, ALTO*8/10,1,1, 1);
         batch.end();
         stageNivel.draw();
     }
