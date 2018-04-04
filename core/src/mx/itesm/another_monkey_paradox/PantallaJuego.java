@@ -172,7 +172,11 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Bala banana1;
     private Bala banana2;
     private Bala banana3;
-    private Boolean crash = false;
+    private Bala banana4;
+    private Bala banana5;
+    private Bala banana6;
+    private Boolean crashRight = false;
+    private Boolean crashLeft = false;
 
     //Asset Manager
     private final AssetManager assetManager;
@@ -247,8 +251,23 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Granadas Colisión
         banana1 = new Bala(bananaDisparo,false);
+        banana1.set(-100,-100);
+
         banana2 = new Bala(bananaDisparo, false);
+        banana2.set(-100,-100);
+
         banana3 = new Bala(bananaDisparo, false);
+        banana3.set(-100,-100);
+
+        banana4 = new Bala(bananaDisparo, true);
+        banana4.set(-100,-100);
+
+        banana5 = new Bala(bananaDisparo, true);
+        banana5.set(-100,-100);
+
+        banana6 = new Bala(bananaDisparo, true);
+        banana6.set(-100,-100);
+
 
         granada = new ImageButton(btnGranada);
         granada.setSize(135, 135);
@@ -584,6 +603,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         banana1.render(batch);
         banana2.render(batch);
         banana3.render(batch);
+        banana4.render(batch);
+        banana5.render(batch);
+        banana6.render(batch);
         batch.end();
 
         stageNivel.draw();
@@ -644,13 +666,22 @@ class PantallaJuego extends Pantalla implements Screen  {
             j++;
         }
 
-        if(crash){
-            if(banana1.getX()>camara.position.x+ANCHO/2||banana1.getX()<camara.position.x-ANCHO/2){
-                crash = false;
+        if(crashRight){
+            if(banana2.getX()>camara.position.x+ANCHO/2||banana2.getX()<camara.position.x-ANCHO/2){
+                crashRight = false;
             }
             banana1.mover(-dt*2);
             banana2.moverY(dt*2);
             banana3.moverY(-dt*2);
+        }
+
+        if(crashLeft){
+            if(banana5.getX()>camara.position.x+ANCHO/2||banana5.getX()<camara.position.x-ANCHO/2){
+                crashRight = false;
+            }
+            banana4.mover(dt*2);
+            banana5.moverY(dt*2);
+            banana6.moverY(-dt*2);
         }
 
         verificarColisionBalaEnemigo(stateTime);
@@ -710,20 +741,30 @@ class PantallaJuego extends Pantalla implements Screen  {
                     boomSound.play();
                     listaGranadas.removeIndex(j);
                     vidaEnemigo = enemigo.getVida() - 100;
-                    explosionGranada(rectEnemigo.getX(), rectEnemigo.getY(), dt);
+                    if(enemigo.right) {
+                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    } else {
+                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    }
                     enemigo.setVida(vidaEnemigo);
                     verificarVidaEnemigos();
-
                 }
             }
         }
     }
 
-    private void explosionGranada(float x, float y, float dt){
+    private void explosionGranadaRight(float x, float y){
+        crashRight = true;
         banana1.set(x,y);
         banana2.set(x,y);
         banana3.set(x,y);
-        crash = true;
+    }
+
+    private void explosionGranadaLeft(float x, float y){
+        crashLeft = true;
+        banana4.set(x,y);
+        banana5.set(x,y);
+        banana6.set(x,y);
     }
 
     private void verificarColisionPersonajeEnemigo(float dt) {
