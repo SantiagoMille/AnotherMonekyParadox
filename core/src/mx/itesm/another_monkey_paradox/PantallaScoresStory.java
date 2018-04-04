@@ -57,7 +57,7 @@ public class PantallaScoresStory extends PantallaScores {
         Table table = new Table(skin);
         table.defaults().pad(10f);
         table.setFillParent(true);
-        table.setPosition(table.getX(),table.getY()+250);
+        table.setPosition(table.getX(),table.getY()+150);
 
         /**
          * Se crean las columnas con puntuajes

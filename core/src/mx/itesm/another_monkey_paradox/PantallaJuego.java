@@ -38,6 +38,7 @@ import com.badlogic.gdx.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -52,10 +53,11 @@ class PantallaJuego extends Pantalla implements Screen  {
     public static final float ALTO = 720;
 
     private boolean firstFilter=true;
+    private boolean secondFilter=true;
 
     //For Background
-    Texture imgBackground;
-    private Sprite spriteBackground;
+    Texture boss;
+    private Sprite bossSprite;
 
     private Fondo fondo;
 
@@ -207,6 +209,10 @@ class PantallaJuego extends Pantalla implements Screen  {
         textoGly = new GlyphLayout(font,"Score");
         textoGlyGran = new GlyphLayout(font,"Score");
 
+        boss = new Texture("boss_stand.png");
+        bossSprite = new Sprite(boss);
+        bossSprite.setPosition(ANCHO,ALTO/4);
+
         pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
         for(int i=0;i<3;i++){
@@ -270,12 +276,10 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void changed(ChangeEvent event, Actor actor) {
                 Touchpad pad = (Touchpad)actor;
                 if (pad.getKnobPercentX() > 0.25) { // Más de 20% de desplazamiento DERECHA
-                    //personaje.setX(personaje.getX()+3);
                     personaje.setRight(true);
                     isMovingRight=true;
                     isMovingLeft = false;
                 } else if ( pad.getKnobPercentX() < -0.25 ) {   // Más de 20% IZQUIERDA
-                    //personaje.setX(personaje.getX()-3);
                     personaje.setRight(false);
                     isMovingLeft = true;
                     isMovingRight = false;
@@ -411,7 +415,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         fondo.render(batch);
 
 
-        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
+/*        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
@@ -423,8 +427,9 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&firstFilter){
-            firstFilter=false;
+        if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
             for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
@@ -436,6 +441,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
+            secondFilter=true;
             firstFilter=false;
             for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
@@ -447,8 +453,9 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&firstFilter){
-            firstFilter=false;
+        if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
             for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
@@ -460,6 +467,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
+            secondFilter=true;
             firstFilter=false;
             for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
@@ -469,10 +477,11 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
-        }
+        }*/
+
 
         //PANTALLA DE VICTORIA PROVISIONAL
-        if(fondo.getImagenA().getX()<-300&&fondo.getImagenA().getX()>-400&&firstFilter){
+        if(fondo.getImagenA().getX()<-4000&&fondo.getImagenA().getX()>-4010&&firstFilter){
             main.setScreen(new EscenaAstroGanador(main, puntosJugador));
         }
 
@@ -480,7 +489,6 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(e.isActiva()){
                 e.render(batch);
             }
-            //e.setX(e.getX()+(-30*delta));
         }
 
         TextureRegion currentFrame = (TextureRegion) personaje.getAnimacion().getKeyFrame(stateTime,true);
@@ -509,10 +517,10 @@ class PantallaJuego extends Pantalla implements Screen  {
         for(Enemigo e:listaEnemigos){
             e.render(batch);
             if(estado == EstadoJuego.JUGANDO&&e.right){
-                e.setX(e.getX()+(-50*delta));
+                e.setX(e.getX()+(-60*delta));
             }else if(estado == EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
-                    e.setX(e.getX()+(50*delta));
+                    e.setX(e.getX()+(60*delta));
                 }else{
                     e.setX(e.getX()+(15*delta));
                 }
@@ -520,13 +528,20 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
+        if(fondo.getImagenA().getX()<-3900){
+            if(personaje.getX()>=camara.position.x) {
+                bossSprite.setPosition(bossSprite.getX() - (delta * 78), bossSprite.getY());
+            }
+            bossSprite.draw(batch);
+        }
+
 
         //Texto Score
         textoGly.setText(font, "Score: "+puntosJugador);
-        font.draw(batch,textoGly, ANCHO/2 + 120,ALTO-15);
+        font.draw(batch,textoGly, ANCHO/2 + 95,ALTO-15);
 
         textoGlyGran.setText(font, "Grenades: "+maxGrandas);
-        font.draw(batch,textoGlyGran, ANCHO/2 + 340,ALTO-15);
+        font.draw(batch,textoGlyGran, ANCHO/2 + 360,ALTO-15);
 
         //Texto Pausa
         if(estado == EstadoJuego.PAUSADO){
@@ -549,14 +564,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Movimiento del personaje
         if(isMovingRight&&!isMovingLeft){
             if(personaje.getX()<camara.position.x){
-                personaje.setX(personaje.getX()+(dt*75));
+                personaje.setX(personaje.getX()+(dt*80));
             }else {
-                fondo.mover(-dt * 76);
+                fondo.mover(-dt * 78);
             }
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){
-                personaje.setX(personaje.getX()+(dt*-75));
+                personaje.setX(personaje.getX()+(dt*-80));
             }
             if(fondo.getImagenA().getX()>0) {
                 fondo.mover(dt * 20);
@@ -707,18 +722,27 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
         int puntosActuales;
         int puntosSiguientes;
-        if(scores.length>=10) {
+        if(scores.length>=6) {
+            ArrayList<String> temp = new ArrayList<String>();
+            temp.addAll(Arrays.asList(scores));
             for (int i = scores.length - 1; i > 0; i--) {
                 puntosActuales = Integer.parseInt(scores[i].split(":")[1]);
-                puntosSiguientes = Integer.parseInt(scores[i - 1].split(":")[1]);
-                if (puntosJugador > puntosActuales && puntosJugador < puntosSiguientes) {
+                puntosSiguientes =0;
+                try {
+                    puntosSiguientes = Integer.parseInt(scores[i - 1].split(":")[1]);
+                }catch (Exception e){
+                    puntosActuales = 100000;
+                }
+                if (puntosJugador > puntosActuales && puntosJugador <= puntosSiguientes) {
                     Date date = new Date(TimeUtils.millis());
                     String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
-                    scores[i] = dateString + ":" + puntosJugador + "";
+                    temp.add(i,dateString + ":" + puntosJugador + "");
+                    temp.remove(temp.size()-1);
+                    //scores[i] = dateString + ":" + puntosJugador + "";
                 }
             }
             StringBuilder sb = new StringBuilder();
-            for(String s:scores){
+            for(String s:temp){
                 sb.append(s);
                 sb.append(",");
             }
@@ -726,7 +750,9 @@ class PantallaJuego extends Pantalla implements Screen  {
             prefs.flush();
         }
         else{
-            StringBuilder sb = new StringBuilder();
+            ArrayList<String> temp = new ArrayList<String>();
+            temp.addAll(Arrays.asList(scores));
+            /*StringBuilder sb = new StringBuilder();
             for(String s:scores){
                 sb.append(s);
                 sb.append(",");
@@ -735,7 +761,45 @@ class PantallaJuego extends Pantalla implements Screen  {
             String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
             sb.append(dateString + ":" + puntosJugador + "");
             prefs.putString("highscores",sb.toString());
+            prefs.flush();*/
+
+            for (int i = scores.length - 1; i > 0; i--) {
+                puntosActuales = Integer.parseInt(scores[i].split(":")[1]);
+                try {
+                    puntosSiguientes = Integer.parseInt(scores[i - 1].split(":")[1]);
+                }catch(Exception e){
+                    puntosSiguientes = 100000;
+                }
+                if (puntosJugador > puntosActuales && puntosJugador < puntosSiguientes) {
+                    Date date = new Date(TimeUtils.millis());
+                    String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
+                    temp.add(i,dateString + ":" + puntosJugador + "");
+                    //scores[i] = dateString + ":" + puntosJugador + "";
+                }
+            }
+            if(scores.length==0){
+
+                temp.add("Sometime in the paradox:1000000");
+            }
+            if(scores.length==1){
+                Date date = new Date(TimeUtils.millis());
+                String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
+                temp.add(dateString + ":" + puntosJugador + "");
+            }else{
+                Date date = new Date(TimeUtils.millis());
+                String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
+                temp.add(dateString + ":" + puntosJugador + "");
+            }
+            StringBuilder sb = new StringBuilder();
+            for(String s:temp){
+                sb.append(s);
+                sb.append(",");
+            }
+            prefs.putString("highscores",sb.toString());
             prefs.flush();
+
+
+
         }
     }
 
