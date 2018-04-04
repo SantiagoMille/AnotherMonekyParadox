@@ -156,7 +156,6 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture padBack;
     private Texture padKnob;
 
-
     // PAUSA
     private EscenaPausa escenaPausa;
 
@@ -168,6 +167,12 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture bananaGranada;
 
     private Enemigo enemigo;
+
+    //bananas Colision
+    private Bala banana1;
+    private Bala banana2;
+    private Bala banana3;
+    private Boolean crash = false;
 
     //Asset Manager
     private final AssetManager assetManager;
@@ -238,6 +243,12 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
+
+
+        //Granadas Colisión
+        banana1 = new Bala(bananaDisparo,false);
+        banana2 = new Bala(bananaDisparo, false);
+        banana3 = new Bala(bananaDisparo, false);
 
         granada = new ImageButton(btnGranada);
         granada.setSize(135, 135);
@@ -570,7 +581,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         if(estado == EstadoJuego.PAUSADO){
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
-
+        banana1.render(batch);
+        banana2.render(batch);
+        banana3.render(batch);
         batch.end();
 
         stageNivel.draw();
@@ -631,6 +644,15 @@ class PantallaJuego extends Pantalla implements Screen  {
             j++;
         }
 
+        if(crash){
+            if(banana1.getX()>camara.position.x+ANCHO/2||banana1.getX()<camara.position.x-ANCHO/2){
+                crash = false;
+            }
+            banana1.mover(-dt*2);
+            banana2.moverY(dt*2);
+            banana3.moverY(-dt*2);
+        }
+
         verificarColisionBalaEnemigo(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionPersonajeEnemigo(stateTime);
@@ -688,12 +710,20 @@ class PantallaJuego extends Pantalla implements Screen  {
                     boomSound.play();
                     listaGranadas.removeIndex(j);
                     vidaEnemigo = enemigo.getVida() - 100;
+                    explosionGranada(rectEnemigo.getX(), rectEnemigo.getY(), dt);
                     enemigo.setVida(vidaEnemigo);
-                    System.out.println(vidaEnemigo);
+                    verificarVidaEnemigos();
+
                 }
-                verificarVidaEnemigos();
             }
         }
+    }
+
+    private void explosionGranada(float x, float y, float dt){
+        banana1.set(x,y);
+        banana2.set(x,y);
+        banana3.set(x,y);
+        crash = true;
     }
 
     private void verificarColisionPersonajeEnemigo(float dt) {
