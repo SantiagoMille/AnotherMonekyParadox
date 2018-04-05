@@ -711,21 +711,35 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(crashRight){
+            if(banana5.getX()>camara.position.x+ANCHO/2||banana5.getX()<camara.position.x-ANCHO/2){
+                crashRight = false;
+            }
+            banana1.mover(-dt*2);
+            banana2.moverY(dt*2);
+            banana2.mover(-dt*2);
+            banana3.moverY(-dt*2);
+            banana3.mover(-dt*2);
+            banana4.mover(dt*2);
+            banana5.moverY(dt*2);
+            banana6.moverY(-dt*2);
+            banana5.mover(dt*2);
+            banana6.mover(dt*2);
+        }
+
+        if(crashLeft){
             if(banana2.getX()>camara.position.x+ANCHO/2||banana2.getX()<camara.position.x-ANCHO/2){
                 crashRight = false;
             }
             banana1.mover(-dt*2);
             banana2.moverY(dt*2);
+            banana2.mover(-dt*2);
             banana3.moverY(-dt*2);
-        }
-
-        if(crashLeft){
-            if(banana5.getX()>camara.position.x+ANCHO/2||banana5.getX()<camara.position.x-ANCHO/2){
-                crashRight = false;
-            }
+            banana3.mover(-dt*2);
             banana4.mover(dt*2);
             banana5.moverY(dt*2);
             banana6.moverY(-dt*2);
+            banana5.mover(dt*2);
+            banana6.mover(dt*2);
         }
 
         verificarColisionBalaEnemigo(stateTime);
@@ -859,10 +873,16 @@ class PantallaJuego extends Pantalla implements Screen  {
         banana1.set(x,y);
         banana2.set(x,y);
         banana3.set(x,y);
+        banana4.set(x,y);
+        banana5.set(x,y);
+        banana6.set(x,y);
     }
 
     private void explosionGranadaLeft(float x, float y){
         crashLeft = true;
+        banana1.set(x,y);
+        banana2.set(x,y);
+        banana3.set(x,y);
         banana4.set(x,y);
         banana5.set(x,y);
         banana6.set(x,y);
@@ -902,14 +922,17 @@ class PantallaJuego extends Pantalla implements Screen  {
             rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
             if (bala.getSprite().getBoundingRectangle().overlaps(rectPersonaje)) {
                 for (int j = vidas.size() - 1; j >= 0; j--) {
-                    if (vidas.get(j).isActiva()) {
-                        hitSound.play();
-                        vidas.get(j).setActiva(false);
+                    if(contador>=50) {
+                        if (vidas.get(j).isActiva()) {
+                            hitSound.play();
+                            vidas.get(j).setActiva(false);
+                            contador = 0;
+                        }
                     }
                 }
             }
         }
-
+        contador++;
     }
 
     private void verificarVidaAstro(){
