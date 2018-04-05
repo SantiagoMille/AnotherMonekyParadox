@@ -273,7 +273,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
-        for(int i=0;i<3;i++){
+        for(int i=0;i<5;i++){
             if(i<3) {
                 vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70,true));
             }else{
@@ -802,6 +802,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         verificarColisionPersonajeEnemigo(stateTime);
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
+        verificarColisionPersonajeItemGranada();
+        verificarColisionPersonajeItemVida();
         verificarVidaAstro();
 
     }
@@ -815,12 +817,38 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
     }
 
+    private void verificarColisionPersonajeItemVida() {
+        Rectangle rectItem = powerUpVida.getSprite().getBoundingRectangle();
+        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+        if(rectItem.overlaps(rectPersonaje)){
+            //PANTALLA DE VICTORIA PROVISIONAL
+            for(PowerUp vida:vidas){
+                if(!vida.isActiva()){
+                    vida.setActiva(true);
+                    break;
+                }
+            }
+            powerUpVida.setX(-500);
+        }
+    }
+
+    private void verificarColisionPersonajeItemGranada() {
+        Rectangle rectItem = powerUpGranada.getSprite().getBoundingRectangle();
+        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+        if(rectItem.overlaps(rectPersonaje)){
+            //PANTALLA DE VICTORIA PROVISIONAL
+            maxGrandas++;
+            powerUpGranada.setX(-500);
+        }
+    }
+
     private void verificarVidaEnemigos() {
         for(int i = listaEnemigos.size-1;i>=0;i--){
             if(listaEnemigos.get(i).getVida() <= 0){
                 listaEnemigos.removeIndex(i);
                 puntosJugador += 10;
-                Gdx.app.log("EEHHEHEHEHHE", puntosJugador+"");            }
+                            
+            }
         }
     }
 
