@@ -40,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by santi on 1/30/2018.
@@ -51,6 +52,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
+
+    private boolean powerUpVidaFlag = true;
+    private boolean powerUpGranadaFlag = true;
 
     private boolean firstFilter=true;
     private boolean secondFilter=true;
@@ -84,7 +88,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     private ImageButton home;
     private ImageButton continua;
 
-    private float stateTime=0;
+    private float stateTime = 0;
 
     private boolean isMovingRight=false;
     private boolean isMovingLeft = false;
@@ -188,6 +192,17 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Boolean crashRight = false;
     private Boolean crashLeft = false;
 
+    //PowerUps
+    private Random random;
+    private Texture imgpowerUpGranada;
+    private Texture imgpowerUpVida;
+    private PowerUp powerUpGranada;
+    private PowerUp powerUpVida;
+    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
+    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
+    Double randomX;
+    Double randomX2;
+
     //Asset Manager
     private final AssetManager assetManager;
 
@@ -225,6 +240,10 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Lista Granadas
         listaGranadas = new Array<Granada>();
 
+        //Lista PowerUps
+        listaGranadasExtra.add(powerUpGranada);
+        listaVidasExtra.add(powerUpVida);
+
         estado = EstadoJuego.JUGANDO;
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
@@ -236,6 +255,8 @@ class PantallaJuego extends Pantalla implements Screen  {
         cargarTexturas();
 
         stageNivel = new Stage(vista);
+
+        random = new Random();
 
         //Objeto que dibuja texto
         font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
@@ -283,6 +304,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         banana6 = new Bala(bananaDisparo, true);
         banana6.set(-100,-100);
 
+        randomX = random.nextDouble()*4000;
+        randomX2 = random.nextDouble()*4000;
+        System.out.println(randomX);
+        System.out.println(randomX2);
+
+        //Power Ups
+        powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
+        powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
 
         granada = new ImageButton(btnGranada);
         granada.setSize(135, 135);
@@ -453,6 +482,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         bossDisparo = assetManager.get("disparo2.png");
         bananaGranada = assetManager.get("granana.png");
 
+        imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
+        imgpowerUpVida = assetManager.get("Items/VIDA.png");
+
         gunSound = assetManager.get("pew.mp3");
         boomSound = assetManager.get("boom.mp3");
         hitSound = assetManager.get("hit.mp3");
@@ -474,6 +506,14 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         }
 
+        if(!powerUpVidaFlag){
+            powerUpVida.setX(powerUpVida.getX()-(delta*80));
+        }
+
+        if(!powerUpGranadaFlag){
+            powerUpGranada.setX(powerUpGranada.getX()-(delta*80));
+        }
+
         //Usar v=d/t o en este caso d=v*t
         Gdx.gl.glClearColor(.3f,.6f,.3f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -482,8 +522,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         batch.begin();
         fondo.render(batch);
-
-
+/*
         if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<4;i++){
@@ -546,6 +585,16 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
+        }*/
+
+        if (fondo.getImagenA().getX()<-randomX &&powerUpVidaFlag){
+            powerUpVida.setX(ANCHO*0.75f);
+            powerUpVidaFlag=false;
+        }
+
+        if (fondo.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
+            powerUpGranada.setX(ANCHO*0.75f);
+            powerUpGranadaFlag=false;
         }
 
 
@@ -634,6 +683,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         if(estado == EstadoJuego.PAUSADO){
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
+
+        powerUpGranada.render(batch);
+        powerUpVida.render(batch);
         banana1.render(batch);
         banana2.render(batch);
         banana3.render(batch);
