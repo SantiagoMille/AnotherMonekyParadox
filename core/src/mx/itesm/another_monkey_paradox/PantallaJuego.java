@@ -138,6 +138,19 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture canervicola01Frame2;
     private Texture canervicola01Frame3;
 
+    //Textura de Cavernicola 02
+    private Texture canervicola02Frame0;
+    private Texture canervicola02Frame1;
+    private Texture canervicola02Frame2;
+    private Texture canervicola02Frame3;
+
+    //Textura de Cavernicola 03
+    private Texture canervicola03Frame0;
+    private Texture canervicola03Frame1;
+    private Texture canervicola03Frame2;
+    private Texture canervicola03Frame3;
+
+
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
@@ -152,7 +165,6 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture padBack;
     private Texture padKnob;
 
-
     // PAUSA
     private EscenaPausa escenaPausa;
 
@@ -165,6 +177,16 @@ class PantallaJuego extends Pantalla implements Screen  {
     private Texture bananaGranada;
 
     private Enemigo enemigo;
+
+    //bananas Colision
+    private Bala banana1;
+    private Bala banana2;
+    private Bala banana3;
+    private Bala banana4;
+    private Bala banana5;
+    private Bala banana6;
+    private Boolean crashRight = false;
+    private Boolean crashLeft = false;
 
     //Asset Manager
     private final AssetManager assetManager;
@@ -240,6 +262,27 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
+
+
+        //Granadas Colisión
+        banana1 = new Bala(bananaDisparo,false);
+        banana1.set(-100,-100);
+
+        banana2 = new Bala(bananaDisparo, false);
+        banana2.set(-100,-100);
+
+        banana3 = new Bala(bananaDisparo, false);
+        banana3.set(-100,-100);
+
+        banana4 = new Bala(bananaDisparo, true);
+        banana4.set(-100,-100);
+
+        banana5 = new Bala(bananaDisparo, true);
+        banana5.set(-100,-100);
+
+        banana6 = new Bala(bananaDisparo, true);
+        banana6.set(-100,-100);
+
 
         granada = new ImageButton(btnGranada);
         granada.setSize(135, 135);
@@ -387,6 +430,16 @@ class PantallaJuego extends Pantalla implements Screen  {
         canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
         canervicola01Frame3 = assetManager.get("cavernicola01/CM1 1.png");
 
+        canervicola02Frame0 = assetManager.get("cavernicola02/CM2 3.png");
+        canervicola02Frame1 = assetManager.get("cavernicola02/CM2 4.png");
+        canervicola02Frame2 = assetManager.get("cavernicola02/CM2 2.png");
+        canervicola02Frame3 = assetManager.get("cavernicola02/CM2 1.png");
+
+        canervicola03Frame0 = assetManager.get("cavernicola03/CM3 3.png");
+        canervicola03Frame1 = assetManager.get("cavernicola03/CM3 4.png");
+        canervicola03Frame2 = assetManager.get("cavernicola03/CM3 2.png");
+        canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
+
 
         botonGranada = assetManager.get("granada_icon.png");
         botonDisparo = assetManager.get("bullet_icon.png");
@@ -431,14 +484,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         fondo.render(batch);
 
 
-/*        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
+        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -447,7 +500,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
@@ -460,11 +513,11 @@ class PantallaJuego extends Pantalla implements Screen  {
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -473,7 +526,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<4;i++){
@@ -493,7 +546,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
-        }*/
+        }
 
 
 
@@ -581,7 +634,12 @@ class PantallaJuego extends Pantalla implements Screen  {
         if(estado == EstadoJuego.PAUSADO){
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
-
+        banana1.render(batch);
+        banana2.render(batch);
+        banana3.render(batch);
+        banana4.render(batch);
+        banana5.render(batch);
+        banana6.render(batch);
         batch.end();
 
         stageNivel.draw();
@@ -650,6 +708,24 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
             granada.getSprite().rotate(10);
             j++;
+        }
+
+        if(crashRight){
+            if(banana2.getX()>camara.position.x+ANCHO/2||banana2.getX()<camara.position.x-ANCHO/2){
+                crashRight = false;
+            }
+            banana1.mover(-dt*2);
+            banana2.moverY(dt*2);
+            banana3.moverY(-dt*2);
+        }
+
+        if(crashLeft){
+            if(banana5.getX()>camara.position.x+ANCHO/2||banana5.getX()<camara.position.x-ANCHO/2){
+                crashRight = false;
+            }
+            banana4.mover(dt*2);
+            banana5.moverY(dt*2);
+            banana6.moverY(-dt*2);
         }
 
         verificarColisionBalaEnemigo(stateTime);
@@ -766,12 +842,30 @@ class PantallaJuego extends Pantalla implements Screen  {
                     boomSound.play();
                     listaGranadas.removeIndex(j);
                     vidaEnemigo = enemigo.getVida() - 100;
+                    if(enemigo.right) {
+                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    } else {
+                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    }
                     enemigo.setVida(vidaEnemigo);
-                    System.out.println(vidaEnemigo);
+                    verificarVidaEnemigos();
                 }
-                verificarVidaEnemigos();
             }
         }
+    }
+
+    private void explosionGranadaRight(float x, float y){
+        crashRight = true;
+        banana1.set(x,y);
+        banana2.set(x,y);
+        banana3.set(x,y);
+    }
+
+    private void explosionGranadaLeft(float x, float y){
+        crashLeft = true;
+        banana4.set(x,y);
+        banana5.set(x,y);
+        banana6.set(x,y);
     }
 
     private void verificarColisionPersonajeEnemigo(float dt) {
@@ -946,6 +1040,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     @Override
     public void dispose() {
+
 
     }
 

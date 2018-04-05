@@ -86,6 +86,18 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("cavernicola01/CM1 2.png", Texture.class);
         assetManager.load("cavernicola01/CM1 1.png", Texture.class);
 
+        //Textura de cavernicola02
+        assetManager.load("cavernicola02/CM2 3.png", Texture.class);
+        assetManager.load("cavernicola02/CM2 4.png", Texture.class);
+        assetManager.load("cavernicola02/CM2 2.png", Texture.class);
+        assetManager.load("cavernicola02/CM2 1.png", Texture.class);
+
+        //Textura de cavernicola03
+        assetManager.load("cavernicola03/CM3 3.png", Texture.class);
+        assetManager.load("cavernicola03/CM3 4.png", Texture.class);
+        assetManager.load("cavernicola03/CM3 2.png", Texture.class);
+        assetManager.load("cavernicola03/CM3 1.png", Texture.class);
+
         //Textura vida
         assetManager.load("vida.png", Texture.class);
 
