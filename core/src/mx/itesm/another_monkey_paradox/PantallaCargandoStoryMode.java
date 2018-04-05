@@ -113,6 +113,10 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("banana.png", Texture.class);
         assetManager.load("granana.png", Texture.class);
 
+        //Textura PowerUps
+        assetManager.load("Items/GRANADAS.png", Texture.class);
+        assetManager.load("Items/VIDA.png", Texture.class);
+
         assetManager.load("ok-button.png", Texture.class);
 
         // Se bloquea hasta cargar los recursos
