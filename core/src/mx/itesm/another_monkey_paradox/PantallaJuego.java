@@ -522,7 +522,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         batch.begin();
         fondo.render(batch);
-/*
+
         if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<4;i++){
@@ -585,7 +585,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
-        }*/
+        }
 
         if (fondo.getImagenA().getX()<-randomX &&powerUpVidaFlag){
             powerUpVida.setX(ANCHO*0.75f);
