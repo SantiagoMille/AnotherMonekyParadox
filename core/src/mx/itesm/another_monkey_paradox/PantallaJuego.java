@@ -56,8 +56,12 @@ class PantallaJuego extends Pantalla implements Screen  {
     private boolean secondFilter=true;
 
     //For Background
-    Texture boss;
+    private Texture boss;
     private Sprite bossSprite;
+
+    //Item boss
+    private Texture itemBosss;
+    private Sprite itemBoss;
 
     private Fondo fondo;
 
@@ -69,6 +73,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Armas
     private Array<Bala> listaBalas;
     private Array<Granada> listaGranadas;
+    private Array<Bala> listaBalasBoss;
     //Fisica Granada
     float velocityY;     // Velocidad de la granada
 
@@ -91,10 +96,14 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Enemigos
     private Array<Enemigo> listaEnemigos;
     private int vidaEnemigo = 100;
+    private int vidaBoss = 500;
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     int contador = 0;
+
+    //Disparos Boss
+    int shootCounter =0;
 
     //Escena
     private Stage stageNivel;
@@ -152,6 +161,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Textura Armas
     private Texture bananaDisparo;
+    private Texture bossDisparo;
     private Texture bananaGranada;
 
     private Enemigo enemigo;
@@ -188,6 +198,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         //Lista Balas
         listaBalas = new Array<Bala>();
+        listaBalasBoss = new Array<Bala>();
 
         //Lista Granadas
         listaGranadas = new Array<Granada>();
@@ -210,8 +221,12 @@ class PantallaJuego extends Pantalla implements Screen  {
         textoGlyGran = new GlyphLayout(font,"Score");
 
         boss = new Texture("boss_stand.png");
+        itemBosss = new Texture("item_boss.png");
+
         bossSprite = new Sprite(boss);
         bossSprite.setPosition(ANCHO,ALTO/4);
+        itemBoss = new Sprite(itemBosss);
+        itemBoss.setPosition(ANCHO,ALTO/4);
 
         pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
@@ -382,6 +397,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         padKnob = assetManager.get("Pad/padKnob.png");
 
         bananaDisparo = assetManager.get("banana.png");
+        bossDisparo = assetManager.get("disparo2.png");
         bananaGranada = assetManager.get("granana.png");
 
         gunSound = assetManager.get("pew.mp3");
@@ -480,10 +496,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         }*/
 
 
-        //PANTALLA DE VICTORIA PROVISIONAL
-        if(fondo.getImagenA().getX()<-4000&&fondo.getImagenA().getX()>-4010&&firstFilter){
-            main.setScreen(new EscenaAstroGanador(main, puntosJugador));
-        }
+
 
         for(PowerUp e:vidas){
             if(e.isActiva()){
@@ -512,6 +525,10 @@ class PantallaJuego extends Pantalla implements Screen  {
             bala.render(batch);
         }
 
+        for(Bala balaB: listaBalasBoss){
+            balaB.render(batch);
+        }
+
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
@@ -528,11 +545,28 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3900){
-            if(personaje.getX()>=camara.position.x) {
-                bossSprite.setPosition(bossSprite.getX() - (delta * 78), bossSprite.getY());
+        if(fondo.getImagenA().getX()<-3999){
+
+            shootCounter++;
+
+            if(shootCounter>=50){
+                shootCounter=0;
+                Bala nueva = new Bala(bossDisparo,true);
+                nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
+                listaBalasBoss.add(nueva);
             }
-            bossSprite.draw(batch);
+
+            if(personaje.getX()>=camara.position.x&&isMovingRight&&!isMovingLeft) {
+                float x = bossSprite.getX();
+                bossSprite.setPosition(x - (delta * 78), bossSprite.getY());
+            }
+
+            if(vidaBoss<=0){
+                itemBoss.setPosition(bossSprite.getX(),bossSprite.getY());
+                itemBoss.draw(batch);
+            }else{
+                bossSprite.draw(batch);
+            }
         }
 
 
@@ -566,7 +600,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(personaje.getX()<camara.position.x){
                 personaje.setX(personaje.getX()+(dt*80));
             }else {
-                fondo.mover(-dt * 78);
+                fondo.mover(-dt * 79);
             }
 
         }else if(isMovingLeft&&!isMovingRight){
@@ -593,6 +627,16 @@ class PantallaJuego extends Pantalla implements Screen  {
             i++;
         }
 
+        i=0;
+        for(Bala balaa:listaBalasBoss){
+            if(balaa.getX()>camara.position.x+ANCHO/2||balaa.getX()<camara.position.x-ANCHO/2){
+                listaBalasBoss.removeIndex(i);
+            }
+            balaa.mover(dt * 2);
+            balaa.getSprite().rotate(10);
+            i++;
+        }
+
         //Granadas
         int j=0;
         for(Granada granada:listaGranadas){
@@ -609,10 +653,24 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         verificarColisionBalaEnemigo(stateTime);
+        verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
+        verificarColisionBalaBoss(stateTime);
+        verificarColisionGranadaBoss(stateTime);
         verificarColisionPersonajeEnemigo(stateTime);
+        verificarColisionPersonajeBalaBoss(stateTime);
+        verificarColisionPersonajeItemBoss();
         verificarVidaAstro();
 
+    }
+
+    private void verificarColisionPersonajeItemBoss() {
+        Rectangle rectItem = itemBoss.getBoundingRectangle();
+        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+        if(rectItem.overlaps(rectPersonaje)){
+            //PANTALLA DE VICTORIA PROVISIONAL
+            main.setScreen(new EscenaAstroGanador(main, puntosJugador));
+        }
     }
 
     private void verificarVidaEnemigos() {
@@ -645,6 +703,49 @@ class PantallaJuego extends Pantalla implements Screen  {
                     System.out.println(vidaEnemigo);
                 }
                 verificarVidaEnemigos();
+            }
+        }
+    }
+
+    private void verificarColisionBalaBala(float dt) {
+        Bala balaBoss;
+        Bala bala;
+
+        for(int j =listaBalas.size-1; j>=0;j--){
+            bala = listaBalas.get(j);
+            for(int i =listaBalasBoss.size-1;i>=0;i--){
+
+                balaBoss = listaBalasBoss.get(i);
+                if(bala.getSprite().getBoundingRectangle().overlaps(balaBoss.getSprite().getBoundingRectangle())){
+                    listaBalas.removeIndex(j);
+                    listaBalasBoss.removeIndex(i);
+                }
+            }
+        }
+    }
+
+    private void verificarColisionBalaBoss(float dt) {
+        Rectangle rectBoss;
+        Bala bala;
+        for(int j =listaBalas.size-1; j>=0;j--){
+            bala = listaBalas.get(j);
+            rectBoss = bossSprite.getBoundingRectangle();
+            if(bala.getSprite().getBoundingRectangle().overlaps(rectBoss)){
+                vidaBoss-=25;
+                listaBalas.removeIndex(j);
+            }
+        }
+    }
+
+    private void verificarColisionGranadaBoss(float dt) {
+        Rectangle rectBoss;
+        Granada granada;
+        for(int j =listaGranadas.size-1; j>=0;j--){
+            granada = listaGranadas.get(j);
+            rectBoss = bossSprite.getBoundingRectangle();
+            if(granada.getSprite().getBoundingRectangle().overlaps(rectBoss)){
+                vidaBoss-=100;
+                listaGranadas.removeIndex(j);
             }
         }
     }
@@ -696,6 +797,25 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
         contador++;
+    }
+
+    private void verificarColisionPersonajeBalaBoss(float dt) {
+        Bala bala;
+        Rectangle rectPersonaje;
+
+        for (int i = listaBalasBoss.size - 1; i >= 0; i--) {
+            bala = listaBalasBoss.get(i);
+            rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            if (bala.getSprite().getBoundingRectangle().overlaps(rectPersonaje)) {
+                for (int j = vidas.size() - 1; j >= 0; j--) {
+                    if (vidas.get(j).isActiva()) {
+                        hitSound.play();
+                        vidas.get(j).setActiva(false);
+                    }
+                }
+            }
+        }
+
     }
 
     private void verificarVidaAstro(){
