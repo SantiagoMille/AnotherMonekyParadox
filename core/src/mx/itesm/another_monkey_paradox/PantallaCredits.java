@@ -89,11 +89,11 @@ class PantallaCredits implements Screen {
         Diego = new Texto(1,1,1);
 
         imgBackground = new Texture("space.png");
-        adrian = new Texture("pp.jpg");
-        santi = new Texture("pp.jpg");
-        fernando = new Texture("pp.jpg");
-        diego = new Texture("pp.jpg");
-        brian = new Texture("pp.jpg");
+        adrian = new Texture("pp_s.jpeg");
+        santi = new Texture("pp_a.jpeg");
+        fernando = new Texture("pp_d.jpeg");
+        diego = new Texture("pp.jpeg");
+        brian = new Texture("pp_b.jpeg");
 
         spriteBackground = new Sprite(imgBackground);
         //spriteBackground.setAlpha(0.7f);

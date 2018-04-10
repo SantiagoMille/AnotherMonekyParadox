@@ -53,6 +53,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
 
+    private boolean bossKilled = false;
+
     private boolean powerUpVidaFlag = true;
     private boolean powerUpGranadaFlag = true;
 
@@ -267,9 +269,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         itemBosss = new Texture("item_boss.png");
 
         bossSprite = new Sprite(boss);
-        bossSprite.setPosition(ANCHO,ALTO/4);
+        bossSprite.setPosition(ANCHO,ALTO);
         itemBoss = new Sprite(itemBosss);
-        itemBoss.setPosition(ANCHO,ALTO/4);
+        itemBoss.setPosition(ANCHO*3/4,ALTO/4);
 
         pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
@@ -529,11 +531,9 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            if(fondo.getImagenA().getX()<-1000&&fondo.getImagenA().getX()>-1202&&firstFilter){
-                for(int i=0; i<4;i++){
-                    enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
-                    listaEnemigos.add(enemigo);
-                }
+            for(int i=0; i<4;i++){
+                enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
+                listaEnemigos.add(enemigo);
             }
         }
 
@@ -630,7 +630,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         for(Bala balaB: listaBalasBoss){
-            balaB.render(batch);
+            if(!bossKilled){
+                balaB.render(batch);
+            }
         }
 
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
@@ -638,7 +640,12 @@ class PantallaJuego extends Pantalla implements Screen  {
         for(Enemigo e:listaEnemigos){
             e.render(batch);
             if(estado == EstadoJuego.JUGANDO&&e.right){
-                e.setX(e.getX()+(-60*delta));
+
+                if(personaje.getX()<camara.position.x){
+                    e.setX(e.getX()+(-60*delta));
+                }else{
+                    e.setX(e.getX()+(-80*delta));
+                }
             }else if(estado == EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(60*delta));
@@ -653,7 +660,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
             shootCounter++;
 
-            if(shootCounter>=50){
+            if(shootCounter>=50&&!bossKilled){
                 shootCounter=0;
                 Bala nueva = new Bala(bossDisparo,true);
                 nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
@@ -662,12 +669,13 @@ class PantallaJuego extends Pantalla implements Screen  {
 
             if(personaje.getX()>=camara.position.x&&isMovingRight&&!isMovingLeft) {
                 float x = bossSprite.getX();
-                bossSprite.setPosition(x - (delta * 78), bossSprite.getY());
+                bossSprite.setPosition(x - (delta * 78), ALTO/4);
             }
 
             if(vidaBoss<=0){
-                itemBoss.setPosition(bossSprite.getX(),bossSprite.getY());
+                itemBoss.setPosition(bossSprite.getX(),ALTO/4);
                 itemBoss.draw(batch);
+                bossKilled=true;
             }else{
                 bossSprite.draw(batch);
             }
@@ -745,7 +753,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 listaBalasBoss.removeIndex(i);
             }
             balaa.mover(dt * 2);
-            balaa.getSprite().rotate(10);
+            //balaa.getSprite().rotate(10);
             i++;
         }
 
@@ -765,8 +773,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(crashRight){
-            if(banana5.getX()>camara.position.x+ANCHO/2||banana5.getX()<camara.position.x-ANCHO/2){
+            if(banana1.getX()<ANCHO/20-banana2.getWidth()||banana1.getX()>ANCHO-ANCHO/20){
                 crashRight = false;
+                banana1.set(ANCHO,ALTO);
+                banana2.set(ANCHO,ALTO);
+                banana3.set(ANCHO,ALTO);
+                banana4.set(ANCHO,ALTO);
+                banana5.set(ANCHO,ALTO);
+                banana6.set(ANCHO,ALTO);
             }
             banana1.mover(-dt*2);
             banana2.moverY(dt*2);
@@ -781,8 +795,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(crashLeft){
-            if(banana2.getX()>camara.position.x+ANCHO/2||banana2.getX()<camara.position.x-ANCHO/2){
+            if(banana4.getX()>ANCHO-ANCHO/20||banana4.getX()<ANCHO/20-banana5.getWidth()){
                 crashRight = false;
+                banana1.set(ANCHO,ALTO);
+                banana2.set(ANCHO,ALTO);
+                banana3.set(ANCHO,ALTO);
+                banana4.set(ANCHO,ALTO);
+                banana5.set(ANCHO,ALTO);
+                banana6.set(ANCHO,ALTO);
             }
             banana1.mover(-dt*2);
             banana2.moverY(dt*2);
@@ -849,6 +869,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(listaEnemigos.get(i).getVida() <= 0){
                 listaEnemigos.removeIndex(i);
                 puntosJugador += 10;
+                            
             }
         }
     }
@@ -869,7 +890,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - 17;
+                    vidaEnemigo = enemigo.getVida() - 12;
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -978,22 +999,21 @@ class PantallaJuego extends Pantalla implements Screen  {
             x = listaEnemigos.get(i);
             rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
             rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-
-            if (rectEnemigo.overlaps(rectPersonaje)) {
-                if(x.getAnimacion().getKeyFrameIndex(dt) == 0) {
-                    for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 55) {
-                            if (vidas.get(j).isActiva()) {
-                                hitSound.play();
+                if (rectEnemigo.overlaps(rectPersonaje)) {
+                    if(x.getAnimacion().getKeyFrameIndex(dt) == 0)
+                        for (int j = vidas.size() - 1; j >= 0; j--) {
+                            if (contador >= 55){
+                                if (vidas.get(j).isActiva()) {
+                                    hitSound.play();
                                 vidas.get(j).setActiva(false);
                                 System.out.println(vidas.get(j));
                                 contador = 0;
-                                }
                             }
                         }
                     }
                 }
             }
+        }
         contador++;
     }
 

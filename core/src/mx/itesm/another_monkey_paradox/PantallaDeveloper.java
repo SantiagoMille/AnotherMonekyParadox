@@ -222,7 +222,7 @@ class PantallaDeveloper implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
-        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/2,ALTO-50,1,1,1);
+        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4,ALTO-50,1,1,1);
         batch.end();
         stageMenu.draw();
 
