@@ -529,9 +529,11 @@ class PantallaJuego extends Pantalla implements Screen  {
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
-                listaEnemigos.add(enemigo);
+            if(fondo.getImagenA().getX()<-1000&&fondo.getImagenA().getX()>-1202&&firstFilter){
+                for(int i=0; i<4;i++){
+                    enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
+                    listaEnemigos.add(enemigo);
+                }
             }
         }
 
@@ -799,7 +801,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
         verificarColisionGranadaBoss(stateTime);
-        verificarColisionPersonajeEnemigo(stateTime);
+        verificarColisionPersonajeEnemigo(dt);
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
@@ -847,7 +849,6 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(listaEnemigos.get(i).getVida() <= 0){
                 listaEnemigos.removeIndex(i);
                 puntosJugador += 10;
-                            
             }
         }
     }
@@ -977,21 +978,27 @@ class PantallaJuego extends Pantalla implements Screen  {
             x = listaEnemigos.get(i);
             rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
             rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-                if (rectEnemigo.overlaps(rectPersonaje)) {
+
+
+
+            if (rectEnemigo.overlaps(rectPersonaje)) {
+                if(x.getAnimacion().getKeyFrameIndex(dt) == 0) {
                     for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 50){
+                        if (contador >= 55) {
                             if (vidas.get(j).isActiva()) {
                                 hitSound.play();
-                            vidas.get(j).setActiva(false);
-                            System.out.println(vidas.get(j));
-                            contador = 0;
+                                vidas.get(j).setActiva(false);
+                                System.out.println(vidas.get(j));
+                                contador = 0;
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
         contador++;
     }
+
 
     private void verificarColisionPersonajeBalaBoss(float dt) {
         Bala bala;
