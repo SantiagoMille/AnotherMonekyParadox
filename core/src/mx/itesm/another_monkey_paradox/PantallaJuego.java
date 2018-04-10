@@ -804,7 +804,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
         verificarColisionGranadaBoss(stateTime);
-        verificarColisionPersonajeEnemigo(stateTime);
+        verificarColisionPersonajeEnemigo(dt);
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
@@ -983,13 +983,15 @@ class PantallaJuego extends Pantalla implements Screen  {
             rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
             rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
                 if (rectEnemigo.overlaps(rectPersonaje)) {
-                    for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 50){
-                            if (vidas.get(j).isActiva()) {
-                                hitSound.play();
-                            vidas.get(j).setActiva(false);
-                            System.out.println(vidas.get(j));
-                            contador = 0;
+                    if(x.getAnimacion().getKeyFrameIndex(dt) == 0)
+                        for (int j = vidas.size() - 1; j >= 0; j--) {
+                            if (contador >= 55){
+                                if (vidas.get(j).isActiva()) {
+                                    hitSound.play();
+                                vidas.get(j).setActiva(false);
+                                System.out.println(vidas.get(j));
+                                contador = 0;
+                            }
                         }
                     }
                 }
