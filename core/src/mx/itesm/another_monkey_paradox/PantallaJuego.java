@@ -999,6 +999,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         contador++;
     }
 
+    //hola
 
     private void verificarColisionPersonajeBalaBoss(float dt) {
         Bala bala;
