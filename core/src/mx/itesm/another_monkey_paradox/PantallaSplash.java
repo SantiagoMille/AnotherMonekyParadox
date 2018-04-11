@@ -83,6 +83,8 @@ class PantallaSplash implements Screen {
         sprite.draw(batch);
         batch.end();
 
+        sprite.rotate(5);
+
         /*
         float delay = 1; // seconds
         Timer.schedule(new Timer.Task(){

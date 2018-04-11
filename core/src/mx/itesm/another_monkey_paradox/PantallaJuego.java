@@ -53,6 +53,8 @@ class PantallaJuego extends Pantalla implements Screen  {
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
 
+    private boolean bossKilled = false;
+
     private boolean powerUpVidaFlag = true;
     private boolean powerUpGranadaFlag = true;
 
@@ -269,7 +271,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         bossSprite = new Sprite(boss);
         bossSprite.setPosition(ANCHO,ALTO);
         itemBoss = new Sprite(itemBosss);
-        itemBoss.setPosition(ANCHO,ALTO/4);
+        itemBoss.setPosition(ANCHO*3/4,ALTO/4);
 
         pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
@@ -628,7 +630,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         for(Bala balaB: listaBalasBoss){
-            balaB.render(batch);
+            if(!bossKilled){
+                balaB.render(batch);
+            }
         }
 
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
@@ -656,7 +660,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
             shootCounter++;
 
-            if(shootCounter>=50){
+            if(shootCounter>=50&&!bossKilled){
                 shootCounter=0;
                 Bala nueva = new Bala(bossDisparo,true);
                 nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
@@ -671,6 +675,7 @@ class PantallaJuego extends Pantalla implements Screen  {
             if(vidaBoss<=0){
                 itemBoss.setPosition(bossSprite.getX(),ALTO/4);
                 itemBoss.draw(batch);
+                bossKilled=true;
             }else{
                 bossSprite.draw(batch);
             }
@@ -768,8 +773,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(crashRight){
-            if(banana5.getX()>camara.position.x+ANCHO/2+banana5.getWidth()||banana5.getX()<camara.position.x-ANCHO/2-banana5.getWidth()){
+            if(banana1.getX()<ANCHO/20-banana2.getWidth()||banana1.getX()>ANCHO-ANCHO/20){
                 crashRight = false;
+                banana1.set(ANCHO,ALTO);
+                banana2.set(ANCHO,ALTO);
+                banana3.set(ANCHO,ALTO);
+                banana4.set(ANCHO,ALTO);
+                banana5.set(ANCHO,ALTO);
+                banana6.set(ANCHO,ALTO);
             }
             banana1.mover(-dt*2);
             banana2.moverY(dt*2);
@@ -784,8 +795,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
         if(crashLeft){
-            if(banana2.getX()>camara.position.x+ANCHO/2+banana2.getWidth()||banana2.getX()<camara.position.x-ANCHO/2-banana2.getWidth()){
+            if(banana4.getX()>ANCHO-ANCHO/20||banana4.getX()<ANCHO/20-banana5.getWidth()){
                 crashRight = false;
+                banana1.set(ANCHO,ALTO);
+                banana2.set(ANCHO,ALTO);
+                banana3.set(ANCHO,ALTO);
+                banana4.set(ANCHO,ALTO);
+                banana5.set(ANCHO,ALTO);
+                banana6.set(ANCHO,ALTO);
             }
             banana1.mover(-dt*2);
             banana2.moverY(dt*2);
