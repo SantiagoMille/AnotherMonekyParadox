@@ -429,7 +429,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.2f);
+                Bar.setValue(Bar.getValue()-0.4f);
             }
         });
 
@@ -521,7 +521,11 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         }
 
-        Bar.setValue(Bar.getValue() + 0.005f);
+        if(!arma.isPressed()){
+            Bar.setValue(Bar.getValue()+0.02f);
+        }
+
+        //Bar.setValue(Bar.getValue() + 0.005f);
 
         if(!powerUpVidaFlag){
             powerUpVida.setX(powerUpVida.getX()-(delta*80));
