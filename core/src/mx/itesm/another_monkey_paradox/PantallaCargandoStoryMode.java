@@ -121,6 +121,11 @@ public class PantallaCargandoStoryMode implements Screen {
 
         assetManager.load("ok-button.png", Texture.class);
 
+        //Textura barra de carga de balas
+        assetManager.load("BarraBalas/bananabarra.png", Texture.class);
+        assetManager.load("BarraBalas/barranegra.png", Texture.class);
+
+
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
     }

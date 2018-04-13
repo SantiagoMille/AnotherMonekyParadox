@@ -104,8 +104,13 @@ class PantallaJuego extends Pantalla implements Screen  {
     private int vidaEnemigo = 100;
     private int vidaBoss = 500;
 
-
+    //Barra de carga balas
     private progressBar Bar;
+    private Texture imgBarraBala;
+    private Texture imgBananaBarra;
+    private Sprite barraBala;
+    private Sprite bananaBarra;
+
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
@@ -315,6 +320,14 @@ class PantallaJuego extends Pantalla implements Screen  {
         System.out.println(randomX);
         System.out.println(randomX2);
 
+        //Barra Bala
+        Bar = new progressBar(200, 20);
+        Bar.setPosition((ANCHO/3)-25, ALTO*0.93f);
+        barraBala = new Sprite(imgBarraBala);
+        barraBala.setPosition((ANCHO/3)-30, (ALTO*0.92f)+3);
+        bananaBarra = new Sprite(imgBananaBarra);
+        bananaBarra.setPosition((ANCHO/3)-(imgBananaBarra.getWidth()/2)-33, (ALTO*0.90f));
+
         //Power Ups
         powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
         powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
@@ -406,10 +419,6 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         });
 
-        //Barra de disparo
-        Bar = new progressBar(200, 20);
-        Bar.setPosition(ANCHO/4, ALTO*0.93f);
-
 
         // Comportamiento de Boton Disparo
         arma.addListener(new ClickListener(){
@@ -417,19 +426,20 @@ class PantallaJuego extends Pantalla implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                gunSound.play();
-                if(Bar.getValue() > 0) {
+                if(Bar.getValue() > 0.1) {
+                    gunSound.play();
                     if (!isFliped) {
                         Bala nueva = new Bala(bananaDisparo, false);
                         nueva.set(personaje.getX() + 105, personaje.getY() + 68);
                         listaBalas.add(nueva);
                     } else {
+                        gunSound.play();
                         Bala nueva = new Bala(bananaDisparo, true);
                         nueva.set(personaje.getX(), personaje.getY() + 68);
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.4f);
+                Bar.setValue(Bar.getValue()-0.3f);
             }
         });
 
@@ -503,6 +513,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         gunSound = assetManager.get("pew.mp3");
         boomSound = assetManager.get("boom.mp3");
         hitSound = assetManager.get("hit.mp3");
+
+        imgBarraBala = assetManager.get("BarraBalas/barranegra.png");
+        imgBananaBarra = assetManager.get("BarraBalas/bananabarra.png");
     }
 
     private void crearCamara() {
@@ -716,6 +729,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         powerUpGranada.render(batch);
         powerUpVida.render(batch);
+        barraBala.draw(batch);
         banana1.render(batch);
         banana2.render(batch);
         banana3.render(batch);
@@ -727,10 +741,16 @@ class PantallaJuego extends Pantalla implements Screen  {
         stageNivel.act();
         stageNivel.draw();
 
+        batch.begin();
+        bananaBarra.draw(batch);
+        batch.end();
+
         // Botón PAUSA
         if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw(); // Solo si está pausado muestra la imagen
         }
+
+        Gdx.app.log("render", "fps="+Gdx.graphics.getFramesPerSecond());
 
     }
 
