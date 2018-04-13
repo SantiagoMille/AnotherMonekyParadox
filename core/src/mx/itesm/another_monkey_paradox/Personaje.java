@@ -31,7 +31,6 @@ class Personaje {
         y = PantallaJuego.ALTO/4;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
         isRight=true;
-
     }
 
     public boolean isRight() {

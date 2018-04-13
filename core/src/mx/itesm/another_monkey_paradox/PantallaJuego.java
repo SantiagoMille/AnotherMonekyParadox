@@ -104,6 +104,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     private int vidaEnemigo = 100;
     private int vidaBoss = 500;
 
+
+    private progressBar Bar;
+
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     int contador = 0;
@@ -258,6 +261,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         stageNivel = new Stage(vista);
 
+        //para sacar número random donde se crean los powerups
         random = new Random();
 
         //Objeto que dibuja texto
@@ -402,6 +406,11 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         });
 
+        //Barra de disparo
+        Bar = new progressBar(200, 20);
+        Bar.setPosition(ANCHO/4, ALTO*0.93f);
+
+
         // Comportamiento de Boton Disparo
         arma.addListener(new ClickListener(){
             @Override
@@ -409,15 +418,18 @@ class PantallaJuego extends Pantalla implements Screen  {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 gunSound.play();
-                if(!isFliped) {
-                    Bala nueva = new Bala(bananaDisparo,false);
-                    nueva.set(personaje.getX() + 105, personaje.getY() + 68);
-                    listaBalas.add(nueva);
-                } else {
-                    Bala nueva = new Bala(bananaDisparo,true);
-                    nueva.set(personaje.getX(), personaje.getY() + 68);
-                    listaBalas.add(nueva);
+                if(Bar.getValue() > 0) {
+                    if (!isFliped) {
+                        Bala nueva = new Bala(bananaDisparo, false);
+                        nueva.set(personaje.getX() + 105, personaje.getY() + 68);
+                        listaBalas.add(nueva);
+                    } else {
+                        Bala nueva = new Bala(bananaDisparo, true);
+                        nueva.set(personaje.getX(), personaje.getY() + 68);
+                        listaBalas.add(nueva);
+                    }
                 }
+                Bar.setValue(Bar.getValue()-0.2f);
             }
         });
 
@@ -441,6 +453,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         stageNivel.addActor(arma);
         stageNivel.addActor(pausa);
         stageNivel.addActor(pad);
+        stageNivel.addActor(Bar);
 
         Gdx.input.setInputProcessor(stageNivel);
     }
@@ -507,6 +520,8 @@ class PantallaJuego extends Pantalla implements Screen  {
             actualizarObjetos(delta, stateTime);
 
         }
+
+        Bar.setValue(Bar.getValue() + 0.005f);
 
         if(!powerUpVidaFlag){
             powerUpVida.setX(powerUpVida.getX()-(delta*80));
@@ -600,8 +615,6 @@ class PantallaJuego extends Pantalla implements Screen  {
         }
 
 
-
-
         for(PowerUp e:vidas){
             if(e.isActiva()){
                 e.render(batch);
@@ -639,6 +652,9 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
+
+
+
             if(estado == EstadoJuego.JUGANDO&&e.right){
 
                 if(personaje.getX()<camara.position.x){
@@ -704,6 +720,7 @@ class PantallaJuego extends Pantalla implements Screen  {
         banana6.render(batch);
         batch.end();
 
+        stageNivel.act();
         stageNivel.draw();
 
         // Botón PAUSA
@@ -735,11 +752,11 @@ class PantallaJuego extends Pantalla implements Screen  {
         //Balas
         int i=0;
         for(Bala bala:listaBalas){
-            if(bala.getX()>camara.position.x+ANCHO/2||bala.getX()<camara.position.x-ANCHO/2){
+            if (bala.getX() > camara.position.x + ANCHO / 2 || bala.getX() < camara.position.x - ANCHO / 2) {
                 listaBalas.removeIndex(i);
             }
-            if(bala.fliped){
-                bala.mover(dt*2);
+            if (bala.fliped) {
+                bala.mover(dt * 2);
             } else {
                 bala.mover(-dt * 2);
             }
@@ -998,7 +1015,11 @@ class PantallaJuego extends Pantalla implements Screen  {
         for (int i = listaEnemigos.size - 1; i >= 0; i--) {
             x = listaEnemigos.get(i);
             rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
-            rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            if(!personaje.isRight()) {
+                rectPersonaje = new Rectangle(personaje.getX()+50, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            } else{
+                rectPersonaje = new Rectangle(personaje.getX()-50, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            }
             if (rectEnemigo.overlaps(rectPersonaje)) {
                 if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
                     for (int j = vidas.size() - 1; j >= 0; j--) {

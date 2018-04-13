@@ -22,6 +22,7 @@ class Enemigo {
     private Estado estado;
     private float timerMuriendo;
     private int vida = 100;
+    //protected progressBar HealthBar;
 
     public Animation getAnimacion() {
         return animacion;
@@ -60,6 +61,9 @@ class Enemigo {
             x = (0 - texture1.getWidth())+(-1000*mult);
             y = PantallaJuego.ALTO / 4;
         }
+        //progressBar de los enemigos
+        //HealthBar = new progressBar(20, 5);
+
         estado=Estado.VIVO;
         animacion.setPlayMode(Animation.PlayMode.LOOP);
     }
@@ -67,6 +71,7 @@ class Enemigo {
     public void render(SpriteBatch batch){
         timerAnimacion += Gdx.graphics.getDeltaTime();
         TextureRegion frame = (TextureRegion) animacion.getKeyFrame(timerAnimacion);
+
         batch.draw(frame, x, y);
     }
 

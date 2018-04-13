@@ -14,12 +14,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 
 /**
@@ -99,27 +102,27 @@ class PantallaMenu implements Screen {
         spriteLogo = new Sprite(imgLogo);
         spriteLogo.setPosition(ANCHO/2-spriteLogo.getWidth()/2, ALTO-spriteLogo.getHeight()-40);
 
-
         //Boton Play
         TextureRegionDrawable trdPlay = new TextureRegionDrawable(new TextureRegion(botonPlay));
         TextureRegionDrawable trdPlayPressed = new TextureRegionDrawable(new TextureRegion(botonPlayPressed));
-
         ImageButton btnPlay = new ImageButton(trdPlay, trdPlayPressed);
-        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, -100);
+        btnPlay.addAction(Actions.moveTo(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2, 0.5f));
+
 
         //Boton Leaderboard
         TextureRegionDrawable trdLead = new TextureRegionDrawable(new TextureRegion(botonLeaderboard));
         TextureRegionDrawable trdLeadPush = new TextureRegionDrawable(new TextureRegion(botonLeaderboardPressed));
-
         ImageButton btnLead = new ImageButton(trdLead, trdLeadPush);
-        btnLead.setPosition(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2);
+        btnLead.setPosition(-200, ALTO/4-btnLead.getHeight()/2);
+        btnLead.addAction(Actions.moveTo(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2, 0.5f));
 
         //Boton about
         TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(botonAbout));
         TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(botonAboutPressed));
-
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
-        btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
+        btnConfig.setPosition(ANCHO+200, ALTO/4-btnConfig.getHeight()/2);
+        btnConfig.addAction(Actions.moveTo(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2, 0.5f));
 
         //Boton Tutorial
         TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(botonTutorial));
@@ -291,6 +294,7 @@ class PantallaMenu implements Screen {
         spriteBackground.draw(batch);
         spriteLogo.draw(batch);
         batch.end();
+        stageMenu.act(Gdx.graphics.getDeltaTime());
         stageMenu.draw();
 
     }
