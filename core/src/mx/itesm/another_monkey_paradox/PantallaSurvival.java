@@ -85,11 +85,11 @@ class PantallaSurvival implements Screen {
         btnLead.setPosition(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2);
 
         //Boton Config
-        TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(new Texture("but-config.png")));
-        TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(new Texture("but-config-push.png")));
-
+        TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(new Texture("configButton.png")));
+        TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(new Texture("configButton.png")));
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
-        btnConfig.setPosition(ANCHO*3/4-btnConfig.getWidth()/2, ALTO/4-btnConfig.getHeight()/2);
+        btnConfig.setPosition(ANCHO*9/10, ALTO*8/10);
+        btnConfig.setSize(95,95);
 
         //Boton Tutorial
         TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(new Texture("but-tut.png")));

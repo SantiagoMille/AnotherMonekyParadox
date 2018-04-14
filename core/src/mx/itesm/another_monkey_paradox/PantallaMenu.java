@@ -117,7 +117,7 @@ class PantallaMenu implements Screen {
         btnLead.setPosition(-200, ALTO/4-btnLead.getHeight()/2);
         btnLead.addAction(Actions.moveTo(ANCHO/4-btnLead.getWidth()/2, ALTO/4-btnLead.getHeight()/2, 0.5f));
 
-        //Boton about
+        //Boton CONFIG
         TextureRegionDrawable trdConfig = new TextureRegionDrawable(new TextureRegion(botonAbout));
         TextureRegionDrawable trdConfigPush = new TextureRegionDrawable(new TextureRegion(botonAboutPressed));
         ImageButton btnConfig = new ImageButton(trdConfig, trdConfigPush);
@@ -129,7 +129,8 @@ class PantallaMenu implements Screen {
         TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(botonTutorialPressed));
 
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
-        btnTut.setPosition(ANCHO*13/14, ALTO*13/14-btnTut.getHeight()/2);
+        btnTut.setPosition(ANCHO*9/10, ALTO*8/10);
+        btnTut.setSize(95,95);
 
         //Boton modo horda
         TextureRegionDrawable trdHorda = new TextureRegionDrawable(new TextureRegion(new Texture("arrow-point-to-right.png")));
@@ -265,8 +266,8 @@ class PantallaMenu implements Screen {
         botonLeaderboardPressed = assetManager.get("trophy_Pressed.png");
         botonAbout = assetManager.get("about-button.png");
         botonAboutPressed = assetManager.get("About-button_Pressed.png");
-        botonTutorial = assetManager.get("About2.png");
-        botonTutorialPressed = assetManager.get("About2.png");
+        botonTutorial = assetManager.get("configButton.png");
+        botonTutorialPressed = assetManager.get("configButton.png");
         backgroundStory = assetManager.get("StoryModeBack.png");
         backgroundSurvival = assetManager.get("SurvivalModeBack.png");
     }
