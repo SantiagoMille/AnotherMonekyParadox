@@ -127,7 +127,6 @@ class PantallaMenu implements Screen {
         //Boton Tutorial
         TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(botonTutorial));
         TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(botonTutorialPressed));
-
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
         btnTut.setPosition(ANCHO*13/14, ALTO*13/14-btnTut.getHeight()/2);
 

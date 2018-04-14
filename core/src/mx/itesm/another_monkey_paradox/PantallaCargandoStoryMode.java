@@ -102,8 +102,11 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("vida.png", Texture.class);
 
         //Textura botones
-        assetManager.load("granada_icon.png", Texture.class);
-        assetManager.load("bullet_icon.png", Texture.class);
+        assetManager.load("BotonesDisparo/bullet_icon.png", Texture.class);
+        assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
+        assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
         assetManager.load("Pad/padKnob.png", Texture.class);

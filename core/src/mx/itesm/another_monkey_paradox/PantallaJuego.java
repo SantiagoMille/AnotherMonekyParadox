@@ -23,6 +23,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -35,6 +36,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -170,7 +172,9 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     //Textura botones
     private Texture botonGranada;
+    private Texture botonGranadaPressed;
     private Texture botonDisparo;
+    private Texture botonDisparoPressed;
     private Texture botonPausa;
 
     private Texture botonContinua;
@@ -292,9 +296,6 @@ class PantallaJuego extends Pantalla implements Screen  {
             }
         }
 
-        //Boton granadas
-        TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
-
 
         //Granadas Colisión
         banana1 = new Bala(bananaDisparo,false);
@@ -332,34 +333,34 @@ class PantallaJuego extends Pantalla implements Screen  {
         powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
         powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
 
-        granada = new ImageButton(btnGranada);
-        granada.setSize(135, 135);
-        granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80);
+        //Boton granadas
+        TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
+        TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(botonGranadaPressed));
+        granada = new ImageButton(btnGranada, btnGranadaPressed);
+        granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, -100);
+        granada.addAction(Actions.moveTo(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80, 0.6f));
 
         //boton disparo
         TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(botonDisparo));
-
-        arma = new ImageButton(btnArma);
-        arma.setSize(135, 135);
-        arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80);
+        TextureRegionDrawable btnArmaPressed = new TextureRegionDrawable(new TextureRegion(botonDisparoPressed));
+        arma = new ImageButton(btnArma, btnArmaPressed);
+        arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, -100);
+        arma.addAction(Actions.moveTo(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80, 0.6f));
 
         //boton pausa
         TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(botonPausa));
-
         pausa = new ImageButton(btnPausa);
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
 
         //boton continua
         TextureRegionDrawable btnContinua = new TextureRegionDrawable(new TextureRegion(botonContinua));
-
         continua = new ImageButton(btnContinua);
         continua.setSize(55, 55);
         continua.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
 
         //boton Home
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(botonHome));
-
         home = new ImageButton(btnContinua);
         home.setSize(55, 55);
         home.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
@@ -495,8 +496,12 @@ class PantallaJuego extends Pantalla implements Screen  {
         canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
 
 
-        botonGranada = assetManager.get("granada_icon.png");
-        botonDisparo = assetManager.get("bullet_icon.png");
+        botonGranada = assetManager.get("BotonesDisparo/granada_icon.png");
+        botonDisparo = assetManager.get("BotonesDisparo/bullet_icon.png");
+        botonDisparoPressed = assetManager.get("BotonesDisparo/bullet_icon_pressed.png");
+        botonGranadaPressed = assetManager.get("BotonesDisparo/granada_icon_pressed.png");
+
+
         botonPausa = assetManager.get("pause-button.png");
         botonContinua = assetManager.get("PlayButton.png");
         botonHome = assetManager.get("boton Home.png");
