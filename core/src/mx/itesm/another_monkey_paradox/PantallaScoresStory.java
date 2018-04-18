@@ -38,7 +38,12 @@ public class PantallaScoresStory extends PantallaScores {
         spriteBackground.setPosition(0, 0);
         //spriteBackground.setAlpha(0.7f);
 
-        Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+        //Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
+
+        Skin skin = new Skin(Gdx.files.internal("skin5/star-soldier-ui.json"));
+
+        //Skin skin = new Skin(Gdx.files.internal("skin2/glassy-ui.json"));
+
 
         Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
         String score = prefs.getString("highscores", null);
@@ -57,7 +62,7 @@ public class PantallaScoresStory extends PantallaScores {
         Table table = new Table(skin);
         table.defaults().pad(10f);
         table.setFillParent(true);
-        table.setPosition(table.getX(),table.getY()+150);
+        table.setPosition(table.getX(),table.getY()+130);
 
         /**
          * Se crean las columnas con puntuajes
@@ -77,10 +82,10 @@ public class PantallaScoresStory extends PantallaScores {
         table.row();
         for(String name:allNames){
             columnName=new Label(name+": ", skin);
-            columnName.setFontScale(3f,3f);
+            columnName.setFontScale(1.5f,1.5f);
             table.add(columnName);
             columnScore= new Label(allScores.get(i), skin);
-            columnScore.setFontScale(3f,3f);
+            columnScore.setFontScale(1.5f,1.5f);
             table.add(columnScore);
             i++;
             table.row();

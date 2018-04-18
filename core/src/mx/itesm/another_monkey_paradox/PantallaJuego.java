@@ -375,7 +375,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
         // Crea el pad
         Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(20,20,160,160);               // x,y - ancho,alto
+        pad.setBounds(30,30,180,180);               // x,y - ancho,alto
 
         // Comportamiento del pad
         pad.addListener(new ChangeListener() {
@@ -440,7 +440,7 @@ class PantallaJuego extends Pantalla implements Screen  {
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.3f);
+                Bar.setValue(Bar.getValue()-0.15f);
             }
         });
 

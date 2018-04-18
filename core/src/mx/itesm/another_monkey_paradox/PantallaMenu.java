@@ -128,7 +128,7 @@ class PantallaMenu implements Screen {
         TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(botonTutorial));
         TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(botonTutorialPressed));
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
-        btnTut.setPosition(ANCHO*9/10, ALTO*8/10);
+        btnTut.setPosition(40, ALTO*8/10+30);
         btnTut.setSize(95,95);
 
         //Boton modo horda
