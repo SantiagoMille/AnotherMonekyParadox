@@ -206,9 +206,17 @@ public class PantallaMenu extends Pantalla implements Screen {
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
                 if(isSurvivalMode) {
-                    main.setScreen(new PantallaTutorialSurvivalMode(main));
+                    String toWrite = "Survive as long as you can, fight Dr. Timetravelov's \nminions.\n\n" +
+                            "- Use the joystick to move forwards and \n  backwards. \n" +
+                            "- Use the blue button to shoot bananas.\n" +
+                            "- Use the red button to throw banana grenades.";
+                    main.setScreen(new PantallaTutorial(main, toWrite));
                 }else{
-                    main.setScreen(new PantallaTutorialStoryMode(main));
+                    String toWrite = "Astro is seeking revenge against Dr. Timetravelov...\n\n" +
+                            "- Use the joystick to move forwards and \n  backwards. \n" +
+                            "- Use the blue button to shoot bananas.\n" +
+                            "- Use the red button to throw banana grenades.";
+                    main.setScreen(new PantallaTutorial(main, toWrite));
                 }
             }
 
