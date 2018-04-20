@@ -120,7 +120,11 @@ public class PantallaSurvival extends Pantalla implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaTutorialStoryMode(main));
+                String toWrite = "Astro is seeking revenge against Dr. Timetravelov...\n\n" +
+                        "- Use the joystick to move forwards and \n  backwards. \n" +
+                        "- Use the blue button to shoot bananas.\n" +
+                        "- Use the red button to throw banana grenades.";
+                main.setScreen(new PantallaTutorial(main, toWrite));
             }
         });
 

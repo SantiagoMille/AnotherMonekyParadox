@@ -25,7 +25,7 @@ import mx.itesm.another_monkey_paradox.Utils.Texto;
  * Created by adrian on 2/9/2018.
  */
 
-public abstract class PantallaTutorial extends Pantalla implements Screen {
+public class PantallaTutorial extends Pantalla implements Screen {
 
     //Escena
     private Stage stageMenu;
@@ -41,10 +41,10 @@ public abstract class PantallaTutorial extends Pantalla implements Screen {
     public Texto texto;
     public Texto title;
     public String toWrite;
-    String toWriteTitle;
 
-    public PantallaTutorial(Main main) {
+    public PantallaTutorial(Main main, String toWrite) {
         super(main);
+        this.toWrite = toWrite;
     }
 
     @Override
@@ -57,7 +57,9 @@ public abstract class PantallaTutorial extends Pantalla implements Screen {
         //musicMenu.play();
     }
 
-    abstract void crearTexto();
+    public void crearTexto(){
+        texto = new Texto(0,0,0);
+    }
 
     private void crearMainView() {
         stageMenu = new Stage(vista);
@@ -120,7 +122,9 @@ public abstract class PantallaTutorial extends Pantalla implements Screen {
 
     }
 
-    protected abstract void escribirTexto(SpriteBatch batch);
+    public void escribirTexto(SpriteBatch batch){
+        texto.mostratMensaje(batch,toWrite,ANCHO/2-50,ALTO-100,0f,0f,0f);
+    }
 
     @Override
     public void resize(int width, int height) {
