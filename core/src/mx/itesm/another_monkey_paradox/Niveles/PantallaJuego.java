@@ -1,17 +1,24 @@
-package mx.itesm.another_monkey_paradox.Niveles;
+package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -29,6 +36,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,25 +44,17 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
-import mx.itesm.another_monkey_paradox.Utils.Fondo;
-import mx.itesm.another_monkey_paradox.Main;
-import mx.itesm.another_monkey_paradox.Objetos.Bala;
-import mx.itesm.another_monkey_paradox.Objetos.Enemigo;
-import mx.itesm.another_monkey_paradox.Objetos.Granada;
-import mx.itesm.another_monkey_paradox.Objetos.Personaje;
-import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
-import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
-import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
-import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
-import mx.itesm.another_monkey_paradox.Utils.progressBar;
-
 /**
  * Created by santi on 1/30/2018.
  */
 
-public class PantallaJuego extends nivelGenerico implements Screen  {
+class PantallaJuego extends Pantalla implements Screen  {
 
-    /*
+    private final Main main;
+
+    public static final float ANCHO = 1280;
+    public static final float ALTO = 720;
+
     private boolean bossKilled = false;
 
     private boolean powerUpVidaFlag = true;
@@ -62,7 +62,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     private boolean firstFilter=true;
     private boolean secondFilter=true;
-    */
 
     //For Background
     private Texture boss;
@@ -74,12 +73,10 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     private Fondo fondo;
 
-    /*
     //Sonido
     private Sound gunSound;
     private Sound boomSound;
     private Sound hitSound;
-
 
     //Armas
     private Array<Bala> listaBalas;
@@ -87,15 +84,13 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Array<Bala> listaBalasBoss;
     //Fisica Granada
     float velocityY;     // Velocidad de la granada
-    */
-    /*
+
     //Controles del jugador
     private ImageButton granada;
     private ImageButton arma;
     private ImageButton pausa;
     private ImageButton home;
     private ImageButton continua;
-    */
 
     private float stateTime = 0;
 
@@ -118,6 +113,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Sprite barraBala;
     private Sprite bananaBarra;
 
+
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
     int contador = 0;
@@ -127,6 +123,11 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     //Escena
     private Stage stageNivel;
+
+    //Camara
+    private OrthographicCamera camara;
+    private Viewport vista;
+    private SpriteBatch batch;
 
     // Puntaje y texto
     private int puntosJugador = 0;
@@ -140,13 +141,12 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private int maxGrandas = 5;
     public GlyphLayout textoGlyGran;
 
-    /*
+
     //Textura de Astro
     private Texture astroCaminata0;
     private Texture astroCaminata1;
     private Texture astroCaminata2;
     private Texture astroCaminata3;
-    */
 
     //Textura de Cavernicola 01
     private Texture canervicola01Frame0;
@@ -170,7 +170,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
-    /*
     //Textura botones
     private Texture botonGranada;
     private Texture botonGranadaPressed;
@@ -180,7 +179,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     private Texture botonContinua;
     private Texture botonHome;
-    */
+
     private Texture padBack;
     private Texture padKnob;
 
@@ -215,12 +214,15 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private PowerUp powerUpVida;
     private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
     private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-    private Double randomX;
-    private Double randomX2;
+    Double randomX;
+    Double randomX2;
 
+    //Asset Manager
+    private final AssetManager assetManager;
 
     public PantallaJuego(Main main) {
-        super(main);
+        this.main = main;
+        assetManager = main.getAssetManager();
     }
 
     @Override
@@ -294,6 +296,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
 
+
         //Granadas Colisión
         banana1 = new Bala(bananaDisparo,false);
         banana1.set(-100,-100);
@@ -324,55 +327,43 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         barraBala = new Sprite(imgBarraBala);
         barraBala.setPosition((ANCHO/3)-30, (ALTO*0.92f)+3);
         bananaBarra = new Sprite(imgBananaBarra);
-        bananaBarra.setSize(65, 63);
-        bananaBarra.setPosition((ANCHO/3)-(imgBananaBarra.getWidth()/2)-33, (ALTO*0.91f));
+        bananaBarra.setPosition((ANCHO/3)-(imgBananaBarra.getWidth()/2)-33, (ALTO*0.90f));
 
         //Power Ups
         powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
         powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
 
-        /*
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
         TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(botonGranadaPressed));
         granada = new ImageButton(btnGranada, btnGranadaPressed);
-        */
         granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, -100);
         granada.addAction(Actions.moveTo(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80, 0.6f));
 
-        /*
         //boton disparo
         TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(botonDisparo));
         TextureRegionDrawable btnArmaPressed = new TextureRegionDrawable(new TextureRegion(botonDisparoPressed));
         arma = new ImageButton(btnArma, btnArmaPressed);
-        */
         arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, -100);
         arma.addAction(Actions.moveTo(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80, 0.6f));
 
-        /*
         //boton pausa
         TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(botonPausa));
         pausa = new ImageButton(btnPausa);
-        */
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
 
-        /*
         //boton continua
         TextureRegionDrawable btnContinua = new TextureRegionDrawable(new TextureRegion(botonContinua));
         continua = new ImageButton(btnContinua);
-        */
         continua.setSize(55, 55);
         continua.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
 
-        /*
         //boton Home
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(botonHome));
         home = new ImageButton(btnContinua);
-        */
         home.setSize(55, 55);
         home.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
-
 
         Skin skin = new Skin(); // Texturas para el pad
         skin.add("fondo", padBack);
@@ -384,8 +375,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
         // Crea el pad
         Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(-100,20,220,220); // x,y - ancho,alto
-        pad.addAction(Actions.moveTo(35,25, 0.6f));
+        pad.setBounds(20,20,160,160);               // x,y - ancho,alto
 
         // Comportamiento del pad
         pad.addListener(new ChangeListener() {
@@ -483,27 +473,12 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
-
         fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
 
-        /*
         astroCaminata0 = assetManager.get("Astro/CAMINATA 4.png");
         astroCaminata1 = assetManager.get("Astro/CAMINATA 2.png");
         astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
         astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
-
-        botonGranada = assetManager.get("BotonesDisparo/granada_icon.png");
-        botonDisparo = assetManager.get("BotonesDisparo/bullet_icon.png");
-        botonDisparoPressed = assetManager.get("BotonesDisparo/bullet_icon_pressed.png");
-        botonGranadaPressed = assetManager.get("BotonesDisparo/granada_icon_pressed.png");
-        botonPausa = assetManager.get("pause-button.png");
-        botonContinua = assetManager.get("PlayButton.png");
-        botonHome = assetManager.get("boton Home.png");
-
-        gunSound = assetManager.get("pew.mp3");
-        boomSound = assetManager.get("boom.mp3");
-        hitSound = assetManager.get("hit.mp3");
-        */
 
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
@@ -520,6 +495,16 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         canervicola03Frame2 = assetManager.get("cavernicola03/CM3 2.png");
         canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
 
+
+        botonGranada = assetManager.get("BotonesDisparo/granada_icon.png");
+        botonDisparo = assetManager.get("BotonesDisparo/bullet_icon.png");
+        botonDisparoPressed = assetManager.get("BotonesDisparo/bullet_icon_pressed.png");
+        botonGranadaPressed = assetManager.get("BotonesDisparo/granada_icon_pressed.png");
+
+
+        botonPausa = assetManager.get("pause-button.png");
+        botonContinua = assetManager.get("PlayButton.png");
+        botonHome = assetManager.get("boton Home.png");
         padBack = assetManager.get("Pad/padBack.png");
         padKnob = assetManager.get("Pad/padKnob.png");
 
@@ -529,6 +514,10 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
         imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
         imgpowerUpVida = assetManager.get("Items/VIDA.png");
+
+        gunSound = assetManager.get("pew.mp3");
+        boomSound = assetManager.get("boom.mp3");
+        hitSound = assetManager.get("hit.mp3");
 
         imgBarraBala = assetManager.get("BarraBalas/barranegra.png");
         imgBananaBarra = assetManager.get("BarraBalas/bananabarra.png");
@@ -1063,7 +1052,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             if (rectEnemigo.overlaps(rectPersonaje)) {
                 if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
                     for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 58) {
+                        if (contador >= 55) {
                             if (vidas.get(j).isActiva()) {
                                 hitSound.play();
                                 vidas.get(j).setActiva(false);

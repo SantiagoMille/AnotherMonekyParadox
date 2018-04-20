@@ -37,7 +37,6 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
     //Escena
     private Stage stageMenu;
-    private Table container;
 
     private float sensitivity = 0;
     private float difficulty = 0;
@@ -47,7 +46,6 @@ public class PantallaDeveloper extends Pantalla implements Screen {
     private Preferences prefs;
 
     private SpriteBatch batch;
-
 
     Texture imgBackground;
     private Sprite spriteBackground;
@@ -77,22 +75,12 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         imgBackground = new Texture("pantalla_config.png");
         spriteBackground = new Sprite(imgBackground);
-        spriteBackground.setAlpha(0.7f);
-
-        container = new Table();
-        stageMenu.addActor(container);
-        container.setFillParent(true);
-        container.setPosition(0,30);
-
-        Table table = new Table();
-
-        final ScrollPane scroll = new ScrollPane(table, skin);
-
+        spriteBackground.setAlpha(0.55f);
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
         ImageButton btnReturn = new ImageButton(trdReturn);
-        btnReturn.setPosition(ANCHO-80, ALTO-30-btnReturn.getHeight());
+        btnReturn.setPosition(20, ALTO-30-btnReturn.getHeight());
 
         //Click en boton Return
         btnReturn.addListener(new ClickListener(){
@@ -101,6 +89,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
                 super.clicked(event, x, y);
                 prefs.putFloat("Difficulty",difficulty);
                 prefs.putFloat("Sensitivity",sensitivity);
+                prefs.flush();
                 main.setScreen(new PantallaMenu(main));
             }
         });
@@ -121,81 +110,55 @@ public class PantallaDeveloper extends Pantalla implements Screen {
             }
         };
 
-        table.pad(10).defaults().expandX().space(4);
         titulo = new Texto(1,1,1);
 
-
-        table.row();
-        table.row();
-        table.row();
-        table.row();
-        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
-        table.row();
-        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
-
-        TextButton buttonVolumen = new TextButton("Difficulty", skin);
-        table.add(buttonVolumen);
-        buttonVolumen.addListener(new ClickListener() {
+        TextButton buttonDifficulty = new TextButton("Difficulty", skin);
+        buttonDifficulty.addListener(new ClickListener() {
             public void clicked (InputEvent event, float x, float y) {
                 System.out.println("click " + x + ", " + y);
             }
         });
 
+        buttonDifficulty.setPosition(ANCHO/2-buttonDifficulty.getWidth(),ALTO/2+100);
+
         Slider sliderDif = new Slider(0, 100, 1, false, skin);
         sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-        table.add(sliderDif);
+        sliderDif.setPosition(ANCHO/2+50,ALTO/2+100);
 
-        table.add(new Label("                                                                                                               ", skin));
-
-        table.row();
-        table.add(new Label(" ",skin));
-        table.row();
-        table.add(new Label(" ",skin));
-        table.row();
-        table.add(new Label("                                                                                             ", skin)).expandX().fillX();
 
         TextButton buttonSensitivity = new TextButton("Sensitivity", skin);
-        table.add(buttonSensitivity);
         buttonSensitivity.addListener(new ClickListener() {
             public void clicked (InputEvent event, float x, float y) {
                 System.out.println("click " + x + ", " + y);
             }
         });
+        buttonSensitivity.setPosition(ANCHO/2-buttonDifficulty.getWidth(),ALTO/2);
 
         Slider sliderSens = new Slider(0, 100, 1, false, skin);
         sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.
-        table.add(sliderSens);
-
-        table.add(new Label("                                                                                                               ", skin));
+        sliderSens.setPosition(ANCHO/2+50,ALTO/2);
 
         final TextButton creditsButton = new TextButton("Creditos", skin.get("default", TextButton.TextButtonStyle.class));
         creditsButton.setChecked(true);
         creditsButton.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
-                scroll.setFlickScroll(creditsButton.isChecked());
                 prefs.putFloat("Difficulty",difficulty);
                 prefs.putFloat("Sensitivity",sensitivity);
+                prefs.flush();
                 main.setScreen(new PantallaCredits(main));
             }
         });
+        creditsButton.setPosition(ANCHO-20-creditsButton.getWidth(),20);
 
-        container.add(scroll).expand().fill().colspan(4);
-        container.row().space(10).padBottom(10);
-        container.add(new Label("  ",skin));
-        table.row();
-        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
-        table.row();
-        table.add(new Label("\n\n\n\n\n\n\n\n\n\n\n ",skin));
-        table.row();
-        container.add(creditsButton).left().expandX();
 
+        stageMenu.addActor(buttonDifficulty);
+        stageMenu.addActor(creditsButton);
+        stageMenu.addActor(buttonSensitivity);
+        stageMenu.addActor(sliderDif);
+        stageMenu.addActor(sliderSens);
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);
-
-        float ddiiff = prefs.getFloat("Difficulty");
-        sliderDif.setX(ddiiff);
-        sliderSens.setX(prefs.getFloat("Sensitivity"));
 
     }
 
@@ -215,7 +178,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
-        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4,ALTO-50,1,1,1);
+        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4-100,ALTO-50,1,1,1);
         batch.end();
         stageMenu.draw();
 
