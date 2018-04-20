@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
@@ -44,17 +44,26 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Objetos.Bala;
+import mx.itesm.another_monkey_paradox.Objetos.Enemigo;
+import mx.itesm.another_monkey_paradox.Objetos.Granada;
+import mx.itesm.another_monkey_paradox.Objetos.Personaje;
+import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
+import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
+import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
+import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
+import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
+import mx.itesm.another_monkey_paradox.Utils.Fondo;
+import mx.itesm.another_monkey_paradox.Utils.progressBar;
+
 /**
  * Created by santi on 1/30/2018.
  */
 
-class PantallaJuego extends Pantalla implements Screen  {
+public class PantallaJuego extends nivelGenerico implements Screen  {
 
-    private final Main main;
-
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 720;
-
+    /*
     private boolean bossKilled = false;
 
     private boolean powerUpVidaFlag = true;
@@ -62,6 +71,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private boolean firstFilter=true;
     private boolean secondFilter=true;
+    */
 
     //For Background
     private Texture boss;
@@ -73,6 +83,7 @@ class PantallaJuego extends Pantalla implements Screen  {
 
     private Fondo fondo;
 
+    /*
     //Sonido
     private Sound gunSound;
     private Sound boomSound;
@@ -91,6 +102,7 @@ class PantallaJuego extends Pantalla implements Screen  {
     private ImageButton pausa;
     private ImageButton home;
     private ImageButton continua;
+    */
 
     private float stateTime = 0;
 
@@ -124,11 +136,6 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Escena
     private Stage stageNivel;
 
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-    private SpriteBatch batch;
-
     // Puntaje y texto
     private int puntosJugador = 0;
     private BitmapFont font;
@@ -140,13 +147,6 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Granada y texto
     private int maxGrandas = 5;
     public GlyphLayout textoGlyGran;
-
-
-    //Textura de Astro
-    private Texture astroCaminata0;
-    private Texture astroCaminata1;
-    private Texture astroCaminata2;
-    private Texture astroCaminata3;
 
     //Textura de Cavernicola 01
     private Texture canervicola01Frame0;
@@ -170,15 +170,22 @@ class PantallaJuego extends Pantalla implements Screen  {
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
+    /*
     //Textura botones
     private Texture botonGranada;
     private Texture botonGranadaPressed;
     private Texture botonDisparo;
     private Texture botonDisparoPressed;
     private Texture botonPausa;
-
     private Texture botonContinua;
     private Texture botonHome;
+
+    //Textura de Astro
+    private Texture astroCaminata0;
+    private Texture astroCaminata1;
+    private Texture astroCaminata2;
+    private Texture astroCaminata3;
+    */
 
     private Texture padBack;
     private Texture padKnob;
@@ -217,12 +224,9 @@ class PantallaJuego extends Pantalla implements Screen  {
     Double randomX;
     Double randomX2;
 
-    //Asset Manager
-    private final AssetManager assetManager;
 
     public PantallaJuego(Main main) {
-        this.main = main;
-        assetManager = main.getAssetManager();
+        super(main);
     }
 
     @Override
@@ -333,37 +337,44 @@ class PantallaJuego extends Pantalla implements Screen  {
         powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
         powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
 
+        /*
         //Boton granadas
         TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
         TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(botonGranadaPressed));
         granada = new ImageButton(btnGranada, btnGranadaPressed);
+        */
         granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, -100);
         granada.addAction(Actions.moveTo(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80, 0.6f));
-
+        /*
         //boton disparo
         TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(botonDisparo));
         TextureRegionDrawable btnArmaPressed = new TextureRegionDrawable(new TextureRegion(botonDisparoPressed));
         arma = new ImageButton(btnArma, btnArmaPressed);
+        */
         arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, -100);
         arma.addAction(Actions.moveTo(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80, 0.6f));
-
+        /*
         //boton pausa
         TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(botonPausa));
         pausa = new ImageButton(btnPausa);
+        */
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
-
+        /*
         //boton continua
         TextureRegionDrawable btnContinua = new TextureRegionDrawable(new TextureRegion(botonContinua));
         continua = new ImageButton(btnContinua);
+        */
         continua.setSize(55, 55);
         continua.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
-
+        /*
         //boton Home
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(botonHome));
         home = new ImageButton(btnContinua);
+        */
         home.setSize(55, 55);
         home.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
+
 
         Skin skin = new Skin(); // Texturas para el pad
         skin.add("fondo", padBack);
