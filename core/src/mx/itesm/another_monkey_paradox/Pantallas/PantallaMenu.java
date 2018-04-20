@@ -1,11 +1,9 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -15,30 +13,23 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 
 
 /**
  * Created by santi on 1/30/2018.
  */
 
-class PantallaMenu implements Screen {
+public class PantallaMenu extends Pantalla implements Screen {
 
-    private final Main main;
-
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 720;
-
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
     //Escena
     private Stage stageMenu;
 
@@ -71,12 +62,8 @@ class PantallaMenu implements Screen {
     private Texture botonTutorial;
     private Texture botonTutorialPressed;
 
-    //Asset Manager
-    private final AssetManager assetManager;
-
     public PantallaMenu(Main main) {
-        this.main = main;
-        assetManager = main.getAssetManager();
+        super(main);
     }
 
     @Override
@@ -151,7 +138,7 @@ class PantallaMenu implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaCargandoStoryMode(main));
+                main.setScreen(new PantallaCargandoStoryMode(main, 1));
             }
         });
 

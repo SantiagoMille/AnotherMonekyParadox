@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;

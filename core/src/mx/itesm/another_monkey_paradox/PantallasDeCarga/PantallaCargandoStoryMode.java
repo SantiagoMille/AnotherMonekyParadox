@@ -1,73 +1,49 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.PantallasDeCarga;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 
-import javax.swing.text.View;
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego;
+import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 
 /**
  * Created by Fernando on 18/03/18.
  */
 
-public class PantallaCargandoStoryMode implements Screen {
-
-    private Main main;
-
-    //Cámara y vista
-    private OrthographicCamera camara;
-    private Viewport vista;
-    private SpriteBatch batch;
+public class PantallaCargandoStoryMode extends Pantalla implements Screen {
 
     //Texturas
     private Texture texturaCargando;
     private Sprite spriteCargando; // Para animarlo
 
-    private AssetManager assetManager;
+    // Nivel
+    private int level;
 
-    public PantallaCargandoStoryMode(Main main){
-        this.main = main;
-        this.assetManager = main.getAssetManager();
+    public PantallaCargandoStoryMode(Main main, int level){
+        super(main);
+        this.level = level;
     }
 
     @Override
     public void show() {
-
-        //Crea cámara/vista
-        camara = new OrthographicCamera(1280, 720);
-        camara.position.set(1280/2, 720/2, 0);
-        camara.update();
-        vista = new StretchViewport(1280, 720, camara);
-        batch = new SpriteBatch();
-
         //Cargar recursos de esta pantalla
-        assetManager.load("PantallaCarga/cargando.png", Texture.class);
-        assetManager.finishLoading();
-        texturaCargando = assetManager.get("PantallaCarga/cargando.png"); //Se bloquea, pero es una sola imagen
+        texturaCargando = new Texture("PantallaCarga/cargando.png"); //Se bloquea, pero es una sola imagen
         spriteCargando = new Sprite(texturaCargando);
-        spriteCargando.setPosition(1280/2-spriteCargando.getWidth()/2,
-                720/2-spriteCargando.getHeight()/2);
-
+        spriteCargando.setPosition(ANCHO/2-spriteCargando.getWidth()/2,
+                ALTO/2-spriteCargando.getHeight()/2);
+        if(level == 1){
+            cargarRecursosLevel1();
+        }
         //Ahora Inicia la carga de los recursos de la siguiente pantalla
-        cargarRecursos();
-
     }
 
     //Estos son los recursos de la pantalla siguiente (StoryMode)
-    private void cargarRecursos() {
-
-        //Sonidos
-        assetManager.load("pew.mp3",Sound.class);
-        assetManager.load("boom.mp3",Sound.class);
-        assetManager.load("hit.mp3", Sound.class);
+    private void cargarRecursosLevel1() {
 
         assetManager.load("disparo2.png",Texture.class);
 
@@ -128,7 +104,10 @@ public class PantallaCargandoStoryMode implements Screen {
         assetManager.load("BarraBalas/bananabarra.png", Texture.class);
         assetManager.load("BarraBalas/barranegra.png", Texture.class);
 
-
+        //Sonidos
+        assetManager.load("pew.mp3", Sound.class);
+        assetManager.load("boom.mp3", Sound.class);
+        assetManager.load("hit.mp3", Sound.class);
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
     }

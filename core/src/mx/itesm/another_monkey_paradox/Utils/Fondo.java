@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Utils;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  * Created by Fernando on 20/02/18.
  */
 
-class Fondo {
+public class Fondo {
 
     private Sprite imagenA;
     //private Sprite imagenB;

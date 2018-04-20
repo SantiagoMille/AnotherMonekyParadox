@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Utils;
 
 /**
  * Created by Fernando on 10/04/18.
@@ -14,13 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 
-public class progressBar extends ProgressBar{
+public class progressBar extends ProgressBar {
 
     public progressBar(int width, int height) {
         super(0f, 1f, 0.01f, false, new ProgressBarStyle());
         getStyle().background = getColoredDrawable(width, height, Color.BLACK);
-        getStyle().knob = getColoredDrawable(0, height, Color.CYAN);
-        getStyle().knobBefore = getColoredDrawable(width, height, Color.CYAN);
+        getStyle().knob = getColoredDrawable(0, height, Color.FOREST);
+        getStyle().knobBefore = getColoredDrawable(width, height, Color.FOREST);
 
         setWidth(width);
         setHeight(height);
@@ -42,5 +42,4 @@ public class progressBar extends ProgressBar{
 
         return drawable;
     }
-
 }

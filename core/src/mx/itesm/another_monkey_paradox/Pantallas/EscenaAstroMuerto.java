@@ -1,10 +1,8 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -15,15 +13,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
+import mx.itesm.another_monkey_paradox.Utils.Texto;
 
 /**
  * Created by santi on 1/30/2018.
  */
 
-class EscenaAstroMuerto implements Screen {
+public class EscenaAstroMuerto implements Screen {
 
     private final Main main;
 

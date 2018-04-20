@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -24,24 +24,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Utils.Texto;
 
 /**
  * Created by adrian on 2/9/2018.
  */
 
-class PantallaDeveloper implements Screen {
+public class PantallaDeveloper extends Pantalla implements Screen {
 
-    private final Main main;
-
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 780;
-
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
     //Escena
     private Stage stageMenu;
     private Table container;
@@ -63,7 +56,7 @@ class PantallaDeveloper implements Screen {
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
     public PantallaDeveloper(Main main) {
-        this.main = main;
+        super(main);
     }
 
     @Override

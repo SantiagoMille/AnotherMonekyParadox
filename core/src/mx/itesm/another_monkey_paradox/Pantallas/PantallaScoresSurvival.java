@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -13,18 +13,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
 
-import java.util.ArrayList;
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Utils.Texto;
 
 /**
  * Created by santi on 2/13/2018.
  */
 
-public class PantallaScoresStory extends PantallaScores {
-    public PantallaScoresStory(Main main) {
+public class PantallaScoresSurvival extends PantallaScores {
+
+    public PantallaScoresSurvival(Main main) {
         super(main);
-        survival = false;
+        survival = true;
     }
 
     @Override
@@ -36,50 +37,47 @@ public class PantallaScoresStory extends PantallaScores {
         imgBackground = new Texture("logros.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
-        //spriteBackground.setAlpha(0.7f);
+        spriteBackground.setAlpha(0.7f);
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
-        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-        String score = prefs.getString("highscores", null);
-        ArrayList<String> scoress = new ArrayList<String>();
-        if(score==null){
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceSurvival");
+        String names = prefs.getString("names", null);
+        if(names==null){
+            // prefs.putString("names", "Astro");
+            names = "Astro,";
+        }
+        String scores = prefs.getString("highscores", null);
+        if(scores==null){
             //prefs.putString("highscores", "10000");
-            scoress.add("Astro:10000");
-        }else{
-            for(String s: score.split(",")){
-                if(s.length()>1) {
-                    scoress.add(s);
-                }
-            }
+            scores = "10000,";
         }
 
         Table table = new Table(skin);
         table.defaults().pad(10f);
         table.setFillParent(true);
-        table.setPosition(table.getX(),table.getY()+150);
+        table.setPosition(table.getX(),table.getY()+250);
+
+        /**
+         * Se hace el titulo de scores
+         */
 
         /**
          * Se crean las columnas con puntuajes
          */
         Label columnName;
         Label columnScore;
-        ArrayList<String> allScores = new ArrayList<String>();
-        ArrayList<String> allNames = new ArrayList<String>();
 
-        for(String s: scoress) {
-            allScores.add(s.split(":")[1]);
-            allNames.add(s.split(":")[0]);
-        }
+        String[] allScores = scores.split(",");
+        String[] allNames = names.split(",");
         int i=0;
 
-        //table.add(scoresTitle).colspan(2).fillX().height(150);
         table.row();
         for(String name:allNames){
             columnName=new Label(name+": ", skin);
             columnName.setFontScale(3f,3f);
             table.add(columnName);
-            columnScore= new Label(allScores.get(i), skin);
+            columnScore= new Label(allScores[i], skin);
             columnScore.setFontScale(3f,3f);
             table.add(columnScore);
             i++;
@@ -105,4 +103,5 @@ public class PantallaScoresStory extends PantallaScores {
 
         Gdx.input.setInputProcessor(stageMenu);
     }
+
 }

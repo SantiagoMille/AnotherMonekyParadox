@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -16,11 +16,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
+import mx.itesm.another_monkey_paradox.Utils.Texto;
+
 /**
  * Created by Adrian on 03/04/2018.
  */
 
-class EscenaAstroGanador implements Screen {
+public class EscenaAstroGanador implements Screen {
 
     private final Main main;
 

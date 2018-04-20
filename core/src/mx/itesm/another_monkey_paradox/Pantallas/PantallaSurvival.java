@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -15,26 +15,19 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 
 /**
  * Created by Fernando on 10/02/18.
  */
 
-class PantallaSurvival implements Screen {
+public class PantallaSurvival extends Pantalla implements Screen {
 
-    private final Main main;
-
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 720;
-
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
     //Escena
     private Stage stageMenu;
-
-    private SpriteBatch batch;
 
     //For Background
     Texture imgBackground, imgLogo;
@@ -46,7 +39,7 @@ class PantallaSurvival implements Screen {
 
 
     public PantallaSurvival(Main main) {
-        this.main = main;
+        super(main);
     }
 
     @Override

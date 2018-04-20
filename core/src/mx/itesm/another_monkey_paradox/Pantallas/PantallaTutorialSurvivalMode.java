@@ -1,6 +1,9 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Utils.Texto;
 
 /**
  * Created by santi on 2/13/2018.

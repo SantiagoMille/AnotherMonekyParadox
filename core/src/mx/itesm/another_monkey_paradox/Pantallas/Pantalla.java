@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 /**
  * Created by Fernando on 20/02/18.
@@ -6,11 +6,14 @@ package mx.itesm.another_monkey_paradox;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+
+import mx.itesm.another_monkey_paradox.Main;
 
 /**
  * Representa comportamiento genérico de cualquier pantalla que forma
@@ -23,6 +26,12 @@ public abstract class Pantalla implements Screen
     public static final float ANCHO = 1280;
     public static final float ALTO = 720;
 
+    //Pantalla
+    protected final Main main;
+
+    //Asset Manager
+    protected final AssetManager assetManager;
+
     // Atributos disponibles solo en las subclases
     // Todas las pantallas tienen una cámara y una vista
     protected OrthographicCamera camara;
@@ -30,7 +39,9 @@ public abstract class Pantalla implements Screen
     // Todas las pantallas dibujan algo :)
     protected SpriteBatch batch;
 
-    public Pantalla() {
+    public Pantalla(Main main) {
+        this.main = main;
+        this.assetManager = main.getAssetManager();
         // Crea la cámara con las dimensiones del mundo
         camara = new OrthographicCamera(ANCHO, ALTO);
         // En el centro de la pantalla
@@ -40,6 +51,7 @@ public abstract class Pantalla implements Screen
         vista = new StretchViewport(ANCHO, ALTO, camara);
         // El objeto que administra los trazos gráficos
         batch = new SpriteBatch();
+        batch.setProjectionMatrix(camara.combined);
     }
 
     // Borra la pantalla con fondo negro

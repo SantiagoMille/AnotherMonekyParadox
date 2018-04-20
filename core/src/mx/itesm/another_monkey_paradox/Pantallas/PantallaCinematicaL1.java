@@ -1,4 +1,4 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -11,28 +11,21 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
+import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 
 /**
  * Created by adrian on 03/04/2018.
  */
 
-class PantallaCinematicaL1 implements Screen {
+public class PantallaCinematicaL1 extends Pantalla implements Screen {
 
-    private final Main main;
-
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 780;
-
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
     //Escena
     private Stage stageMenu;
 
@@ -46,7 +39,7 @@ class PantallaCinematicaL1 implements Screen {
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
     public PantallaCinematicaL1(Main main) {
-        this.main = main;
+        super(main);
     }
 
     @Override

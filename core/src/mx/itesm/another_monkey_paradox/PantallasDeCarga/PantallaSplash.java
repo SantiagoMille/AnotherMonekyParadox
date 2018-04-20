@@ -1,49 +1,33 @@
-package mx.itesm.another_monkey_paradox;
+package mx.itesm.another_monkey_paradox.PantallasDeCarga;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
+
+import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
+import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 
 /**
  * Created by santi on 1/30/2018.
  */
 
-class PantallaSplash implements Screen {
-
-    private final Main main;
-
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 780;
-
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-    //Escena
-    private SpriteBatch batch;
+public class PantallaSplash extends Pantalla implements Screen {
 
     //To draw sprite of monkey
     Texture imgMonkey;
     private Sprite sprite;
 
-    //Asset Manager
-    private AssetManager assetManager;
-
-
     public static Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
     public PantallaSplash(Main main) {
-
-        this.main = main;
-        this.assetManager = main.getAssetManager();
+        super(main);
     }
 
     @Override
