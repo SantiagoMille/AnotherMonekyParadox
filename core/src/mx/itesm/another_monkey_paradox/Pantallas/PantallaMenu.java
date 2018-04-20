@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -223,7 +224,6 @@ public class PantallaMenu extends Pantalla implements Screen {
         stageMenu.addActor(btnRegresarHorda);
 
         inputMultiplexer.addProcessor(stageMenu);
-        //Gdx.input.setInputProcessor(stageMenu);
     }
 
     private void cargarTexturas(){
@@ -288,11 +288,8 @@ public class PantallaMenu extends Pantalla implements Screen {
 
     public void imgLogoRebotando(){
         float y = MathUtils.sinDeg(grados);
-
         grados += diferencial;
-
         spriteLogo.setPosition(ANCHO / 2 - spriteLogo.getWidth() / 2, spriteLogo.getY() + y);
-
         if (diferencial == 360 || diferencial == 0){
             diferencial = -diferencial;
         }

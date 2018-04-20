@@ -3,15 +3,20 @@ package mx.itesm.another_monkey_paradox.Niveles;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.ArrayList;
+
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.Objetos.Bala;
 import mx.itesm.another_monkey_paradox.Objetos.Granada;
+import mx.itesm.another_monkey_paradox.Objetos.Personaje;
+import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 
 /**
@@ -24,7 +29,6 @@ public abstract class nivelGenerico extends Pantalla {
         super(main);
     }
 
-
     protected boolean bossKilled = false;
 
     protected boolean powerUpVidaFlag = true;
@@ -32,18 +36,6 @@ public abstract class nivelGenerico extends Pantalla {
 
     protected boolean firstFilter=true;
     protected boolean secondFilter=true;
-
-    /*
-    //For Background
-    protected Texture boss;
-    protected Sprite bossSprite;
-
-    //Item boss
-    protected Texture itemBosss;
-    protected Sprite itemBoss;
-
-    private Fondo fondo;
-    */
 
     //Sonido
     protected Sound gunSound = assetManager.get("pew.mp3");
@@ -56,13 +48,7 @@ public abstract class nivelGenerico extends Pantalla {
     protected Array<Bala> listaBalasBoss;
 
     //Fisica Granada
-    protected float velocityY;     // Velocidad de la granada
-
-    /*
-    //Textura Fondos de los niveles
-    private Texture fondoNivel01;
-    */
-    //Escena
+    protected float velocityY; // Velocidad de la granada
 
     //Textura botones
     protected Texture botonGranada = assetManager.get("BotonesDisparo/granada_icon.png");
@@ -95,10 +81,29 @@ public abstract class nivelGenerico extends Pantalla {
     protected Texture astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
     protected Texture astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
 
-    /*
+    //Personaje
+    protected Personaje personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
+
+    //Textura Armas
+    protected Texture bananaDisparo = assetManager.get("banana.png");
+    protected Texture bossDisparo = assetManager.get("disparo2.png");
+    protected Texture bananaGranada = assetManager.get("granana.png");
+
     //pad
-    private Texture padBack = assetManager.get("Pad/padBack.png");
-    private Texture padKnob = assetManager.get("Pad/padKnob.png");
+    protected Texture padBack = assetManager.get("Pad/padBack.png");
+    protected Texture padKnob = assetManager.get("Pad/padKnob.png");
+
+    //Power Ups
+    protected ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
+    protected ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
+
+    protected Texture imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
+    protected Texture imgpowerUpVida = assetManager.get("Items/VIDA.png");
+
+    protected PowerUp powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
+    protected PowerUp powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
+
+    /*
     Skin skin = new Skin(); // Texturas para el pad
     skin.add("fondo", padBack);
     skin.add("boton", padKnob);
@@ -109,10 +114,23 @@ public abstract class nivelGenerico extends Pantalla {
 
     // Crea el pad
     Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-    */
+        /*
+    //For Background
+    protected Texture boss;
+    protected Sprite bossSprite;
 
+    //Item boss
+    protected Texture itemBosss;
+    protected Sprite itemBoss;
 
-    /*
+    //Fondo
+    private Fondo fondo;
+
+    //Textura Fondos de los niveles
+    private Texture fondoNivel01;
+
+    //Escena
+
     protected float stateTime = 0;
 
     protected boolean isMovingRight = false;
@@ -179,11 +197,6 @@ public abstract class nivelGenerico extends Pantalla {
 
     // Estados del juego
     private PantallaJuego.EstadoJuego estado;
-
-    //Textura Armas
-    private Texture bananaDisparo;
-    private Texture bossDisparo;
-    private Texture bananaGranada;
 
     private Enemigo enemigo;
 

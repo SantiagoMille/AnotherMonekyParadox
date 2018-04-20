@@ -63,16 +63,6 @@ import mx.itesm.another_monkey_paradox.Utils.progressBar;
 
 public class PantallaJuego extends nivelGenerico implements Screen  {
 
-    /*
-    private boolean bossKilled = false;
-
-    private boolean powerUpVidaFlag = true;
-    private boolean powerUpGranadaFlag = true;
-
-    private boolean firstFilter=true;
-    private boolean secondFilter=true;
-    */
-
     //For Background
     private Texture boss;
     private Sprite bossSprite;
@@ -83,27 +73,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     private Fondo fondo;
 
-    /*
-    //Sonido
-    private Sound gunSound;
-    private Sound boomSound;
-    private Sound hitSound;
-
-    //Armas
-    private Array<Bala> listaBalas;
-    private Array<Granada> listaGranadas;
-    private Array<Bala> listaBalasBoss;
-    //Fisica Granada
-    float velocityY;     // Velocidad de la granada
-
-    //Controles del jugador
-    private ImageButton granada;
-    private ImageButton arma;
-    private ImageButton pausa;
-    private ImageButton home;
-    private ImageButton continua;
-    */
-
     private float stateTime = 0;
 
     private boolean isMovingRight=false;
@@ -111,7 +80,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     private boolean isFliped;
 
-    private Personaje personaje;
+    //private Personaje personaje;
 
     //Enemigos
     private Array<Enemigo> listaEnemigos;
@@ -124,7 +93,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Texture imgBananaBarra;
     private Sprite barraBala;
     private Sprite bananaBarra;
-
 
     //Vidas
     private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
@@ -140,7 +108,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private int puntosJugador = 0;
     private BitmapFont font;
     public GlyphLayout textoGly;
-
 
     public GlyphLayout pausaText;
 
@@ -166,7 +133,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Texture canervicola03Frame2;
     private Texture canervicola03Frame3;
 
-
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
@@ -185,21 +151,56 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Texture astroCaminata1;
     private Texture astroCaminata2;
     private Texture astroCaminata3;
-    */
+
+    //Textura Armas
+    private Texture bananaDisparo;
+    private Texture bossDisparo;
+    private Texture bananaGranada;
+
+    private boolean bossKilled = false;
+
+    private boolean powerUpVidaFlag = true;
+    private boolean powerUpGranadaFlag = true;
+
+    private boolean firstFilter=true;
+    private boolean secondFilter=true;
+
+    //Sonido
+    private Sound gunSound;
+    private Sound boomSound;
+    private Sound hitSound;
+
+    //Armas
+    private Array<Bala> listaBalas;
+    private Array<Granada> listaGranadas;
+    private Array<Bala> listaBalasBoss;
+    //Fisica Granada
+    float velocityY;     // Velocidad de la granada
+
+    //Controles del jugador
+    private ImageButton granada;
+    private ImageButton arma;
+    private ImageButton pausa;
+    private ImageButton home;
+    private ImageButton continua;
 
     private Texture padBack;
     private Texture padKnob;
+
+    //Power Ups
+    private Texture imgpowerUpGranada;
+    private Texture imgpowerUpVida;
+    private PowerUp powerUpGranada;
+    private PowerUp powerUpVida;
+    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
+    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
+    */
 
     // PAUSA
     private EscenaPausa escenaPausa;
 
     // Estados del juego
     private EstadoJuego estado;
-
-    //Textura Armas
-    private Texture bananaDisparo;
-    private Texture bossDisparo;
-    private Texture bananaGranada;
 
     private Enemigo enemigo;
 
@@ -215,12 +216,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     //PowerUps
     private Random random;
-    private Texture imgpowerUpGranada;
-    private Texture imgpowerUpVida;
-    private PowerUp powerUpGranada;
-    private PowerUp powerUpVida;
-    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
-    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
     Double randomX;
     Double randomX2;
 
@@ -235,7 +230,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         crearCamara();
         crearMapa();
 
-        personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
+        //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
         fondo = new Fondo(fondoNivel01);
         batch = new SpriteBatch();
@@ -334,8 +329,8 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         bananaBarra.setPosition((ANCHO/3)-(imgBananaBarra.getWidth()/2)-33, (ALTO*0.90f));
 
         //Power Ups
-        powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
-        powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
+        //powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
+        //powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
 
         /*
         //Boton granadas
@@ -345,6 +340,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         */
         granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, -100);
         granada.addAction(Actions.moveTo(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80, 0.6f));
+
         /*
         //boton disparo
         TextureRegionDrawable btnArma = new TextureRegionDrawable(new TextureRegion(botonDisparo));
@@ -353,6 +349,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         */
         arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, -100);
         arma.addAction(Actions.moveTo(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80, 0.6f));
+
         /*
         //boton pausa
         TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(botonPausa));
@@ -360,6 +357,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         */
         pausa.setSize(55, 55);
         pausa.setPosition(ANCHO/2-pausa.getWidth()/2, 680 - pausa.getHeight()/2);
+
         /*
         //boton continua
         TextureRegionDrawable btnContinua = new TextureRegionDrawable(new TextureRegion(botonContinua));
@@ -367,6 +365,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         */
         continua.setSize(55, 55);
         continua.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
+
         /*
         //boton Home
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(botonHome));
@@ -431,7 +430,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         });
 
-
         // Comportamiento de Boton Disparo
         arma.addListener(new ClickListener(){
             @Override
@@ -486,11 +484,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         // Cuando termina de cargar las texturas, las leemos
         fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
 
-        astroCaminata0 = assetManager.get("Astro/CAMINATA 4.png");
-        astroCaminata1 = assetManager.get("Astro/CAMINATA 2.png");
-        astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
-        astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
-
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
         canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
@@ -506,6 +499,21 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         canervicola03Frame2 = assetManager.get("cavernicola03/CM3 2.png");
         canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
 
+        gunSound = assetManager.get("pew.mp3");
+        boomSound = assetManager.get("boom.mp3");
+        hitSound = assetManager.get("hit.mp3");
+
+        imgBarraBala = assetManager.get("BarraBalas/barranegra.png");
+        imgBananaBarra = assetManager.get("BarraBalas/bananabarra.png");
+
+        /*
+        imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
+        imgpowerUpVida = assetManager.get("Items/VIDA.png");
+
+        astroCaminata0 = assetManager.get("Astro/CAMINATA 4.png");
+        astroCaminata1 = assetManager.get("Astro/CAMINATA 2.png");
+        astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
+        astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
 
         botonGranada = assetManager.get("BotonesDisparo/granada_icon.png");
         botonDisparo = assetManager.get("BotonesDisparo/bullet_icon.png");
@@ -522,16 +530,8 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         bananaDisparo = assetManager.get("banana.png");
         bossDisparo = assetManager.get("disparo2.png");
         bananaGranada = assetManager.get("granana.png");
+        */
 
-        imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
-        imgpowerUpVida = assetManager.get("Items/VIDA.png");
-
-        gunSound = assetManager.get("pew.mp3");
-        boomSound = assetManager.get("boom.mp3");
-        hitSound = assetManager.get("hit.mp3");
-
-        imgBarraBala = assetManager.get("BarraBalas/barranegra.png");
-        imgBananaBarra = assetManager.get("BarraBalas/bananabarra.png");
     }
 
     private void crearCamara() {
