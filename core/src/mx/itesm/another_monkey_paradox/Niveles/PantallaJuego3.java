@@ -33,6 +33,7 @@ import mx.itesm.another_monkey_paradox.Objetos.Enemigo;
 import mx.itesm.another_monkey_paradox.Objetos.Granada;
 import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
+import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.Fondo;
 
@@ -40,7 +41,7 @@ import mx.itesm.another_monkey_paradox.Utils.Fondo;
  * Created by santi on 1/30/2018.
  */
 
-public class PantallaJuego3 extends NivelGenerico implements Screen  {
+public class PantallaJuego3 extends nivelGenerico implements Screen  {
 
     //For Background
     private Texture boss;
@@ -856,6 +857,19 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         verificarColisionPersonajeItemVida();
         verificarVidaAstro();
 
+    }
+
+    protected void verificarVidaAstro(){
+        int vidasFalse = 0;
+        for (int i = vidas.size() - 1; i >= 0; i--){
+            if(vidas.get(i).isActiva() == false){
+                vidasFalse++;
+            }
+        }
+        if(vidasFalse == vidas.size()){
+            escribirScore(true);
+            main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
+        }
     }
 
     /*

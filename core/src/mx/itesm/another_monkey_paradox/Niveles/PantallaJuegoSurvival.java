@@ -41,8 +41,7 @@ import mx.itesm.another_monkey_paradox.Utils.Fondo;
  * Created by santi on 4/24/2018.
  */
 
-public class PantallaJuego2 extends nivelGenerico implements Screen  {
-
+public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
     //For Background
     private Texture boss;
     private Sprite bossSprite;
@@ -78,7 +77,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
     private Texture fondoNivel01;
 
     // PAUSA
-    private PantallaJuego2.EscenaPausa2 escenaPausa;
+    private PantallaJuegoSurvival.EscenaPausa2 escenaPausa;
 
     // Estados del juego
     private PantallaJuego.EstadoJuego estado;
@@ -189,7 +188,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
     private Sprite bananaBarra;
     */
 
-    public PantallaJuego2(Main main) {
+    public PantallaJuegoSurvival(Main main) {
         super(main);
     }
 
@@ -211,11 +210,11 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        for(int i=0; i<6;i++){
+        for(int i=0; i<getRandomNumber(10,13);i++){
             enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
-        for(int i=0; i<6;i++){
+        for(int i=0; i<getRandomNumber(10,13);i++){
             enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
             listaEnemigos.add(enemigo);
         }
@@ -235,6 +234,13 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
+    }
+
+    private static int getRandomNumber(int min, int max) {
+        if (min >= max) {
+            throw new IllegalArgumentException("Max must be greater than Min");
+        }
+        return (int)(Math.random() * ((max - min) + 1)) + min;
     }
 
     private void crearMapa() {
@@ -434,7 +440,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
                 estado = PantallaJuego.EstadoJuego.PAUSADO;
                 //main.setScreen((Screen) new EscenaPausa2(vista,batch));
                 if(escenaPausa == null){
-                    escenaPausa = new PantallaJuego2.EscenaPausa2(vista,batch);
+                    escenaPausa = new PantallaJuegoSurvival.EscenaPausa2(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
                 dispose();
@@ -547,11 +553,11 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
 
         if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -560,11 +566,11 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -573,11 +579,11 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -586,11 +592,11 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -599,11 +605,11 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<4;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -867,7 +873,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
         if(vidasFalse == vidas.size()){
-            escribirScore(true);
+            escribirScore(false);
             main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
         }
     }
