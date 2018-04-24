@@ -19,11 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.Random;
 
@@ -37,10 +37,10 @@ import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.Fondo;
 
 /**
- * Created by santi on 4/24/2018.
+ * Created by santi on 1/30/2018.
  */
 
-public class PantallaJuego2 extends NivelGenerico implements Screen  {
+public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
     //For Background
     private Texture boss;
@@ -77,10 +77,10 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
     private Texture fondoNivel01;
 
     // PAUSA
-    private PantallaJuego2.EscenaPausa2 escenaPausa;
+    private EscenaPausa escenaPausa;
 
     // Estados del juego
-    private PantallaJuego.EstadoJuego estado;
+    private EstadoJuego estado;
 
     //private Enemigo enemigo;
 
@@ -188,7 +188,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
     private Sprite bananaBarra;
     */
 
-    public PantallaJuego2(Main main) {
+    public PantallaJuego3(Main main) {
         super(main);
     }
 
@@ -210,11 +210,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        for(int i=0; i<6;i++){
+        for(int i=0; i<8;i++){
             enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
-        for(int i=0; i<6;i++){
+        for(int i=0; i<8;i++){
             enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
             listaEnemigos.add(enemigo);
         }
@@ -230,7 +230,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         listaGranadasExtra.add(powerUpGranada);
         listaVidasExtra.add(powerUpVida);
 
-        estado = PantallaJuego.EstadoJuego.JUGANDO;
+        estado = EstadoJuego.JUGANDO;
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
@@ -430,10 +430,10 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                estado = PantallaJuego.EstadoJuego.PAUSADO;
-                //main.setScreen((Screen) new EscenaPausa2(vista,batch));
+                estado = EstadoJuego.PAUSADO;
+                //main.setScreen((Screen) new EscenaPausa(vista,batch));
                 if(escenaPausa == null){
-                    escenaPausa = new PantallaJuego2.EscenaPausa2(vista,batch);
+                    escenaPausa = new EscenaPausa(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
                 dispose();
@@ -516,7 +516,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
     public void render(float delta) {
         stateTime+=delta;
 
-        if(estado != PantallaJuego.EstadoJuego.PAUSADO) {
+        if(estado != EstadoJuego.PAUSADO) {
             actualizarObjetos(delta, stateTime);
 
         }
@@ -546,11 +546,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
         if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -559,11 +559,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -572,11 +572,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -585,11 +585,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -598,11 +598,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -659,14 +659,14 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
 
 
-            if(estado == PantallaJuego.EstadoJuego.JUGANDO&&e.right){
+            if(estado == EstadoJuego.JUGANDO&&e.right){
 
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
                     e.setX(e.getX()+(-80*delta));
                 }
-            }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
+            }else if(estado == EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(60*delta));
                 }else{
@@ -710,7 +710,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         font.draw(batch,textoGlyGran, ANCHO/2 + 360,ALTO-15);
 
         //Texto Pausa
-        if(estado == PantallaJuego.EstadoJuego.PAUSADO){
+        if(estado == EstadoJuego.PAUSADO){
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
 
@@ -733,7 +733,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         batch.end();
 
         // Botón PAUSA
-        if (estado== PantallaJuego.EstadoJuego.PAUSADO) {
+        if (estado==EstadoJuego.PAUSADO) {
             escenaPausa.draw(); // Solo si está pausado muestra la imagen
         }
 
@@ -1125,12 +1125,12 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
     @Override
     public void pause() {
-        estado = PantallaJuego.EstadoJuego.PAUSADO;
+        estado = EstadoJuego.PAUSADO;
     }
 
     @Override
     public void resume() {
-        estado = PantallaJuego.EstadoJuego.JUGANDO;
+        estado = EstadoJuego.JUGANDO;
     }
 
     @Override
@@ -1149,10 +1149,10 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         PAUSADO
     }
 
-    private class EscenaPausa2 extends Stage{
+    private class EscenaPausa extends Stage{
 
         // La escena que se muestra cuando está pausado
-        public EscenaPausa2(Viewport vista, SpriteBatch batch) {
+        public EscenaPausa(Viewport vista, SpriteBatch batch) {
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
@@ -1193,7 +1193,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al juego
-                    estado = PantallaJuego.EstadoJuego.JUGANDO;
+                    estado = EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
                 }
             });
