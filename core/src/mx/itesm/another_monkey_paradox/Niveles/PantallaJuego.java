@@ -66,54 +66,15 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     //For Background
     private Texture boss;
     private Sprite bossSprite;
-
-    //Item boss
-    private Texture itemBosss;
-    private Sprite itemBoss;
-
     private Fondo fondo;
 
-    private float stateTime = 0;
-
-    private boolean isMovingRight=false;
-    private boolean isMovingLeft = false;
-
-    private boolean isFliped;
-
-    //private Personaje personaje;
-
     //Enemigos
-    private Array<Enemigo> listaEnemigos;
-    private int vidaEnemigo = 100;
-    private int vidaBoss = 500;
-
-    //Barra de carga balas
-    private progressBar Bar;
-    private Texture imgBarraBala;
-    private Texture imgBananaBarra;
-    private Sprite barraBala;
-    private Sprite bananaBarra;
-
-    //Vidas
-    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
-    int contador = 0;
-
-    //Disparos Boss
-    int shootCounter =0;
+    //private Array<Enemigo> listaEnemigos;
+    int vidaEnemigo = 100;
+    int vidaBoss = 500;
 
     //Escena
     private Stage stageNivel;
-
-    // Puntaje y texto
-    private int puntosJugador = 0;
-    private BitmapFont font;
-    public GlyphLayout textoGly;
-
-    public GlyphLayout pausaText;
-
-    //Granada y texto
-    private int maxGrandas = 5;
-    public GlyphLayout textoGlyGran;
 
     //Textura de Cavernicola 01
     private Texture canervicola01Frame0;
@@ -136,7 +97,42 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
 
+    // PAUSA
+    private EscenaPausa escenaPausa;
+
+    // Estados del juego
+    private EstadoJuego estado;
+
+    //private Enemigo enemigo;
+
+    //PowerUps
+    private Random random;
+    Double randomX;
+    Double randomX2;
+
+
     /*
+    //Vidas
+    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
+    int contador = 0;
+
+    //Granada y texto
+    private int maxGrandas = 5;
+    public GlyphLayout textoGlyGran;
+
+    // Puntaje y texto
+    private int puntosJugador = 0;
+    private BitmapFont font;
+    public GlyphLayout textoGly;
+    public GlyphLayout pausaText;
+
+    private boolean isMovingRight = false;
+    private boolean isMovingLeft = false;
+
+    //Item boss
+    private Texture itemBosss;
+    private Sprite itemBoss;
+
     //Textura botones
     private Texture botonGranada;
     private Texture botonGranadaPressed;
@@ -194,17 +190,8 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private PowerUp powerUpVida;
     private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
     private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-    */
 
-    // PAUSA
-    private EscenaPausa escenaPausa;
-
-    // Estados del juego
-    private EstadoJuego estado;
-
-    private Enemigo enemigo;
-
-    //bananas Colision
+     //bananas Colision
     private Bala banana1;
     private Bala banana2;
     private Bala banana3;
@@ -214,11 +201,13 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Boolean crashRight = false;
     private Boolean crashLeft = false;
 
-    //PowerUps
-    private Random random;
-    Double randomX;
-    Double randomX2;
-
+    //Barra de carga balas
+    private progressBar Bar;
+    private Texture imgBarraBala;
+    private Texture imgBananaBarra;
+    private Sprite barraBala;
+    private Sprite bananaBarra;
+    */
 
     public PantallaJuego(Main main) {
         super(main);
@@ -273,9 +262,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         random = new Random();
 
         //Objeto que dibuja texto
-        font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
-        textoGly = new GlyphLayout(font,"Score");
-        textoGlyGran = new GlyphLayout(font,"Score");
+        //font = new BitmapFont(Gdx.files.internal("tutorial.fnt"));
+        //textoGly = new GlyphLayout(font,"Score");
+        //textoGlyGran = new GlyphLayout(font,"Score");
 
         boss = new Texture("boss_stand.png");
         itemBosss = new Texture("item_boss.png");
@@ -285,7 +274,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         itemBoss = new Sprite(itemBosss);
         itemBoss.setPosition(ANCHO*3/4,ALTO/4);
 
-        pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
+        //pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
         for(int i=0;i<5;i++){
             if(i<3) {
@@ -295,37 +284,35 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
 
-
         //Granadas Colisión
-        banana1 = new Bala(bananaDisparo,false);
+        //banana1 = new Bala(bananaDisparo,false);
         banana1.set(-100,-100);
 
-        banana2 = new Bala(bananaDisparo, false);
+        //banana2 = new Bala(bananaDisparo, false);
         banana2.set(-100,-100);
 
-        banana3 = new Bala(bananaDisparo, false);
+        //banana3 = new Bala(bananaDisparo, false);
         banana3.set(-100,-100);
 
-        banana4 = new Bala(bananaDisparo, true);
+        //banana4 = new Bala(bananaDisparo, true);
         banana4.set(-100,-100);
 
-        banana5 = new Bala(bananaDisparo, true);
+        //banana5 = new Bala(bananaDisparo, true);
         banana5.set(-100,-100);
 
-        banana6 = new Bala(bananaDisparo, true);
+        //banana6 = new Bala(bananaDisparo, true);
         banana6.set(-100,-100);
 
         randomX = random.nextDouble()*4000;
         randomX2 = random.nextDouble()*4000;
-        System.out.println(randomX);
-        System.out.println(randomX2);
 
         //Barra Bala
-        Bar = new progressBar(200, 20);
+        //Bar = new progressBar(200, 20);
         Bar.setPosition((ANCHO/3)-25, ALTO*0.93f);
-        barraBala = new Sprite(imgBarraBala);
+        //barraBala = new Sprite(imgBarraBala);
         barraBala.setPosition((ANCHO/3)-30, (ALTO*0.92f)+3);
-        bananaBarra = new Sprite(imgBananaBarra);
+        //bananaBarra = new Sprite(imgBananaBarra);
+
         bananaBarra.setPosition((ANCHO/3)-(imgBananaBarra.getWidth()/2)-33, (ALTO*0.90f));
 
         //Power Ups
@@ -499,6 +486,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         canervicola03Frame2 = assetManager.get("cavernicola03/CM3 2.png");
         canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
 
+        /*
         gunSound = assetManager.get("pew.mp3");
         boomSound = assetManager.get("boom.mp3");
         hitSound = assetManager.get("hit.mp3");
@@ -506,7 +494,6 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         imgBarraBala = assetManager.get("BarraBalas/barranegra.png");
         imgBananaBarra = assetManager.get("BarraBalas/bananabarra.png");
 
-        /*
         imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
         imgpowerUpVida = assetManager.get("Items/VIDA.png");
 
@@ -732,10 +719,10 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
 
         //Texto Score
-        textoGly.setText(font, "Score: "+puntosJugador);
+        textoGly.setText(font, "Score: "+ puntosJugador);
         font.draw(batch,textoGly, ANCHO/2 + 95,ALTO-15);
 
-        textoGlyGran.setText(font, "Grenades: "+maxGrandas);
+        textoGlyGran.setText(font, "Grenades: "+ maxGrandas);
         font.draw(batch,textoGlyGran, ANCHO/2 + 360,ALTO-15);
 
         //Texto Pausa
@@ -887,6 +874,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     }
 
+    /*
     private void verificarColisionPersonajeItemBoss() {
         Rectangle rectItem = itemBoss.getBoundingRectangle();
         Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
@@ -895,7 +883,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             main.setScreen(new EscenaAstroGanador(main, puntosJugador));
         }
     }
+    */
 
+    /*
     private void verificarColisionPersonajeItemVida() {
         Rectangle rectItem = powerUpVida.getSprite().getBoundingRectangle();
         Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
@@ -910,7 +900,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             powerUpVida.setX(-500);
         }
     }
+    */
 
+    /*
     private void verificarColisionPersonajeItemGranada() {
         Rectangle rectItem = powerUpGranada.getSprite().getBoundingRectangle();
         Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
@@ -920,7 +912,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             powerUpGranada.setX(-500);
         }
     }
+    */
 
+    /*
     private void verificarVidaEnemigos() {
         for(int i = listaEnemigos.size-1;i>=0;i--){
             if(listaEnemigos.get(i).getVida() <= 0){
@@ -930,7 +924,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
+    */
 
+    /*
     private void verificarColisionBalaEnemigo(float dt) {
         Rectangle rectEnemigo;
         Bala bala;
@@ -955,7 +951,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
+    */
 
+    /*
     private void verificarColisionBalaBala(float dt) {
         Bala balaBoss;
         Bala bala;
@@ -972,7 +970,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
+    */
 
+    /*
     private void verificarColisionBalaBoss(float dt) {
         Rectangle rectBoss;
         Bala bala;
@@ -985,7 +985,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
+    */
 
+    /*
     private void verificarColisionGranadaBoss(float dt) {
         Rectangle rectBoss;
         Granada granada;
@@ -998,7 +1000,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
+    */
 
+    /*
     private void verificarColisionGranadaEnemigo(float dt) {
         Rectangle rectEnemigo;
         Granada granada;
@@ -1026,7 +1030,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
+    */
 
+    /*
     private void explosionGranadaRight(float x, float y){
         crashRight = true;
         banana1.set(x,y);
@@ -1036,7 +1042,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         banana5.set(x,y);
         banana6.set(x,y);
     }
+    */
 
+    /*
     private void explosionGranadaLeft(float x, float y){
         crashLeft = true;
         banana1.set(x,y);
@@ -1046,7 +1054,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         banana5.set(x,y);
         banana6.set(x,y);
     }
+    */
 
+    /*
     private void verificarColisionPersonajeEnemigo(float dt) {
         Enemigo x;
         Rectangle rectEnemigo;
@@ -1077,7 +1087,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         }
         contador++;
     }
+    */
 
+    /*
     private void verificarColisionPersonajeBalaBoss(float dt) {
         Bala bala;
         Rectangle rectPersonaje;
@@ -1099,7 +1111,9 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         }
         contador++;
     }
+    */
 
+    /*
     private void verificarVidaAstro(){
         int vidasFalse = 0;
         for (int i = vidas.size() - 1; i >= 0; i--){
@@ -1112,99 +1126,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             main.setScreen(new EscenaAstroMuerto(main));
         }
     }
-
-    private void escribirScore() {
-        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-        String scoresString = prefs.getString("highscores", null);
-        String[] scores;
-        if(scoresString==null){
-            scores = new String[0];
-        }else {
-            scores = scoresString.split(",");
-        }
-        int puntosActuales;
-        int puntosSiguientes;
-        if(scores.length>=6) {
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.addAll(Arrays.asList(scores));
-            for (int i = scores.length - 1; i > 0; i--) {
-                puntosActuales = Integer.parseInt(scores[i].split(":")[1]);
-                puntosSiguientes =0;
-                try {
-                    puntosSiguientes = Integer.parseInt(scores[i - 1].split(":")[1]);
-                }catch (Exception e){
-                    puntosActuales = 100000;
-                }
-                if (puntosJugador > puntosActuales && puntosJugador <= puntosSiguientes) {
-                    Date date = new Date(TimeUtils.millis());
-                    String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
-                    temp.add(i,dateString + ":" + puntosJugador + "");
-                    temp.remove(temp.size()-1);
-                    //scores[i] = dateString + ":" + puntosJugador + "";
-                }
-            }
-            StringBuilder sb = new StringBuilder();
-            for(String s:temp){
-                sb.append(s);
-                sb.append(",");
-            }
-            prefs.putString("highscores",sb.toString());
-            prefs.flush();
-        }
-        else{
-            ArrayList<String> temp = new ArrayList<String>();
-            temp.addAll(Arrays.asList(scores));
-            /*StringBuilder sb = new StringBuilder();
-            for(String s:scores){
-                sb.append(s);
-                sb.append(",");
-            }
-            Date date = new Date(TimeUtils.millis());
-            String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
-            sb.append(dateString + ":" + puntosJugador + "");
-            prefs.putString("highscores",sb.toString());
-            prefs.flush();*/
-
-            for (int i = scores.length - 1; i > 0; i--) {
-                puntosActuales = Integer.parseInt(scores[i].split(":")[1]);
-                try {
-                    puntosSiguientes = Integer.parseInt(scores[i - 1].split(":")[1]);
-                }catch(Exception e){
-                    puntosSiguientes = 100000;
-                }
-                if (puntosJugador > puntosActuales && puntosJugador < puntosSiguientes) {
-                    Date date = new Date(TimeUtils.millis());
-                    String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
-                    temp.add(i,dateString + ":" + puntosJugador + "");
-                    //scores[i] = dateString + ":" + puntosJugador + "";
-                }
-            }
-            if(scores.length==0){
-
-                temp.add("Sometime in the paradox:1000000");
-            }
-            if(scores.length==1){
-                Date date = new Date(TimeUtils.millis());
-                String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
-                temp.add(dateString + ":" + puntosJugador + "");
-            }else{
-                Date date = new Date(TimeUtils.millis());
-                String dateString = new SimpleDateFormat("MM-dd-yyyy").format(date).toString();
-                temp.add(dateString + ":" + puntosJugador + "");
-            }
-            StringBuilder sb = new StringBuilder();
-            for(String s:temp){
-                sb.append(s);
-                sb.append(",");
-            }
-            prefs.putString("highscores",sb.toString());
-            prefs.flush();
-
-
-
-        }
-    }
-
+    */
 
     @Override
     public void resize(int width, int height) {
@@ -1288,6 +1210,5 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             this.addActor(btnContinuar);
         }
     }
-
 }
 
