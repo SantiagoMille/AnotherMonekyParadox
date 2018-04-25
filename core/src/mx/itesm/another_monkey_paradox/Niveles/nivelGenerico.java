@@ -362,21 +362,14 @@ public abstract class nivelGenerico extends Pantalla {
         contador++;
     }
 
-    protected void verificarVidaAstro(){
-        int vidasFalse = 0;
-        for (int i = vidas.size() - 1; i >= 0; i--){
-            if(vidas.get(i).isActiva() == false){
-                vidasFalse++;
-            }
-        }
-        if(vidasFalse == vidas.size()){
-            escribirScore();
-            main.setScreen(new EscenaAstroMuerto(main));
-        }
-    }
 
-    protected void escribirScore() {
-        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+    protected void escribirScore(boolean isStoryMode) {
+        Preferences prefs;
+        if(isStoryMode) {
+            prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+        }else{
+            prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceSurvival");
+        }
         String scoresString = prefs.getString("highscores", null);
         String[] scores;
         if(scoresString==null){

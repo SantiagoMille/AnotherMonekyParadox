@@ -2,8 +2,6 @@ package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,10 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 import mx.itesm.another_monkey_paradox.Utils.Texto;
 
@@ -24,25 +21,16 @@ import mx.itesm.another_monkey_paradox.Utils.Texto;
  * Created by santi on 1/30/2018.
  */
 
-public class EscenaAstroMuerto implements Screen {
+public class EscenaAstroMuerto extends Pantalla implements Screen {
 
-    private final Main main;
 
-    public static final float ANCHO = 1280;
-    public static final float ALTO = 780;
-
-    //Camara
-    private OrthographicCamera camara;
-    private Viewport vista;
-    //Escena
-    private SpriteBatch batch;
-
-    //button
+    //button home
     private Texture imgBoton;
     private ImageButton home;
 
-    //Asset Manager
-    private AssetManager assetManager;
+    //button regresar
+    private Texture imgBotonHome;
+    private ImageButton regresar;
 
     //Texto
     private Texto texto;
@@ -54,17 +42,17 @@ public class EscenaAstroMuerto implements Screen {
     private Texture imgBacgraun;
     private Sprite Bacgraun;
 
+    //Score
+    private int finalScore;
 
+    public EscenaAstroMuerto(Main main, int score) {
 
-    public EscenaAstroMuerto(Main main) {
-
-        this.main = main;
-        this.assetManager = main.getAssetManager();
+        super(main);
+        this.finalScore = score;
     }
 
     @Override
     public void show() {
-        crearCamara();
         crearBackground();
         crearBoton();
         batch = new SpriteBatch();
@@ -80,9 +68,10 @@ public class EscenaAstroMuerto implements Screen {
 
     private void crearBoton() {
         assetManager.load("regresar.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
         assetManager.finishLoading();
         imgBoton = assetManager.get("regresar.png");
-
+        imgBotonHome = assetManager.get("PlayButton.png");
 
         stageNivel = new Stage(vista);
 
@@ -90,7 +79,8 @@ public class EscenaAstroMuerto implements Screen {
 
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(imgBoton));
         home = new ImageButton(btnHome);
-        home.setPosition(ANCHO/2-imgBoton.getWidth()/2, ALTO/5-imgBoton.getHeight()/2);
+        home.setPosition(ANCHO/2-imgBoton.getWidth()/2, -100);
+        home.addAction(Actions.moveTo(ANCHO/2-imgBoton.getWidth()/2, ALTO/5-imgBoton.getHeight()/2, 0.6f));
         home.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -99,16 +89,26 @@ public class EscenaAstroMuerto implements Screen {
             }
         });
 
+
+        TextureRegionDrawable btnRregresar = new TextureRegionDrawable((new TextureRegion(imgBotonHome)));
+        regresar = new ImageButton(btnRregresar);
+        regresar.setSize(128,128);
+        regresar.setPosition(-200, ALTO/5-imgBotonHome.getHeight()/2);
+        regresar.addAction(Actions.moveTo(ANCHO/2-imgBotonHome.getWidth()/2-100, ALTO/4-imgBotonHome.getHeight()/2,0.6f));
+        regresar.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                main.setScreen(new PantallaCargandoStoryMode(main, 1));
+            }
+        });
+
+
         stageNivel.addActor(home);
+        //stageNivel.addActor(regresar);
+
 
         Gdx.input.setInputProcessor(stageNivel);
-    }
-
-    private void crearCamara() {
-        camara = new OrthographicCamera(ANCHO,ALTO);
-        camara.position.set(ANCHO/2, ALTO/2,0);
-        camara.update();
-        vista = new StretchViewport(ANCHO,ALTO,camara);
     }
 
     @Override
@@ -116,12 +116,13 @@ public class EscenaAstroMuerto implements Screen {
 
         Bacgraun.setPosition(0,0);
 
-        batch.setProjectionMatrix(camara.combined);
         batch.begin();
         Bacgraun.draw(batch);
-        texto.mostratMensaje(batch, "Lol u ded", ANCHO/2, ALTO/2,1,1, 1);
+        texto.mostratMensaje(batch, "Good luck \nnext time", 650, 420,1,1, 1);
+        texto.mostratMensaje(batch, "Score: " + finalScore, -200, 420,1,1, 1);
         batch.end();
         stageNivel.draw();
+        stageNivel.act();
     }
 
 

@@ -1,24 +1,14 @@
 package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -31,31 +21,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Random;
 
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.Objetos.Bala;
 import mx.itesm.another_monkey_paradox.Objetos.Enemigo;
 import mx.itesm.another_monkey_paradox.Objetos.Granada;
-import mx.itesm.another_monkey_paradox.Objetos.Personaje;
 import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
-import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.Fondo;
-import mx.itesm.another_monkey_paradox.Utils.progressBar;
 
 /**
  * Created by santi on 1/30/2018.
@@ -474,7 +454,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
-        fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
+        fondoNivel01 = assetManager.get("Fondos/NIVEL 1 PAN.png");
 
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
@@ -877,6 +857,19 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         verificarColisionPersonajeItemVida();
         verificarVidaAstro();
 
+    }
+
+    protected void verificarVidaAstro(){
+        int vidasFalse = 0;
+        for (int i = vidas.size() - 1; i >= 0; i--){
+            if(vidas.get(i).isActiva() == false){
+                vidasFalse++;
+            }
+        }
+        if(vidasFalse == vidas.size()){
+            escribirScore(true);
+            main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
+        }
     }
 
     /*

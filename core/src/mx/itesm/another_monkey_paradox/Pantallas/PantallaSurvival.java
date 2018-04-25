@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 
 /**
@@ -98,7 +99,7 @@ public class PantallaSurvival extends Pantalla implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaJuego(main));
+                main.setScreen(new PantallaCargandoStoryMode(main,5));
             }
         });
 

@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 import mx.itesm.another_monkey_paradox.Utils.Texto;
