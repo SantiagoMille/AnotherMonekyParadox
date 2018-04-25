@@ -972,7 +972,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     }
     */
 
-    /*
+
     private void verificarColisionBalaBoss(float dt) {
         Rectangle rectBoss;
         Bala bala;
@@ -985,9 +985,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
-    */
 
-    /*
     private void verificarColisionGranadaBoss(float dt) {
         Rectangle rectBoss;
         Granada granada;
@@ -1000,7 +998,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             }
         }
     }
-    */
+
 
     /*
     private void verificarColisionGranadaEnemigo(float dt) {

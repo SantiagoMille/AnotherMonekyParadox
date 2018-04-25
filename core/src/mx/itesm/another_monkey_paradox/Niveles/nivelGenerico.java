@@ -266,32 +266,6 @@ public abstract class nivelGenerico extends Pantalla {
         }
     }
 
-    protected void verificarColisionBalaBoss(float dt) {
-        Rectangle rectBoss;
-        Bala bala;
-        for(int j =listaBalas.size-1; j>=0;j--){
-            bala = listaBalas.get(j);
-            rectBoss = bossSprite.getBoundingRectangle();
-            if(bala.getSprite().getBoundingRectangle().overlaps(rectBoss)){
-                vidaBoss-=25;
-                listaBalas.removeIndex(j);
-            }
-        }
-    }
-
-    protected void verificarColisionGranadaBoss(float dt) {
-        Rectangle rectBoss;
-        Granada granada;
-        for(int j =listaGranadas.size-1; j>=0;j--){
-            granada = listaGranadas.get(j);
-            rectBoss = bossSprite.getBoundingRectangle();
-            if(granada.getSprite().getBoundingRectangle().overlaps(rectBoss)){
-                vidaBoss-=100;
-                listaGranadas.removeIndex(j);
-            }
-        }
-    }
-
     protected void verificarColisionGranadaEnemigo(float dt) {
         Rectangle rectEnemigo;
         Granada granada;
