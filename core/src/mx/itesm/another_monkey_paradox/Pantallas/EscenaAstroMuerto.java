@@ -99,7 +99,7 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                main.setScreen(new PantallaCargandoStoryMode(main, 1));
+                main.setScreen(new PantallaCargandoStoryMode(main, 1, 0));
             }
         });
 

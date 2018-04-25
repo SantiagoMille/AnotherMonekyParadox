@@ -20,6 +20,7 @@ import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego2;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
 
 /**
  * Created by adrian on 03/04/2018.
@@ -76,7 +77,7 @@ public class PantallaCinematica extends Pantalla implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(nivel == 2) {
-                    main.setScreen(new PantallaJuego2(main, score));
+                    main.setScreen(new PantallaCargandoStoryMode(main,2, score));
                 }
             }
         });

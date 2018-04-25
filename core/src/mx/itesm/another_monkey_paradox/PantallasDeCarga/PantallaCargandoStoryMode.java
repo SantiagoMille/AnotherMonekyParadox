@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego;
+import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego2;
 import mx.itesm.another_monkey_paradox.Niveles.PantallaJuegoSurvival;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 
@@ -24,10 +25,12 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
 
     // Nivel
     private int level;
+    private int score;
 
-    public PantallaCargandoStoryMode(Main main, int level){
+    public PantallaCargandoStoryMode(Main main, int level, int score){
         super(main);
         this.level = level;
+        this.score = score;
     }
 
     @Override
@@ -271,9 +274,13 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         if (assetManager.update()){
             if(level==1){
                 main.setScreen(new PantallaJuego(main));//regresa true si ya terminó la carga
-            }
-            if(level==5){
+                this.dispose();
+            }else if(level == 2){
+                main.setScreen(new PantallaJuego2(main,score));
+                this.dispose();
+            }else if(level==5){
                 main.setScreen(new PantallaJuegoSurvival(main));
+                this.dispose();
             }
         } else {
             //Aún no termina, preguntar cómo va
@@ -304,6 +311,6 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
     @Override
     public void dispose() {
         texturaCargando.dispose();
-        assetManager.unload("PantallaCarga/cargando.png");
+        //assetManager.unload("PantallaCarga/cargando.png");
     }
 }

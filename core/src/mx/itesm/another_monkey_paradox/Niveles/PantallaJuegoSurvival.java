@@ -460,7 +460,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
 
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
-        fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
+        fondoNivel01 = assetManager.get("Fondos/NIVEL 1 PAN.png");
 
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
