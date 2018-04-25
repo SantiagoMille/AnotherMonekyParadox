@@ -58,9 +58,10 @@ public class EscenaAstroGanador implements Screen {
     private Sprite Background;
 
     private int score;
+    private int nivel;
 
-    public EscenaAstroGanador(Main main, int score) {
-
+    public EscenaAstroGanador(Main main, int score, int nivel) {
+        this.nivel = nivel;
         this.main = main;
         this.score = score;
         this.assetManager = main.getAssetManager();
@@ -87,7 +88,6 @@ public class EscenaAstroGanador implements Screen {
         assetManager.load("boton Home.png", Texture.class);
         assetManager.finishLoading();
         imgBoton = assetManager.get("boton Home.png");
-
 
         stageNivel = new Stage(vista);
 
@@ -119,7 +119,9 @@ public class EscenaAstroGanador implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                main.setScreen(new PantallaCinematicaL1(main));
+                if(nivel==2){
+                    main.setScreen(new PantallaCinematicaL1(main));
+                }
             }
         });
 
@@ -149,7 +151,6 @@ public class EscenaAstroGanador implements Screen {
         batch.end();
         stageNivel.draw();
     }
-
 
     @Override
     public void resize(int width, int height) {

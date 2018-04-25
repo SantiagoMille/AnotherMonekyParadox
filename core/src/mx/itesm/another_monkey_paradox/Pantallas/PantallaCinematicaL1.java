@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego2;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 
@@ -67,7 +68,7 @@ public class PantallaCinematicaL1 extends Pantalla implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaMenu(main));
+                main.setScreen(new PantallaJuego2(main));
             }
         });
 

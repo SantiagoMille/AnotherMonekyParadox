@@ -1,24 +1,14 @@
 package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -29,40 +19,28 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.*;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.Random;
 
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.Objetos.Bala;
 import mx.itesm.another_monkey_paradox.Objetos.Enemigo;
 import mx.itesm.another_monkey_paradox.Objetos.Granada;
-import mx.itesm.another_monkey_paradox.Objetos.Personaje;
 import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
-import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
-import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.Fondo;
-import mx.itesm.another_monkey_paradox.Utils.progressBar;
 
 /**
- * Created by santi on 1/30/2018.
+ * Created by santi on 4/24/2018.
  */
 
-public class PantallaJuego extends nivelGenerico implements Screen  {
-
+public class PantallaJuego2  extends nivelGenerico implements Screen  {
     //For Background
     private Texture boss;
     private Sprite bossSprite;
@@ -98,10 +76,10 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Texture fondoNivel01;
 
     // PAUSA
-    private EscenaPausa escenaPausa;
+    private PantallaJuego2.EscenaPausa2 escenaPausa;
 
     // Estados del juego
-    private EstadoJuego estado;
+    private PantallaJuego.EstadoJuego estado;
 
     //private Enemigo enemigo;
 
@@ -209,7 +187,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     private Sprite bananaBarra;
     */
 
-    public PantallaJuego(Main main) {
+    public PantallaJuego2(Main main) {
         super(main);
     }
 
@@ -251,7 +229,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         listaGranadasExtra.add(powerUpGranada);
         listaVidasExtra.add(powerUpVida);
 
-        estado = EstadoJuego.JUGANDO;
+        estado = PantallaJuego.EstadoJuego.JUGANDO;
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
@@ -451,10 +429,10 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                estado = EstadoJuego.PAUSADO;
-                //main.setScreen((Screen) new EscenaPausa(vista,batch));
+                estado = PantallaJuego.EstadoJuego.PAUSADO;
+                //main.setScreen((Screen) new EscenaPausa2(vista,batch));
                 if(escenaPausa == null){
-                    escenaPausa = new EscenaPausa(vista,batch);
+                    escenaPausa = new PantallaJuego2.EscenaPausa2(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
                 dispose();
@@ -537,7 +515,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
     public void render(float delta) {
         stateTime+=delta;
 
-        if(estado != EstadoJuego.PAUSADO) {
+        if(estado != PantallaJuego.EstadoJuego.PAUSADO) {
             actualizarObjetos(delta, stateTime);
 
         }
@@ -680,14 +658,14 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
 
 
-            if(estado == EstadoJuego.JUGANDO&&e.right){
+            if(estado == PantallaJuego.EstadoJuego.JUGANDO&&e.right){
 
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
                     e.setX(e.getX()+(-80*delta));
                 }
-            }else if(estado == EstadoJuego.JUGANDO&&!e.right){
+            }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(60*delta));
                 }else{
@@ -731,7 +709,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         font.draw(batch,textoGlyGran, ANCHO/2 + 360,ALTO-15);
 
         //Texto Pausa
-        if(estado == EstadoJuego.PAUSADO){
+        if(estado == PantallaJuego.EstadoJuego.PAUSADO){
             font.draw(batch,pausaText, ANCHO/4-175,ALTO*13/20);
         }
 
@@ -754,7 +732,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         batch.end();
 
         // Botón PAUSA
-        if (estado==EstadoJuego.PAUSADO) {
+        if (estado== PantallaJuego.EstadoJuego.PAUSADO) {
             escenaPausa.draw(); // Solo si está pausado muestra la imagen
         }
 
@@ -925,7 +903,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
             if(listaEnemigos.get(i).getVida() <= 0){
                 listaEnemigos.removeIndex(i);
                 puntosJugador += 10;
-                            
+
             }
         }
     }
@@ -1146,12 +1124,12 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
     @Override
     public void pause() {
-        estado = EstadoJuego.PAUSADO;
+        estado = PantallaJuego.EstadoJuego.PAUSADO;
     }
 
     @Override
     public void resume() {
-        estado = EstadoJuego.JUGANDO;
+        estado = PantallaJuego.EstadoJuego.JUGANDO;
     }
 
     @Override
@@ -1170,10 +1148,10 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
         PAUSADO
     }
 
-    private class EscenaPausa extends Stage{
+    private class EscenaPausa2 extends Stage{
 
         // La escena que se muestra cuando está pausado
-        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+        public EscenaPausa2(Viewport vista, SpriteBatch batch) {
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
@@ -1214,7 +1192,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al juego
-                    estado = EstadoJuego.JUGANDO;
+                    estado = PantallaJuego.EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
                 }
             });

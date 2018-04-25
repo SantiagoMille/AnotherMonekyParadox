@@ -180,14 +180,9 @@ public abstract class nivelGenerico extends Pantalla {
     protected GlyphLayout textoGlyGran = new GlyphLayout(font,"Score");
 
 
-    protected void verificarColisionPersonajeItemBoss() {
-        Rectangle rectItem = itemBoss.getBoundingRectangle();
-        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-        if(rectItem.overlaps(rectPersonaje)){
-            //PANTALLA DE VICTORIA PROVISIONAL
-            main.setScreen(new EscenaAstroGanador(main, puntosJugador));
-        }
-    }
+
+
+    abstract public void pasarDeNivel();
 
     protected void verificarColisionPersonajeItemVida() {
         Rectangle rectItem = powerUpVida.getSprite().getBoundingRectangle();
