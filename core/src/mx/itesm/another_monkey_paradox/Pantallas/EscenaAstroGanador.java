@@ -120,7 +120,7 @@ public class EscenaAstroGanador implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(nivel==2){
-                    main.setScreen(new PantallaCinematicaL1(main));
+                    main.setScreen(new PantallaCinematica(main,"cineL1.png",2, score));
                 }
             }
         });

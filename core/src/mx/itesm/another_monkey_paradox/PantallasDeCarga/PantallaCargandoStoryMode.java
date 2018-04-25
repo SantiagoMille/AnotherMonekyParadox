@@ -38,8 +38,72 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
                 ALTO/2-spriteCargando.getHeight()/2);
         if(level == 1){
             cargarRecursosLevel1();
+        }else if(level == 2){
+            cargarRecursosLevel2();
         }
         //Ahora Inicia la carga de los recursos de la siguiente pantalla
+    }
+
+    private void cargarRecursosLevel2() {
+        assetManager.load("disparo2.png",Texture.class);
+
+        //Textura del nivel 1
+        assetManager.load("Fondos/NIVEL 2 PAN.png", Texture.class);
+
+        //Textura de Astro
+        assetManager.load("Astro/CAMINATA 4.png", Texture.class);
+        assetManager.load("Astro/CAMINATA 2.png", Texture.class);
+        assetManager.load("Astro/CAMINATA 3.png", Texture.class);
+        assetManager.load("Astro/CAMINATA 1.png", Texture.class);
+
+        //Textura de cavernicola01
+        assetManager.load("caballero1/3.png", Texture.class);
+        assetManager.load("caballero1/4.png", Texture.class);
+        assetManager.load("caballero1/2.png", Texture.class);
+        assetManager.load("caballero1/1.png", Texture.class);
+
+        //Textura de cavernicola02
+        assetManager.load("caballero2/caballero 3.png", Texture.class);
+        assetManager.load("caballero2/caballero 4.png", Texture.class);
+        assetManager.load("caballero2/caballero 2.png", Texture.class);
+        assetManager.load("caballero2/caballero 1.png", Texture.class);
+
+        //Textura vida
+        assetManager.load("vida.png", Texture.class);
+
+        //Textura botones
+        assetManager.load("BotonesDisparo/bullet_icon.png", Texture.class);
+        assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
+        assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+
+        assetManager.load("pause-button.png", Texture.class);
+        assetManager.load("Pad/padBack.png", Texture.class);
+        assetManager.load("Pad/padKnob.png", Texture.class);
+        assetManager.load("boton Home.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
+        assetManager.load("PlayButton.png", Texture.class);
+
+        //Textura armas
+        assetManager.load("banana.png", Texture.class);
+        assetManager.load("granana.png", Texture.class);
+
+        //Textura PowerUps
+        assetManager.load("Items/GRANADAS.png", Texture.class);
+        assetManager.load("Items/VIDA.png", Texture.class);
+
+        assetManager.load("ok-button.png", Texture.class);
+
+        //Textura barra de carga de balas
+        assetManager.load("BarraBalas/bananabarra.png", Texture.class);
+        assetManager.load("BarraBalas/barranegra.png", Texture.class);
+
+        //Sonidos
+        assetManager.load("pew.mp3", Sound.class);
+        assetManager.load("boom.mp3", Sound.class);
+        assetManager.load("hit.mp3", Sound.class);
+        // Se bloquea hasta cargar los recursos
+        //assetManager.finishLoading();
     }
 
     //Estos son los recursos de la pantalla siguiente (StoryMode)
@@ -48,7 +112,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("disparo2.png",Texture.class);
 
         //Textura del nivel 1
-        assetManager.load("FondoNivel1/NIVEL 1 PAN.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 1 PAN.png", Texture.class);
 
         //Textura de Astro
         assetManager.load("Astro/CAMINATA 4.png", Texture.class);

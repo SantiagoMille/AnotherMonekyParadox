@@ -25,7 +25,7 @@ import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
  * Created by adrian on 03/04/2018.
  */
 
-public class PantallaCinematicaL1 extends Pantalla implements Screen {
+public class PantallaCinematica extends Pantalla implements Screen {
 
     //Escena
     private Stage stageMenu;
@@ -36,11 +36,18 @@ public class PantallaCinematicaL1 extends Pantalla implements Screen {
     Texture imgBackground;
     private Sprite spriteBackground;
 
+    private String background;
+    private int nivel;
+    private int score;
+
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
-    public PantallaCinematicaL1(Main main) {
+    public PantallaCinematica(Main main, String background, int nivel, int score) {
         super(main);
+        this.background = background;
+        this.nivel = nivel;
+        this.score = score;
     }
 
     @Override
@@ -55,7 +62,7 @@ public class PantallaCinematicaL1 extends Pantalla implements Screen {
     private void crearMenu() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("cineL1.png");
+        imgBackground = new Texture(this.background);
         spriteBackground = new Sprite(imgBackground);
 
         //Boton Next
@@ -68,7 +75,9 @@ public class PantallaCinematicaL1 extends Pantalla implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
-                main.setScreen(new PantallaJuego2(main));
+                if(nivel == 2) {
+                    main.setScreen(new PantallaJuego2(main, score));
+                }
             }
         });
 
@@ -76,7 +85,7 @@ public class PantallaCinematicaL1 extends Pantalla implements Screen {
         stageMenu.addActor(btnNext);
 
         Gdx.input.setInputProcessor(stageMenu);
-}
+    }
 
     private void crearCamara(){
         camara = new OrthographicCamera(ANCHO,ALTO);

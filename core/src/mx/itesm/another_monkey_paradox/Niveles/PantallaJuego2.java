@@ -55,25 +55,19 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
     private Stage stageNivel;
 
     //Textura de Cavernicola 01
-    private Texture canervicola01Frame0;
-    private Texture canervicola01Frame1;
-    private Texture canervicola01Frame2;
-    private Texture canervicola01Frame3;
+    private Texture caballero01Frame0;
+    private Texture caballero01Frame1;
+    private Texture caballero01Frame2;
+    private Texture caballero01Frame3;
 
     //Textura de Cavernicola 02
-    private Texture canervicola02Frame0;
-    private Texture canervicola02Frame1;
-    private Texture canervicola02Frame2;
-    private Texture canervicola02Frame3;
-
-    //Textura de Cavernicola 03
-    private Texture canervicola03Frame0;
-    private Texture canervicola03Frame1;
-    private Texture canervicola03Frame2;
-    private Texture canervicola03Frame3;
+    private Texture caballero02Frame0;
+    private Texture caballero02Frame1;
+    private Texture caballero02Frame2;
+    private Texture caballero02Frame3;
 
     //Textura Fondos de los niveles
-    private Texture fondoNivel01;
+    private Texture fondoNivel02;
 
     // PAUSA
     private PantallaJuego2.EscenaPausa2 escenaPausa;
@@ -88,112 +82,14 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
     Double randomX;
     Double randomX2;
 
-
-    /*
-    //Vidas
-    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
-    int contador = 0;
-
-    //Granada y texto
-    private int maxGrandas = 5;
-    public GlyphLayout textoGlyGran;
-
-    // Puntaje y texto
-    private int puntosJugador = 0;
-    private BitmapFont font;
-    public GlyphLayout textoGly;
-    public GlyphLayout pausaText;
-
-    private boolean isMovingRight = false;
-    private boolean isMovingLeft = false;
-
-    //Item boss
-    private Texture itemBosss;
-    private Sprite itemBoss;
-
-    //Textura botones
-    private Texture botonGranada;
-    private Texture botonGranadaPressed;
-    private Texture botonDisparo;
-    private Texture botonDisparoPressed;
-    private Texture botonPausa;
-    private Texture botonContinua;
-    private Texture botonHome;
-
-    //Textura de Astro
-    private Texture astroCaminata0;
-    private Texture astroCaminata1;
-    private Texture astroCaminata2;
-    private Texture astroCaminata3;
-
-    //Textura Armas
-    private Texture bananaDisparo;
-    private Texture bossDisparo;
-    private Texture bananaGranada;
-
-    private boolean bossKilled = false;
-
-    private boolean powerUpVidaFlag = true;
-    private boolean powerUpGranadaFlag = true;
-
-    private boolean firstFilter=true;
-    private boolean secondFilter=true;
-
-    //Sonido
-    private Sound gunSound;
-    private Sound boomSound;
-    private Sound hitSound;
-
-    //Armas
-    private Array<Bala> listaBalas;
-    private Array<Granada> listaGranadas;
-    private Array<Bala> listaBalasBoss;
-    //Fisica Granada
-    float velocityY;     // Velocidad de la granada
-
-    //Controles del jugador
-    private ImageButton granada;
-    private ImageButton arma;
-    private ImageButton pausa;
-    private ImageButton home;
-    private ImageButton continua;
-
-    private Texture padBack;
-    private Texture padKnob;
-
-    //Power Ups
-    private Texture imgpowerUpGranada;
-    private Texture imgpowerUpVida;
-    private PowerUp powerUpGranada;
-    private PowerUp powerUpVida;
-    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
-    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-
-     //bananas Colision
-    private Bala banana1;
-    private Bala banana2;
-    private Bala banana3;
-    private Bala banana4;
-    private Bala banana5;
-    private Bala banana6;
-    private Boolean crashRight = false;
-    private Boolean crashLeft = false;
-
-    //Barra de carga balas
-    private progressBar Bar;
-    private Texture imgBarraBala;
-    private Texture imgBananaBarra;
-    private Sprite barraBala;
-    private Sprite bananaBarra;
-    */
-
-    public PantallaJuego2(Main main) {
+    public PantallaJuego2(Main main, int score) {
         super(main);
+        this.puntosJugador += score;
     }
 
     @Override
     public void pasarDeNivel() {
-        main.setScreen(new EscenaAstroGanador(main, puntosJugador,2));
+        main.setScreen(new EscenaAstroGanador(main, puntosJugador,3));
     }
 
     @Override
@@ -204,17 +100,17 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
 
         //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
-        fondo = new Fondo(fondoNivel01);
+        fondo = new Fondo(fondoNivel02);
         batch = new SpriteBatch();
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        for(int i=0; i<4;i++){
-            enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+        for(int i=0; i<6;i++){
+            enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
-        for(int i=0; i<4;i++){
-            enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+        for(int i=0; i<6;i++){
+            enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,false,i);
             listaEnemigos.add(enemigo);
         }
 
@@ -232,7 +128,6 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
         estado = PantallaJuego.EstadoJuego.JUGANDO;
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
-
     }
 
     private void crearMapa() {
@@ -452,22 +347,17 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
 
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
-        fondoNivel01 = assetManager.get("FondoNivel1/NIVEL 1 PAN.png");
+        fondoNivel02 = assetManager.get("Fondos/NIVEL 2 PAN.png");
 
-        canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
-        canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
-        canervicola01Frame2 = assetManager.get("cavernicola01/CM1 2.png");
-        canervicola01Frame3 = assetManager.get("cavernicola01/CM1 1.png");
+        caballero01Frame0 = assetManager.get("caballero1/3.png");
+        caballero01Frame1 = assetManager.get("caballero1/4.png");
+        caballero01Frame2 = assetManager.get("caballero1/2.png");
+        caballero01Frame3 = assetManager.get("caballero1/1.png");
 
-        canervicola02Frame0 = assetManager.get("cavernicola02/CM2 3.png");
-        canervicola02Frame1 = assetManager.get("cavernicola02/CM2 4.png");
-        canervicola02Frame2 = assetManager.get("cavernicola02/CM2 2.png");
-        canervicola02Frame3 = assetManager.get("cavernicola02/CM2 1.png");
-
-        canervicola03Frame0 = assetManager.get("cavernicola03/CM3 3.png");
-        canervicola03Frame1 = assetManager.get("cavernicola03/CM3 4.png");
-        canervicola03Frame2 = assetManager.get("cavernicola03/CM3 2.png");
-        canervicola03Frame3 = assetManager.get("cavernicola03/CM3 1.png");
+        caballero02Frame0 = assetManager.get("caballero2/caballero 3.png");
+        caballero02Frame1 = assetManager.get("caballero2/caballero 4.png");
+        caballero02Frame2 = assetManager.get("caballero2/caballero 2.png");
+        caballero02Frame3 = assetManager.get("caballero2/caballero 1.png");
 
         /*
         gunSound = assetManager.get("pew.mp3");
@@ -545,12 +435,12 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
 
         if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola02Frame1, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -558,12 +448,12 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -571,12 +461,12 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,false,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -584,12 +474,12 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -597,12 +487,12 @@ public class PantallaJuego2  extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<10;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+            for(int i=0; i<6;i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
