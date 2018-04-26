@@ -524,7 +524,7 @@ public class PantallaJuego4 extends nivelGenerico implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
-                    e.setX(e.getX()+(-80*delta));
+                    e.setX(e.getX()+(-120*delta));
                 }
             }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){

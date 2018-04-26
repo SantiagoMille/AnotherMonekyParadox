@@ -46,7 +46,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
     //For Background
     private Texture boss;
     private Sprite bossSprite;
-    private Fondo fondo;
+    private Fondo fondo1, fondo2;
 
     //Enemigos
     //private Array<Enemigo> listaEnemigos;
@@ -68,8 +68,8 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
     private Texture caballero02Frame2;
     private Texture caballero02Frame3;
 
-    //Textura Fondos de los niveles
-    private Texture fondoNivel02;
+    //Textura Fondos de los nivele
+    private Texture fondoNivel02, fondoNivel01;
 
     // PAUSA
     private PantallaJuego2.EscenaPausa2 escenaPausa;
@@ -102,17 +102,18 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
 
         //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
-        fondo = new Fondo(fondoNivel02);
+        fondo1 = new Fondo(fondoNivel01);
+        fondo2 = new Fondo(fondoNivel02);
         batch = new SpriteBatch();
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
         for(int i=0; i<6;i++){
-            enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,true,i);
+            enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
         for(int i=0; i<6;i++){
-            enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,false,i);
+            enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
 
             listaEnemigos.add(enemigo);
         }
@@ -350,7 +351,8 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
 
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
-        fondoNivel02 = assetManager.get("Fondos/NIVEL 2 PAN.png");
+        fondoNivel01 = assetManager.get("Fondos/NIVEL 2.1.png");
+        fondoNivel02 = assetManager.get("Fondos/NIVEL 2.2.png");
 
         caballero01Frame0 = assetManager.get("caballero1/3.png");
         caballero01Frame1 = assetManager.get("caballero1/4.png");
@@ -434,9 +436,10 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
-        fondo.render(batch);
+        fondo1.render(batch);
+        fondo2.render(batch);
 
-        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
+        if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<6;i++){
                 enemigo = new Enemigo(caballero01Frame0, caballero01Frame1, caballero01Frame2, caballero01Frame3,true,i);
@@ -449,7 +452,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
+        if(fondo1.getImagenA().getX()<-1480&&fondo1.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<6;i++){
@@ -463,7 +466,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
+        if(fondo1.getImagenA().getX()<-2180&&fondo1.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<6;i++){
@@ -476,7 +479,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
+        if(fondo1.getImagenA().getX()<-2880&&fondo1.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<6;i++){
@@ -489,7 +492,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
+        if(fondo1.getImagenA().getX()<-3580&&fondo1.getImagenA().getX()>-3600&&firstFilter){
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<6;i++){
@@ -502,12 +505,12 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
 
-        if (fondo.getImagenA().getX()<-randomX &&powerUpVidaFlag){
+        if (fondo1.getImagenA().getX()<-randomX &&powerUpVidaFlag){
             powerUpVida.setX(ANCHO*0.75f);
             powerUpVidaFlag=false;
         }
 
-        if (fondo.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
+        if (fondo1.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
             powerUpGranada.setX(ANCHO*0.75f);
             powerUpGranadaFlag=false;
         }
@@ -558,7 +561,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
-                    e.setX(e.getX()+(-80*delta));
+                    e.setX(e.getX()+(-120*delta));
                 }
             }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
@@ -570,7 +573,7 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3999){
+        if(fondo1.getImagenA().getX()<-3999){
 
             shootCounter++;
 
@@ -642,15 +645,17 @@ public class PantallaJuego2 extends nivelGenerico implements Screen  {
             if(personaje.getX()<camara.position.x){
                 personaje.setX(personaje.getX()+(dt*80));
             }else {
-                fondo.mover(-dt * 79);
+                fondo1.mover(-dt * 79);
+                fondo2.mover(-dt * 79);
             }
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){
                 personaje.setX(personaje.getX()+(dt*-80));
             }
-            if(fondo.getImagenA().getX()>0) {
-                fondo.mover(dt * 20);
+            if(fondo1.getImagenA().getX()>0) {
+                fondo1.mover(dt * 20);
+                fondo2.mover(dt * 20);
             }
         }
 
