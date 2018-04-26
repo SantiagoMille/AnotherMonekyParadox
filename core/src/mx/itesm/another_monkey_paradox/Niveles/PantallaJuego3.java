@@ -107,11 +107,11 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        for(int i=0; i<6;i++){
+        for(int i=0; i<8;i++){
             enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
-        for(int i=0; i<6;i++){
+        for(int i=0; i<8;i++){
             enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,false,i);
 
             listaEnemigos.add(enemigo);
@@ -404,11 +404,11 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
 
         if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,false,i);
 
                 listaEnemigos.add(enemigo);
@@ -418,11 +418,11 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,false,i);
 
                 listaEnemigos.add(enemigo);
@@ -432,11 +432,11 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -445,11 +445,11 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -458,11 +458,11 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
