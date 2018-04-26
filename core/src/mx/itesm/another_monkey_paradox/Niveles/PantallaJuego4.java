@@ -19,11 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import java.util.Random;
 
@@ -38,10 +38,10 @@ import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.Fondo;
 
 /**
- * Created by santi on 1/30/2018.
+ * Created by santi on 4/26/2018.
  */
 
-public class PantallaJuego3 extends nivelGenerico implements Screen  {
+public class PantallaJuego4 extends nivelGenerico implements Screen  {
 
     //For Background
     private Texture boss;
@@ -72,7 +72,7 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
     private Texture fondoNivel02;
 
     // PAUSA
-    private PantallaJuego3.EscenaPausa3 escenaPausa;
+    private PantallaJuego4.EscenaPausa4 escenaPausa;
 
     // Estados del juego
     private PantallaJuego.EstadoJuego estado;
@@ -84,7 +84,7 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
     Double randomX;
     Double randomX2;
 
-    public PantallaJuego3(Main main, int score) {
+    public PantallaJuego4(Main main, int score) {
         super(main);
         this.puntosJugador += score;
     }
@@ -330,7 +330,7 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
                 estado = PantallaJuego.EstadoJuego.PAUSADO;
                 //main.setScreen((Screen) new EscenaPausa2(vista,batch));
                 if(escenaPausa == null){
-                    escenaPausa = new PantallaJuego3.EscenaPausa3(vista,batch);
+                    escenaPausa = new PantallaJuego4.EscenaPausa4(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
                 dispose();
@@ -797,10 +797,10 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         PAUSADO
     }
 
-    private class EscenaPausa3 extends Stage{
+    private class EscenaPausa4 extends Stage{
 
         // La escena que se muestra cuando está pausado
-        public EscenaPausa3(Viewport vista, SpriteBatch batch) {
+        public EscenaPausa4(Viewport vista, SpriteBatch batch) {
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
@@ -849,4 +849,3 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         }
     }
 }
-

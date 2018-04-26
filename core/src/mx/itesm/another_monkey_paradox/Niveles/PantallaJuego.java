@@ -357,7 +357,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
 
         // Crea el pad
         Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(20,20,160,160);               // x,y - ancho,alto
+        pad.setBounds(30,30,190,190);               // x,y - ancho,alto
 
         // Comportamiento del pad
         pad.addListener(new ChangeListener() {
@@ -671,7 +671,7 @@ public class PantallaJuego extends nivelGenerico implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(60*delta));
                 }else{
-                    e.setX(e.getX()+(15*delta));
+                    e.setX(e.getX()+(20*delta));
                 }
 
             }

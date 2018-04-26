@@ -78,6 +78,10 @@ public class PantallaCinematica extends Pantalla implements Screen {
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(nivel == 2) {
                     main.setScreen(new PantallaCargandoStoryMode(main,2, score));
+                }else if(nivel == 3){
+                    main.setScreen(new PantallaCargandoStoryMode(main,2, score));
+                }else if(nivel == 4){
+                    main.setScreen(new PantallaCargandoStoryMode(main,2, score));
                 }
             }
         });
