@@ -132,27 +132,17 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("Astro/CAMINATA 3.png", Texture.class);
         assetManager.load("Astro/CAMINATA 1.png", Texture.class);
 
-        //Textura de cavernicola01
-        assetManager.load("caballero1/3.png", Texture.class);
-        assetManager.load("caballero1/4.png", Texture.class);
-        assetManager.load("caballero1/2.png", Texture.class);
-        assetManager.load("caballero1/1.png", Texture.class);
-
-        //Textura de cavernicola02
-        assetManager.load("caballero2/caballero 3.png", Texture.class);
-        assetManager.load("caballero2/caballero 4.png", Texture.class);
-        assetManager.load("caballero2/caballero 2.png", Texture.class);
-        assetManager.load("caballero2/caballero 1.png", Texture.class);
-
+        //Textura de ruso01
+        assetManager.load("ruso1/1.png", Texture.class);
+        assetManager.load("ruso1/2.png", Texture.class);
         assetManager.load("ruso1/3.png", Texture.class);
         assetManager.load("ruso1/4.png", Texture.class);
-        assetManager.load("ruso1/2.png", Texture.class);
-        assetManager.load("ruso1/1.png", Texture.class);
 
-        assetManager.load("ruso2/ruso 3.png", Texture.class);
-        assetManager.load("ruso2/ruso 4.png", Texture.class);
-        assetManager.load("ruso2/ruso 2.png", Texture.class);
-        assetManager.load("ruso2/ruso 1.png", Texture.class);
+        //Textura de ruso02
+        assetManager.load("ruso2/1.png", Texture.class);
+        assetManager.load("ruso2/2.png", Texture.class);
+        assetManager.load("ruso2/3.png", Texture.class);
+        assetManager.load("ruso2/4.png", Texture.class);
 
         //Textura vida
         assetManager.load("vida.png", Texture.class);
