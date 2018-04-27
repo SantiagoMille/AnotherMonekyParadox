@@ -41,7 +41,7 @@ import mx.itesm.another_monkey_paradox.Utils.Fondo;
  * Created by santi on 1/30/2018.
  */
 
-public class PantallaJuego extends nivelGenerico implements Screen  {
+public class PantallaJuego extends NivelGenerico implements Screen  {
 
     //For Background
     private Texture boss;

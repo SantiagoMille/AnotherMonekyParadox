@@ -44,9 +44,9 @@ import mx.itesm.another_monkey_paradox.Utils.progressBar;
  * Created by Fernando on 19/04/18.
  */
 
-public abstract class nivelGenerico extends Pantalla {
+public abstract class NivelGenerico extends Pantalla {
 
-    public nivelGenerico(Main main) {
+    public NivelGenerico(Main main) {
         super(main);
     }
 
@@ -178,9 +178,6 @@ public abstract class nivelGenerico extends Pantalla {
     //Granada y texto
     protected int maxGrandas = 5;
     protected GlyphLayout textoGlyGran = new GlyphLayout(font,"Score");
-
-
-
 
     abstract public void pasarDeNivel();
 
@@ -362,6 +359,18 @@ public abstract class nivelGenerico extends Pantalla {
         contador++;
     }
 
+    protected void verificarVidaAstro(){
+        int vidasFalse = 0;
+        for (int i = vidas.size() - 1; i >= 0; i--){
+            if(vidas.get(i).isActiva() == false){
+                vidasFalse++;
+            }
+        }
+        if(vidasFalse == vidas.size()){
+            escribirScore(true);
+            main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
+        }
+    }
 
     protected void escribirScore(boolean isStoryMode) {
         Preferences prefs;
@@ -459,7 +468,6 @@ public abstract class nivelGenerico extends Pantalla {
 
         }
     }
-
     /*
     Skin skin = new Skin(); // Texturas para el pad
     skin.add("fondo", padBack);

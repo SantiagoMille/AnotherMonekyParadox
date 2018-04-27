@@ -41,7 +41,7 @@ import mx.itesm.another_monkey_paradox.Utils.Fondo;
  * Created by santi on 1/30/2018.
  */
 
-public class PantallaJuego3 extends nivelGenerico implements Screen  {
+public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
     //For Background
     private Texture boss;
@@ -69,7 +69,8 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
     private Texture ruso02Frame3;
 
     //Textura Fondos de los niveles
-    //private Texture fondoNivel02;
+    private Texture fondoNivel01;
+    private Texture fondoNivel02;
 
     // PAUSA
     private PantallaJuego3.EscenaPausa3 escenaPausa;
@@ -100,6 +101,8 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         crearCamara();
         crearMapa();
 
+        fondo1 = new Fondo(fondoNivel01);
+        fondo2 = new Fondo(fondoNivel02);
         //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
         //fondo = new Fondo(fondoNivel02);
@@ -352,8 +355,8 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         // Cuando termina de cargar las texturas, las leemos
         //fondoNivel02 = assetManager.get("Fondos/NIVEL 2 PAN.png");
 
-        fondo1 = assetManager.get("NIVEL 3.1.jpg");
-        fondo2 = assetManager.get("NIVEL 3.2.jpg");
+        fondoNivel01 = assetManager.get("Fondos/NIVEL 3.1.jpg");
+        fondoNivel02 = assetManager.get("Fondos/NIVEL 3.2.jpg");
 
         ruso01Frame0 = assetManager.get("ruso1/3.png");
         ruso01Frame1 = assetManager.get("ruso1/4.png");
@@ -526,7 +529,7 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
-                    e.setX(e.getX()+(-120*delta));
+                    e.setX(e.getX()+(-80*delta));
                 }
             }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
@@ -853,4 +856,3 @@ public class PantallaJuego3 extends nivelGenerico implements Screen  {
         }
     }
 }
-

@@ -43,7 +43,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         spriteCargando.setPosition(ANCHO/2-spriteCargando.getWidth()/2,
                 ALTO/2-spriteCargando.getHeight()/2);
         if(level == 1){
-            cargarRecursosLevel2();
+            cargarRecursosLevel3();
         }else if(level == 2){
             cargarRecursosLevel2();
         }else if(level == 3){
@@ -123,8 +123,8 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("disparo2.png",Texture.class);
 
         //Textura del nivel 1
-        assetManager.load("Fondos/NIVEL 3.1.png", Texture.class);
-        assetManager.load("Fondos/NIVEL 3.2.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 3.1.jpg", Texture.class);
+        assetManager.load("Fondos/NIVEL 3.2.jpg", Texture.class);
 
         //Textura de Astro
         assetManager.load("Astro/CAMINATA 4.png", Texture.class);
@@ -139,10 +139,10 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("ruso1/4.png", Texture.class);
 
         //Textura de ruso02
-        assetManager.load("ruso2/1.png", Texture.class);
-        assetManager.load("ruso2/2.png", Texture.class);
-        assetManager.load("ruso2/3.png", Texture.class);
-        assetManager.load("ruso2/4.png", Texture.class);
+        assetManager.load("ruso2/ruso 1.png", Texture.class);
+        assetManager.load("ruso2/ruso 2.png", Texture.class);
+        assetManager.load("ruso2/ruso 3.png", Texture.class);
+        assetManager.load("ruso2/ruso 4.png", Texture.class);
 
         //Textura vida
         assetManager.load("vida.png", Texture.class);
@@ -321,7 +321,8 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("disparo2.png",Texture.class);
 
         //Textura del nivel 1
-        assetManager.load("Fondos/NIVEL 1 PAN.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 1.1.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 1.2.png", Texture.class);
 
         //Textura de Astro
         assetManager.load("Astro/CAMINATA 4.png", Texture.class);
@@ -412,7 +413,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
     private void actualizarCarga(){
         if (assetManager.update()){
             if(level==1){
-                main.setScreen(new PantallaJuego2(main,0));//regresa true si ya terminó la carga
+                main.setScreen(new PantallaJuego3(main,0));//regresa true si ya terminó la carga
                 this.dispose();
             }else if(level == 2){
                 main.setScreen(new PantallaJuego2(main,score));

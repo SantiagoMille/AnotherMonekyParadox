@@ -41,11 +41,11 @@ import mx.itesm.another_monkey_paradox.Utils.Fondo;
  * Created by santi on 4/24/2018.
  */
 
-public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
+public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     //For Background
     private Texture boss;
     private Sprite bossSprite;
-    private Fondo fondo;
+    private Fondo fondo1, fondo2;
 
     //Enemigos
     //private Array<Enemigo> listaEnemigos;
@@ -80,7 +80,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
     private Texture caballero02Frame3; //1
 
     //Textura Fondos de los niveles
-    private Texture fondoNivel01;
+    private Texture fondoNivel01, fondoNivel02;
 
     // PAUSA
     private PantallaJuegoSurvival.EscenaPausa2 escenaPausa;
@@ -211,7 +211,9 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
 
         //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
-        fondo = new Fondo(fondoNivel01);
+        fondo1 = new Fondo(fondoNivel01);
+        fondo2 = new Fondo(fondoNivel02);
+        fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
         batch = new SpriteBatch();
 
         //Lista Enemigos
@@ -467,7 +469,8 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
 
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
-        fondoNivel01 = assetManager.get("Fondos/NIVEL 1 PAN.png");
+        fondoNivel01 = assetManager.get("Fondos/NIVEL 1.1.png");
+        fondoNivel02 = assetManager.get("Fondos/NIVEL 1.2.png");
 
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
@@ -561,9 +564,10 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
         batch.setProjectionMatrix(camara.combined);
 
         batch.begin();
-        fondo.render(batch);
+        fondo1.render(batch);
+        fondo2.render(batch);
 
-        if(fondo.getImagenA().getX()<-780&&fondo.getImagenA().getX()>-882&&firstFilter){
+        if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<getRandomNumber(7,13);i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
@@ -575,7 +579,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-900&&fondo.getImagenA().getX()>-1450&&firstFilter){
+        if(fondo1.getImagenA().getX()<-900&&fondo1.getImagenA().getX()>-1450&&firstFilter){
             firstFilter=false;
             for(int i=0; i<getRandomNumber(10,13);i++){
                 enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
@@ -588,7 +592,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
         }
 
 
-        if(fondo.getImagenA().getX()<-1480&&fondo.getImagenA().getX()>-1582&&secondFilter){
+        if(fondo1.getImagenA().getX()<-1480&&fondo1.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<getRandomNumber(7,13);i++){
@@ -601,7 +605,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-1600&&fondo.getImagenA().getX()>-2110&&secondFilter){
+        if(fondo1.getImagenA().getX()<-1600&&fondo1.getImagenA().getX()>-2110&&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<getRandomNumber(10,13);i++){
@@ -614,7 +618,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-2180&&fondo.getImagenA().getX()>-2282&&firstFilter){
+        if(fondo1.getImagenA().getX()<-2180&&fondo1.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<getRandomNumber(7,13);i++){
@@ -627,7 +631,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-2300&&fondo.getImagenA().getX()>-2850&&secondFilter){
+        if(fondo1.getImagenA().getX()<-2300&&fondo1.getImagenA().getX()>-2850&&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<getRandomNumber(10,13);i++){
@@ -640,7 +644,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-2880&&fondo.getImagenA().getX()>-2982&&secondFilter){
+        if(fondo1.getImagenA().getX()<-2880&&fondo1.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<getRandomNumber(7,13);i++){
@@ -653,7 +657,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3000&&fondo.getImagenA().getX()>-3500&secondFilter){
+        if(fondo1.getImagenA().getX()<-3000&&fondo1.getImagenA().getX()>-3500&secondFilter){
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<getRandomNumber(10,13);i++){
@@ -666,7 +670,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3580&&fondo.getImagenA().getX()>-3600&&firstFilter){
+        if(fondo1.getImagenA().getX()<-3580&&fondo1.getImagenA().getX()>-3600&&firstFilter){
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<getRandomNumber(9,15);i++){
@@ -679,12 +683,12 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if (fondo.getImagenA().getX()<-randomX &&powerUpVidaFlag){
+        if (fondo1.getImagenA().getX()<-randomX &&powerUpVidaFlag){
             powerUpVida.setX(ANCHO*0.75f);
             powerUpVidaFlag=false;
         }
 
-        if (fondo.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
+        if (fondo1.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
             powerUpGranada.setX(ANCHO*0.75f);
             powerUpGranadaFlag=false;
         }
@@ -747,7 +751,7 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             }
         }
 
-        if(fondo.getImagenA().getX()<-3999){
+        if(fondo1.getImagenA().getX()<-3999){
 
             shootCounter++;
 
@@ -819,15 +823,18 @@ public class PantallaJuegoSurvival extends nivelGenerico implements Screen  {
             if(personaje.getX()<camara.position.x){
                 personaje.setX(personaje.getX()+(dt*80));
             }else {
-                fondo.mover(-dt * 79);
+                fondo1.mover(-dt * 79);
+                fondo2.mover(-dt * 79);
             }
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){
                 personaje.setX(personaje.getX()+(dt*-80));
             }
-            if(fondo.getImagenA().getX()>0) {
-                fondo.mover(dt * 20);
+            if(fondo1.getImagenA().getX()>0) {
+                fondo1.mover(dt * 20);
+                fondo2.mover(dt * 20);
+
             }
         }
 
