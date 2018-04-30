@@ -759,6 +759,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         if (timeSinceCollision > 1.8f) {
             boolean shake = verificarColisionPersonajeEnemigo(dt);
             if(shake){
+                Gdx.input.vibrate(700);
                 screenShake.update(dt, camara);
                 batch.setProjectionMatrix(camara.combined);
                 camara.update();
