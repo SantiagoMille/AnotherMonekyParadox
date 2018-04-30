@@ -113,12 +113,9 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
 
     @Override
     public void render(float delta) {
-
-        Bacgraun.setPosition(0,0);
-
         batch.begin();
         Bacgraun.draw(batch);
-        texto.mostratMensaje(batch, "Good luck \nnext time", 650, 420,1,1, 1);
+        texto.mostratMensaje(batch, "Good luck \nnext time", ANCHO*0.85f, ALTO*0.7f,1,1, 1);
         texto.mostratMensaje(batch, "Score: " + finalScore, -200, 420,1,1, 1);
         batch.end();
         stageNivel.draw();

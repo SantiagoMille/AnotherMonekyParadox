@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -869,7 +870,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         if (timeSinceCollision > 2f) {
             boolean shake = verificarColisionPersonajeEnemigo(dt);
             if(shake){
-                Gdx.input.vibrate(700);
+                Gdx.input.vibrate(350);
                 screenShake.update(dt, camara);
                 batch.setProjectionMatrix(camara.combined);
                 camara.update();
@@ -1027,6 +1028,10 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         }
     }
 
+
+
+
+
     /*
     private void verificarColisionGranadaEnemigo(float dt) {
         Rectangle rectEnemigo;
@@ -1175,7 +1180,6 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
     @Override
     public void dispose() {
-
 
     }
 

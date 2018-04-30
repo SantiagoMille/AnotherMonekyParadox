@@ -1,6 +1,8 @@
 package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
@@ -28,6 +30,7 @@ import mx.itesm.another_monkey_paradox.Objetos.Personaje;
 import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
+import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.ScreenShake;
 import mx.itesm.another_monkey_paradox.Utils.progressBar;
 
@@ -35,7 +38,7 @@ import mx.itesm.another_monkey_paradox.Utils.progressBar;
  * Created by Fernando on 19/04/18.
  */
 
-public abstract class NivelGenerico extends Pantalla {
+public abstract class NivelGenerico extends Pantalla implements InputProcessor{
 
     public NivelGenerico(Main main) {
         super(main);
@@ -462,9 +465,6 @@ public abstract class NivelGenerico extends Pantalla {
             }
             prefs.putString("highscores",sb.toString());
             prefs.flush();
-
-
-
         }
     }
 
@@ -664,6 +664,49 @@ public abstract class NivelGenerico extends Pantalla {
 
     }
     */
+    @Override
+    public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.BACK){
+            main.setScreen(new PantallaMenu(main));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 
     /** The style for a {@link Touchpad}.
      * @author Josh Street */

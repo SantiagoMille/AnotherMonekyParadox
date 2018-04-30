@@ -138,6 +138,8 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
         cargarTexturas();
 
+        Gdx.input.setCatchBackKey(true);
+
         stageNivel = new Stage(vista);
 
         //para sacar número random donde se crean los powerups
@@ -759,7 +761,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         if (timeSinceCollision > 1.8f) {
             boolean shake = verificarColisionPersonajeEnemigo(dt);
             if(shake){
-                Gdx.input.vibrate(700);
+                Gdx.input.vibrate(350);
                 screenShake.update(dt, camara);
                 batch.setProjectionMatrix(camara.combined);
                 camara.update();
