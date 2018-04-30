@@ -927,12 +927,25 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
         verificarColisionGranadaBoss(stateTime);
-        verificarColisionPersonajeEnemigo(dt);
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
         verificarColisionPersonajeItemVida();
         verificarVidaAstro();
+
+        timeSinceCollision += dt;
+        System.out.println("TimeSinceCollision: " + timeSinceCollision);
+        if (timeSinceCollision > 1.8f) {
+            boolean shake = verificarColisionPersonajeEnemigo(dt);
+            if(shake){
+                screenShake.update(dt, camara);
+                batch.setProjectionMatrix(camara.combined);
+                camara.update();
+                camara.position.x = ANCHO/2;
+                camara.position.y = ALTO/2;
+                timeSinceCollision = 0;
+            }
+        }
 
     }
 

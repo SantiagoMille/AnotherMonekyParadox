@@ -59,6 +59,7 @@ public class Bala {
         }
     }
 
+
     public void moverY(float delta){
         sprite.setY(sprite.getY()+delta*VX);
     }

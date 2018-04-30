@@ -24,7 +24,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.Random;
 
 import mx.itesm.another_monkey_paradox.Main;
@@ -523,6 +523,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
         if(estado != EstadoJuego.PAUSADO) {
             actualizarObjetos(delta, stateTime);
+            System.out.println(delta);
 
         }
 
@@ -857,13 +858,25 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
         verificarColisionGranadaBoss(stateTime);
-        verificarColisionPersonajeEnemigo(dt);
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
         verificarColisionPersonajeItemVida();
         verificarVidaAstro();
 
+        timeSinceCollision += dt;
+        System.out.println("TimeSinceCollision: " + timeSinceCollision);
+        if (timeSinceCollision > 1.8f) {
+            boolean shake = verificarColisionPersonajeEnemigo(dt);
+            if(shake){
+                screenShake.update(dt, camara);
+                batch.setProjectionMatrix(camara.combined);
+                camara.update();
+                camara.position.x = ANCHO/2;
+                camara.position.y = ALTO/2;
+                timeSinceCollision = 0;
+            }
+        }
     }
 
     protected void verificarVidaAstro(){
