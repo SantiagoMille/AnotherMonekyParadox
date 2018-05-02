@@ -43,7 +43,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         spriteCargando.setPosition(ANCHO/2-spriteCargando.getWidth()/2,
                 ALTO/2-spriteCargando.getHeight()/2);
         if(level == 1){
-            cargarRecursosLevel1();
+            cargarRecursosLevel3();
         }else if(level == 2){
             cargarRecursosLevel2();
         }else if(level == 3){
@@ -413,10 +413,10 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
     private void actualizarCarga(){
         if (assetManager.update()){
             if(level==1){
-                main.setScreen(new PantallaJuego(main));//regresa true si ya terminó la carga
+                main.setScreen(new PantallaJuego2(main,0));//regresa true si ya terminó la carga
                 this.dispose();
             }else if(level == 2){
-                main.setScreen(new PantallaJuego2(main,score));
+                main.setScreen(new PantallaJuego3(main,score));
                 this.dispose();
             }else if(level == 3){
                 main.setScreen(new PantallaJuego3(main,score));
