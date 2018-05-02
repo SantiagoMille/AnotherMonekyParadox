@@ -41,10 +41,12 @@ public class PantallaTutorial extends Pantalla implements Screen {
     public Texto texto;
     public Texto title;
     public String toWrite;
+    public boolean isHistory;
 
-    public PantallaTutorial(Main main, String toWrite) {
+    public PantallaTutorial(Main main, String toWrite, boolean isHistory) {
         super(main);
         this.toWrite = toWrite;
+        this.isHistory = isHistory;
     }
 
     @Override
@@ -64,19 +66,23 @@ public class PantallaTutorial extends Pantalla implements Screen {
     private void crearMainView() {
         stageMenu = new Stage(vista);
 
-        imgBackground = new Texture("pantall_tutorial.png");
+        if(isHistory){
+            imgBackground = new Texture("pantall_tutorial.png");
+        }else{
+            imgBackground = new Texture("pantall_tutorial2.png");
+        }
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setPosition(0, 0);
         //spriteBackground.setAlpha(0.7f);
 
         //Cuadro oscuro
-        Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO), Pixmap.Format.RGBA8888 );
+        /*Pixmap pixmap = new Pixmap((int)(ANCHO), (int)(ALTO), Pixmap.Format.RGBA8888 );
         pixmap.setColor( 164/255f, 164/255f, 164/255f, 0.5f );
         pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
         Texture texturaRectangulo = new Texture( pixmap );
         pixmap.dispose();
         Image imgRectangulo = new Image(texturaRectangulo);
-        imgRectangulo.setPosition(0,0);
+        imgRectangulo.setPosition(0,0);*/
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
@@ -94,7 +100,7 @@ public class PantallaTutorial extends Pantalla implements Screen {
             }
         });
 
-        stageMenu.addActor(imgRectangulo);
+        //stageMenu.addActor(imgRectangulo);
         stageMenu.addActor(btnReturn);
 
         Gdx.input.setInputProcessor(stageMenu);
@@ -123,7 +129,11 @@ public class PantallaTutorial extends Pantalla implements Screen {
     }
 
     public void escribirTexto(SpriteBatch batch){
-        texto.mostratMensaje(batch,toWrite,ANCHO/2-50,ALTO-100,0f,0f,0f);
+        if(isHistory){
+            texto.mostratMensaje(batch,toWrite,ANCHO/2-50,ALTO-100,0f,0f,0f);
+        }else{
+            texto.mostratMensaje(batch,toWrite,ANCHO/2-50,ALTO-100,.4f,.4f,.4f);
+        }
     }
 
     @Override

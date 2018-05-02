@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -48,7 +49,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
     private SpriteBatch batch;
 
     Texture imgBackground;
-    private Sprite spriteBackground;
+    private Sprite spriteBackground, sensi, diffi;
 
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
@@ -112,35 +113,28 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         titulo = new Texto(1,1,1);
 
-        TextButton buttonDifficulty = new TextButton("Difficulty", skin);
-        buttonDifficulty.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
-                System.out.println("click " + x + ", " + y);
-            }
-        });
-
-        buttonDifficulty.setPosition(ANCHO/2-buttonDifficulty.getWidth(),ALTO/2+100);
+        Texture diff = new Texture("button_difficulty.png");
+        diffi = new Sprite(diff);
+        diffi.setPosition(ANCHO/2-150, ALTO/2+90);
 
         Slider sliderDif = new Slider(0, 100, 1, false, skin);
         sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
         sliderDif.setPosition(ANCHO/2+50,ALTO/2+100);
 
-
-        TextButton buttonSensitivity = new TextButton("Sensitivity", skin);
-        buttonSensitivity.addListener(new ClickListener() {
-            public void clicked (InputEvent event, float x, float y) {
-                System.out.println("click " + x + ", " + y);
-            }
-        });
-        buttonSensitivity.setPosition(ANCHO/2-buttonDifficulty.getWidth(),ALTO/2);
+        Texture sens = new Texture("button_sensitivity.png");
+        sensi = new Sprite(sens);
+        sensi.setPosition(ANCHO/2-165, ALTO/2-10);
 
         Slider sliderSens = new Slider(0, 100, 1, false, skin);
         sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.
         sliderSens.setPosition(ANCHO/2+50,ALTO/2);
 
-        final TextButton creditsButton = new TextButton("Creditos", skin.get("default", TextButton.TextButtonStyle.class));
-        creditsButton.setChecked(true);
-        creditsButton.addListener(new ChangeListener() {
+
+        TextureRegionDrawable creditsTRD = new TextureRegionDrawable(new TextureRegion(new Texture("button_credits.png")));
+        ImageButton btnCreds = new ImageButton(creditsTRD);
+        btnCreds.setPosition(ANCHO-20-btnCreds.getWidth(),20);
+
+        btnCreds.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
                 prefs.putFloat("Difficulty",difficulty);
                 prefs.putFloat("Sensitivity",sensitivity);
@@ -148,12 +142,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
                 main.setScreen(new PantallaCredits(main));
             }
         });
-        creditsButton.setPosition(ANCHO-20-creditsButton.getWidth(),20);
 
-
-        stageMenu.addActor(buttonDifficulty);
-        stageMenu.addActor(creditsButton);
-        stageMenu.addActor(buttonSensitivity);
+        stageMenu.addActor(btnCreds);
         stageMenu.addActor(sliderDif);
         stageMenu.addActor(sliderSens);
         stageMenu.addActor(btnReturn);
@@ -178,6 +168,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         spriteBackground.draw(batch);
+        sensi.draw(batch);
+        diffi.draw(batch);
         titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4-100,ALTO-50,1,1,1);
         batch.end();
         stageMenu.draw();
