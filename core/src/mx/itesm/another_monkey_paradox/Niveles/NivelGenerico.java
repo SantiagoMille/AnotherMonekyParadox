@@ -1,29 +1,23 @@
 package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.badlogic.gdx.utils.viewport.Viewport;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,17 +28,17 @@ import mx.itesm.another_monkey_paradox.Objetos.Enemigo;
 import mx.itesm.another_monkey_paradox.Objetos.Granada;
 import mx.itesm.another_monkey_paradox.Objetos.Personaje;
 import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
-import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
+import mx.itesm.another_monkey_paradox.Utils.ScreenShake;
 import mx.itesm.another_monkey_paradox.Utils.progressBar;
 
 /**
  * Created by Fernando on 19/04/18.
  */
 
-public abstract class NivelGenerico extends Pantalla {
+public abstract class NivelGenerico extends Pantalla implements InputProcessor{
 
     public NivelGenerico(Main main) {
         super(main);
@@ -179,6 +173,12 @@ public abstract class NivelGenerico extends Pantalla {
     protected int maxGrandas = 5;
     protected GlyphLayout textoGlyGran = new GlyphLayout(font,"Score");
 
+    //Tiempo espera entre colision
+    protected float timeSinceCollision = 0;
+
+    //Vibracion de la pantalla
+    protected ScreenShake screenShake = new ScreenShake(50f, 3000f);
+
     abstract public void pasarDeNivel();
 
     protected void verificarColisionPersonajeItemVida() {
@@ -306,27 +306,28 @@ public abstract class NivelGenerico extends Pantalla {
         banana6.set(x,y);
     }
 
-    protected void verificarColisionPersonajeEnemigo(float dt) {
+    protected boolean verificarColisionPersonajeEnemigo(float dt) {
         Enemigo x;
         Rectangle rectEnemigo;
         Rectangle rectPersonaje;
+        boolean hit = false;
 
         for (int i = listaEnemigos.size - 1; i >= 0; i--) {
             x = listaEnemigos.get(i);
             rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
             if(!personaje.isRight()) {
-                rectPersonaje = new Rectangle(personaje.getX()+50, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+                rectPersonaje = new Rectangle(personaje.getX()+25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
             } else{
-                rectPersonaje = new Rectangle(personaje.getX()-50, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+                rectPersonaje = new Rectangle(personaje.getX()-25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
             }
             if (rectEnemigo.overlaps(rectPersonaje)) {
                 if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
                     for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 55) {
+                        if (contador >= 1) {
                             if (vidas.get(j).isActiva()) {
                                 hitSound.play();
                                 vidas.get(j).setActiva(false);
-                                System.out.println(vidas.get(j));
+                                hit = true;
                                 contador = 0;
                             }
                         }
@@ -335,6 +336,7 @@ public abstract class NivelGenerico extends Pantalla {
             }
         }
         contador++;
+        return hit;
     }
 
     protected void verificarColisionPersonajeBalaBoss(float dt) {
@@ -367,13 +369,18 @@ public abstract class NivelGenerico extends Pantalla {
             }
         }
         if(vidasFalse == vidas.size()){
-            escribirScore();
+            escribirScore(true);
             main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
         }
     }
 
-    protected void escribirScore() {
-        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+    protected void escribirScore(boolean isStoryMode) {
+        Preferences prefs;
+        if(isStoryMode) {
+            prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+        }else{
+            prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceSurvival");
+        }
         String scoresString = prefs.getString("highscores", null);
         String[] scores;
         if(scoresString==null){
@@ -458,9 +465,6 @@ public abstract class NivelGenerico extends Pantalla {
             }
             prefs.putString("highscores",sb.toString());
             prefs.flush();
-
-
-
         }
     }
 
@@ -660,6 +664,49 @@ public abstract class NivelGenerico extends Pantalla {
 
     }
     */
+    @Override
+    public boolean keyDown(int keycode) {
+        if(keycode == Input.Keys.BACK){
+            main.setScreen(new PantallaMenu(main));
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 
     /** The style for a {@link Touchpad}.
      * @author Josh Street */
