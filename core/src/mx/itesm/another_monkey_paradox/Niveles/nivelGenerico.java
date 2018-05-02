@@ -367,18 +367,13 @@ public abstract class NivelGenerico extends Pantalla {
             }
         }
         if(vidasFalse == vidas.size()){
-            escribirScore(true);
+            escribirScore();
             main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
         }
     }
 
-    protected void escribirScore(boolean isStoryMode) {
-        Preferences prefs;
-        if(isStoryMode) {
-            prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-        }else{
-            prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceSurvival");
-        }
+    protected void escribirScore() {
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
         String scoresString = prefs.getString("highscores", null);
         String[] scores;
         if(scoresString==null){
@@ -468,6 +463,7 @@ public abstract class NivelGenerico extends Pantalla {
 
         }
     }
+
     /*
     Skin skin = new Skin(); // Texturas para el pad
     skin.add("fondo", padBack);
