@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -50,6 +51,7 @@ public class PantallaSurvival extends Pantalla implements Screen {
         batch = new SpriteBatch();
         PantallaSplash.musicMenu.setLooping(false);
         PantallaSplash.musicMenu.play();
+        Gdx.input.setCatchBackKey(true);
     }
 
     private void crearMenu() {
@@ -174,6 +176,9 @@ public class PantallaSurvival extends Pantalla implements Screen {
         spriteLogo.draw(batch);
         batch.end();
         stageMenu.draw();
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaMenu(main));
+        }
 
     }
 
