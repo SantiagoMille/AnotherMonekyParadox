@@ -43,7 +43,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         spriteCargando.setPosition(ANCHO/2-spriteCargando.getWidth()/2,
                 ALTO/2-spriteCargando.getHeight()/2);
         if(level == 1){
-            cargarRecursosLevel1();
+            cargarRecursosLevel2();
         }else if(level == 2){
             cargarRecursosLevel2();
         }else if(level == 3){
@@ -115,6 +115,9 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("pew.mp3", Sound.class);
         assetManager.load("boom.mp3", Sound.class);
         assetManager.load("hit.mp3", Sound.class);
+
+        assetManager.load("Bosses/jefe n2.png", Texture.class);
+        assetManager.load("Bosses/ITEM BOSS N2.png", Texture.class);
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
     }
@@ -178,6 +181,9 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("pew.mp3", Sound.class);
         assetManager.load("boom.mp3", Sound.class);
         assetManager.load("hit.mp3", Sound.class);
+
+        assetManager.load("Bosses/TIMETRAVELOV.png", Texture.class);
+        assetManager.load("Bosses/ITEM BOSS N3.png", Texture.class);
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
     }
@@ -419,7 +425,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
     private void actualizarCarga(){
         if (assetManager.update()){
             if(level==1){
-                main.setScreen(new PantallaJuego(main));//regresa true si ya terminó la carga
+                main.setScreen(new PantallaJuego2(main, 0));//regresa true si ya terminó la carga
                 this.dispose();
             }else if(level == 2){
                 main.setScreen(new PantallaJuego2(main,score));
