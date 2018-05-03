@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
@@ -76,6 +77,8 @@ public class PantallaMenu extends Pantalla implements Screen {
         PantallaSplash.musicMenu.play();
         inputMultiplexer.addProcessor(new ProcesadorEntrada());
         Gdx.input.setInputProcessor(inputMultiplexer);
+
+        Gdx.input.setCatchBackKey(true);
     }
 
     private void crearMenu() {
@@ -297,6 +300,9 @@ public class PantallaMenu extends Pantalla implements Screen {
         stageMenu.act(Gdx.graphics.getDeltaTime());
         stageMenu.draw();
 
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            System.exit(0);
+        }
     }
 
     public void imgLogoRebotando(){

@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
@@ -57,6 +60,7 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
         crearBoton();
         batch = new SpriteBatch();
     }
+
 
     private void crearBackground(){
         assetManager.load("pantallaMuerto.png", Texture.class);
@@ -113,6 +117,8 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
 
     @Override
     public void render(float delta) {
+        borrarPantalla();
+        batch.setProjectionMatrix(camara.combined);
         batch.begin();
         Bacgraun.draw(batch);
         texto.mostratMensaje(batch, "Good luck \nnext time", ANCHO*0.85f, ALTO*0.7f,1,1, 1);
