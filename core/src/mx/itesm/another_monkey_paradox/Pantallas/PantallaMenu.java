@@ -216,16 +216,16 @@ public class PantallaMenu extends Pantalla implements Screen {
                 dispose();
                 if(isSurvivalMode) {
                     String toWrite = "Survive as long as you can, fight Dr. Timetravelov's \nminions.\n\n" +
-                            "- Use the joystick to move forwards and \n  backwards. \n" +
+                            "- Use the joystick\nto move forwards and backwards. \n" +
                             "- Use the blue button to shoot bananas.\n" +
                             "- Use the red button to throw banana grenades.";
-                    main.setScreen(new PantallaTutorial(main, toWrite));
+                    main.setScreen(new PantallaTutorial(main, toWrite, false));
                 }else{
                     String toWrite = "Astro is seeking revenge against Dr. Timetravelov...\n\n" +
                             "- Use the joystick to move forwards and \n  backwards. \n" +
                             "- Use the blue button to shoot bananas.\n" +
                             "- Use the red button to throw banana grenades.";
-                    main.setScreen(new PantallaTutorial(main, toWrite));
+                    main.setScreen(new PantallaTutorial(main, toWrite, true));
                 }
             }
 

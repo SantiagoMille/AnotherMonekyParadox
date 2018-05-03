@@ -125,7 +125,7 @@ public class PantallaSurvival extends Pantalla implements Screen {
                         "- Use the joystick to move forwards and \n  backwards. \n" +
                         "- Use the blue button to shoot bananas.\n" +
                         "- Use the red button to throw banana grenades.";
-                main.setScreen(new PantallaTutorial(main, toWrite));
+                main.setScreen(new PantallaTutorial(main, toWrite, true));
             }
         });
 
