@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -54,6 +55,7 @@ public class PantallaCredits extends Pantalla implements Screen {
         crearMenu();
         batch = new SpriteBatch();
         musicMenu.setLooping(true);
+        Gdx.input.setCatchBackKey(true);
         //musicMenu.play();
     }
 
@@ -145,6 +147,9 @@ public class PantallaCredits extends Pantalla implements Screen {
         Diego.mostratMensaje(batch,"Diego Cervantes  -  LAD",140,ALTO-660,215/255f,215/255f,215/255f);
         batch.end();
         stageMenu.draw();
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaDeveloper(main));
+        }
     }
 
     @Override

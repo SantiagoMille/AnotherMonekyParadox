@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -64,6 +65,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         crearMenu();
         batch = new SpriteBatch();
         musicMenu.setLooping(true);
+        Gdx.input.setCatchBackKey(true);
         //musicMenu.play();
     }
 
@@ -173,6 +175,9 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4-100,ALTO-50,1,1,1);
         batch.end();
         stageMenu.draw();
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaMenu(main));
+        }
 
     }
 
