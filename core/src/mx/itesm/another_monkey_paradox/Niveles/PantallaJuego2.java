@@ -105,6 +105,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
         fondo1 = new Fondo(fondoNivel01);
         fondo2 = new Fondo(fondoNivel02);
+        fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
         batch = new SpriteBatch();
 
         //Lista Enemigos

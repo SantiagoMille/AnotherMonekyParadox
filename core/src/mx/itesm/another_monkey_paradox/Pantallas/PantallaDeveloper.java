@@ -85,7 +85,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
-        imgBackground = new Texture("pantalla_config.png");
+        imgBackground = new Texture("pantalla_config2.png");
         spriteBackground = new Sprite(imgBackground);
         spriteBackground.setAlpha(0.55f);
 
@@ -174,21 +174,21 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         Texture diff = new Texture("button_difficulty.png");
         diffi = new Sprite(diff);
-        diffi.setPosition(ANCHO/2-250-diffi.getWidth(), ALTO/2-50);
-
+        diffi.setPosition(ANCHO/2-150-diffi.getWidth(), ALTO/2-50);
 
         Slider sliderDif = new Slider(0, 100, 1, false, skin);
         sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
         sliderDif.setPosition(diffi.getX()+100,ALTO/3);
+        sliderDif.setScale(2);
 
         Texture sens = new Texture("button_sensitivity.png");
         sensi = new Sprite(sens);
-        sensi.setPosition(ANCHO/2+250, ALTO/2-50);
+        sensi.setPosition(ANCHO/2+150, ALTO/2-50);
 
         Slider sliderSens = new Slider(0, 100, 1, false, skin);
         sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.
         sliderSens.setPosition(sensi.getX()+100,ALTO/3);
-
+        sliderSens.setScale(2);
 
         TextureRegionDrawable creditsTRD = new TextureRegionDrawable(new TextureRegion(new Texture("button_credits.png")));
         ImageButton btnCreds = new ImageButton(creditsTRD);

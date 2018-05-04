@@ -104,6 +104,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
         fondo1 = new Fondo(fondoNivel01);
         fondo2 = new Fondo(fondoNivel02);
+        fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
         //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
         //fondo = new Fondo(fondoNivel02);

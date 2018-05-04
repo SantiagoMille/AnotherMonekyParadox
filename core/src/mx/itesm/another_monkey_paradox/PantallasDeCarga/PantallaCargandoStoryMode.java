@@ -192,7 +192,8 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("disparo2.png",Texture.class);
 
         //Textura del nivel 1
-        assetManager.load("Fondos/NIVEL 2 PAN.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 4.1.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 4.2.png", Texture.class);
 
         //Textura de Astro
         assetManager.load("Astro/CAMINATA 4.png", Texture.class);
