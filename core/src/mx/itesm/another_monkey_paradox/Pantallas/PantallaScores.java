@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -47,6 +48,7 @@ public abstract class PantallaScores extends Pantalla implements Screen{
         crearCamara();
         crearMenu();
         batch = new SpriteBatch();
+        Gdx.input.setCatchBackKey(true);
     }
 
     abstract void crearMenu();
@@ -73,6 +75,9 @@ public abstract class PantallaScores extends Pantalla implements Screen{
         }
         batch.end();
         stageMenu.draw();
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaMenu(main));
+        }
     }
 
     @Override

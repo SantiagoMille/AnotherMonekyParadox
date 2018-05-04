@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -130,6 +131,8 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         listaVidasExtra.add(powerUpVida);
 
         estado = PantallaJuego.EstadoJuego.JUGANDO;
+
+        Gdx.input.setCatchBackKey(true);
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
@@ -637,6 +640,11 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
         }
 
         Gdx.app.log("render", "fps="+Gdx.graphics.getFramesPerSecond());
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaMenu(main));
+        }
+
 
     }
 

@@ -35,6 +35,7 @@ import mx.itesm.another_monkey_paradox.Objetos.Granada;
 import mx.itesm.another_monkey_paradox.Objetos.PowerUp;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroGanador;
 import mx.itesm.another_monkey_paradox.Pantallas.EscenaAstroMuerto;
+import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.Utils.Fondo;
 
@@ -237,6 +238,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
         estado = EstadoJuego.JUGANDO;
 
+        Gdx.input.setCatchBackKey(true);
+
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
 
     }
@@ -438,7 +441,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
                 estado = EstadoJuego.PAUSADO;
                 //main.setScreen((Screen) new EscenaPausa(vista,batch));
                 if(escenaPausa == null){
-                    escenaPausa = new EscenaPausa(vista,batch);
+                    escenaPausa = new EscenaPausa(vista);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
                 dispose();
@@ -746,6 +749,10 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         }
 
         Gdx.app.log("render", "fps="+Gdx.graphics.getFramesPerSecond());
+
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaMenu(main));
+        }
 
     }
 
@@ -1191,7 +1198,9 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     private class EscenaPausa extends Stage{
 
         // La escena que se muestra cuando está pausado
-        public EscenaPausa(Viewport vista, SpriteBatch batch) {
+        public EscenaPausa(Viewport vista) {
+
+            super(vista);
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );

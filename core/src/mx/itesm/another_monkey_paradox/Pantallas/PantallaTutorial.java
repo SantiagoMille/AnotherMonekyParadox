@@ -1,6 +1,7 @@
 package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
@@ -57,6 +58,7 @@ public class PantallaTutorial extends Pantalla implements Screen {
         musicMenu.setLooping(true);
         crearTexto();
         //musicMenu.play();
+        Gdx.input.setCatchBackKey(true);
     }
 
     public void crearTexto(){
@@ -125,6 +127,9 @@ public class PantallaTutorial extends Pantalla implements Screen {
         escribirTexto(batch);
         batch.end();
         stageMenu.draw();
+        if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
+            main.setScreen(new PantallaMenu(main));
+        }
 
     }
 
