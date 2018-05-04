@@ -200,17 +200,11 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("Astro/CAMINATA 3.png", Texture.class);
         assetManager.load("Astro/CAMINATA 1.png", Texture.class);
 
-        //Textura de cavernicola01
-        assetManager.load("caballero1/3.png", Texture.class);
-        assetManager.load("caballero1/4.png", Texture.class);
-        assetManager.load("caballero1/2.png", Texture.class);
-        assetManager.load("caballero1/1.png", Texture.class);
-
-        //Textura de cavernicola02
-        assetManager.load("caballero2/caballero 3.png", Texture.class);
-        assetManager.load("caballero2/caballero 4.png", Texture.class);
-        assetManager.load("caballero2/caballero 2.png", Texture.class);
-        assetManager.load("caballero2/caballero 1.png", Texture.class);
+        //Textura de Alien
+        assetManager.load("Alien/ALIEN 1.png", Texture.class);
+        assetManager.load("Alien/ALIEN 2.png", Texture.class);
+        assetManager.load("Alien/ALIEN 3.png", Texture.class);
+        assetManager.load("Alien/ALIEN 4.png", Texture.class);
 
         //Textura vida
         assetManager.load("vida.png", Texture.class);
