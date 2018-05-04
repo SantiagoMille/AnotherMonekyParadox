@@ -116,8 +116,8 @@ public class PantallaMenu extends Pantalla implements Screen {
         TextureRegionDrawable trdTut = new TextureRegionDrawable(new TextureRegion(botonTutorial));
         TextureRegionDrawable trdTutPush = new TextureRegionDrawable(new TextureRegion(botonTutorialPressed));
         ImageButton btnTut = new ImageButton(trdTut, trdTutPush);
-        btnTut.setPosition(40, ALTO*8/10+30);
-        btnTut.setSize(95,95);
+        btnTut.setSize(105,105);
+        btnTut.setPosition(ANCHO-btnTut.getWidth()-30, ALTO*8/10+30);
 
         //Boton modo horda
         TextureRegionDrawable trdHorda = new TextureRegionDrawable(new TextureRegion(new Texture("arrow-point-to-right.png")));
@@ -265,8 +265,8 @@ public class PantallaMenu extends Pantalla implements Screen {
         botonLeaderboardPressed = assetManager.get("trophy_Pressed.png");
         botonAbout = assetManager.get("about-button.png");
         botonAboutPressed = assetManager.get("About-button_Pressed.png");
-        botonTutorial = assetManager.get("configButton.png");
-        botonTutorialPressed = assetManager.get("configButton.png");
+        botonTutorial = assetManager.get("About2.png");
+        botonTutorialPressed = assetManager.get("About2.png");
         backgroundStory = assetManager.get("StoryModeBack.png");
         backgroundSurvival = assetManager.get("SurvivalModeBack.png");
     }

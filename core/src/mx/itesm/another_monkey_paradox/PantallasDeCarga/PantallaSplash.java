@@ -90,7 +90,7 @@ public class PantallaSplash extends Pantalla implements Screen {
         assetManager.load("trophy_Pressed.png", Texture.class);
         assetManager.load("about-button.png", Texture.class);
         assetManager.load("About-button_Pressed.png", Texture.class);
-        assetManager.load("configButton.png", Texture.class);
+        assetManager.load("About2.png", Texture.class);
         assetManager.load("StoryModeBack.png", Texture.class);
         assetManager.load("SurvivalModeBack.png", Texture.class);
     }

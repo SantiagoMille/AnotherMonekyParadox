@@ -54,6 +54,9 @@ public class PantallaDeveloper extends Pantalla implements Screen {
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
+    TextureRegionDrawable trdMusic;
+    TextureRegionDrawable trdMusicPressed;
+
     public PantallaDeveloper(Main main) {
         super(main);
     }
@@ -110,6 +113,15 @@ public class PantallaDeveloper extends Pantalla implements Screen {
                 return false;
             }
         };
+
+
+        //Boton Play
+        trdMusic = new TextureRegionDrawable(new TextureRegion(new Texture("mute.png")));
+        trdMusicPressed = new TextureRegionDrawable(new TextureRegion(new Texture("audio.png")));
+        ImageButton btnPlay = new ImageButton(trdMusic);
+        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, -100);
+        btnPlay.addAction(Actions.moveTo(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2, 0.5f));
+        
 
         titulo = new Texto(1,1,1);
 
@@ -183,21 +195,17 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }
