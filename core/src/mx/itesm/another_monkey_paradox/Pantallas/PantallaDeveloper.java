@@ -29,6 +29,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import mx.itesm.another_monkey_paradox.Main;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
 import mx.itesm.another_monkey_paradox.Utils.Texto;
 
 /**
@@ -45,6 +46,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
     private Texto titulo;
 
+    private boolean musicOn = true;
+
     private Preferences prefs;
 
     private SpriteBatch batch;
@@ -57,6 +60,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
     TextureRegionDrawable trdMusic;
     TextureRegionDrawable trdMusicPressed;
+    ImageButton btnPlay, btnPlayPressed;
 
     public PantallaDeveloper(Main main) {
         super(main);
@@ -76,6 +80,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         stageMenu = new Stage(vista);
 
         prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+
+        musicOn = prefs.getBoolean("music");
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
@@ -118,30 +124,70 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
 
         //Boton Play
-        trdMusic = new TextureRegionDrawable(new TextureRegion(new Texture("mute.png")));
-        trdMusicPressed = new TextureRegionDrawable(new TextureRegion(new Texture("audio.png")));
-        ImageButton btnPlay = new ImageButton(trdMusic);
-        btnPlay.setPosition(ANCHO/2-btnPlay.getWidth()/2, -100);
-        btnPlay.addAction(Actions.moveTo(ANCHO/2-btnPlay.getWidth()/2, ALTO/4-btnPlay.getHeight()/2, 0.5f));
-        
+        trdMusicPressed = new TextureRegionDrawable(new TextureRegion(new Texture("mute.png")));
+        trdMusic = new TextureRegionDrawable(new TextureRegion(new Texture("audio.png")));
+        btnPlay = new ImageButton(trdMusic);
+        btnPlayPressed = new ImageButton(trdMusicPressed);
+
+        if(musicOn){
+            btnPlayPressed.setVisible(false);
+            btnPlay.setVisible(true);
+        }else{
+            btnPlayPressed.setVisible(true);
+            btnPlay.setVisible(false);
+        }
+
+        btnPlay.setSize(80,80);
+        btnPlayPressed.setSize(80,80);
+        btnPlay.setPosition(ANCHO-btnPlay.getWidth()-20, ALTO-btnPlay.getHeight()-20);
+        btnPlayPressed.setPosition(ANCHO-btnPlay.getWidth()-20, ALTO-btnPlay.getHeight()-20);
+
+        //Click en boton Play
+        btnPlay.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                musicOn = false;
+                prefs.putBoolean("music", false);
+                prefs.flush();
+                btnPlayPressed.setVisible(true);
+                btnPlay.setVisible(false);
+            }
+        });
+
+        //Click en boton Play
+        btnPlayPressed.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+
+                musicOn = true;
+                prefs.putBoolean("music", true);
+                prefs.flush();
+                btnPlayPressed.setVisible(false);
+                btnPlay.setVisible(true);
+            }
+        });
 
         titulo = new Texto(1,1,1);
 
         Texture diff = new Texture("button_difficulty.png");
         diffi = new Sprite(diff);
-        diffi.setPosition(ANCHO/2-150, ALTO/2+90);
+        diffi.setPosition(ANCHO/2-250-diffi.getWidth(), ALTO/2-50);
+
 
         Slider sliderDif = new Slider(0, 100, 1, false, skin);
         sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
-        sliderDif.setPosition(ANCHO/2+50,ALTO/2+100);
+        sliderDif.setPosition(diffi.getX()+100,ALTO/3);
 
         Texture sens = new Texture("button_sensitivity.png");
         sensi = new Sprite(sens);
-        sensi.setPosition(ANCHO/2-165, ALTO/2-10);
+        sensi.setPosition(ANCHO/2+250, ALTO/2-50);
 
         Slider sliderSens = new Slider(0, 100, 1, false, skin);
         sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.
-        sliderSens.setPosition(ANCHO/2+50,ALTO/2);
+        sliderSens.setPosition(sensi.getX()+100,ALTO/3);
 
 
         TextureRegionDrawable creditsTRD = new TextureRegionDrawable(new TextureRegion(new Texture("button_credits.png")));
@@ -158,6 +204,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         });
 
         stageMenu.addActor(btnCreds);
+        stageMenu.addActor(btnPlay);
+        stageMenu.addActor(btnPlayPressed);
         stageMenu.addActor(sliderDif);
         stageMenu.addActor(sliderSens);
         stageMenu.addActor(btnReturn);
@@ -184,7 +232,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         spriteBackground.draw(batch);
         sensi.draw(batch);
         diffi.draw(batch);
-        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4-100,ALTO-50,1,1,1);
+        titulo.mostratMensaje(batch,"SETTINGS",ANCHO/4-90,ALTO-50,1,1,1);
         batch.end();
         stageMenu.draw();
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
