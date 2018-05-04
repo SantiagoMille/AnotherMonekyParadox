@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -55,6 +56,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     int vidaEnemigo = 100;
     int vidaBoss = 500;
 
+    private float difficulty;
+
     //Escena
     private Stage stageNivel;
 
@@ -93,105 +96,6 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     Double randomX;
     Double randomX2;
 
-
-    /*
-    //Vidas
-    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
-    int contador = 0;
-
-    //Granada y texto
-    private int maxGrandas = 5;
-    public GlyphLayout textoGlyGran;
-
-    // Puntaje y texto
-    private int puntosJugador = 0;
-    private BitmapFont font;
-    public GlyphLayout textoGly;
-    public GlyphLayout pausaText;
-
-    private boolean isMovingRight = false;
-    private boolean isMovingLeft = false;
-
-    //Item boss
-    private Texture itemBosss;
-    private Sprite itemBoss;
-
-    //Textura botones
-    private Texture botonGranada;
-    private Texture botonGranadaPressed;
-    private Texture botonDisparo;
-    private Texture botonDisparoPressed;
-    private Texture botonPausa;
-    private Texture botonContinua;
-    private Texture botonHome;
-
-    //Textura de Astro
-    private Texture astroCaminata0;
-    private Texture astroCaminata1;
-    private Texture astroCaminata2;
-    private Texture astroCaminata3;
-
-    //Textura Armas
-    private Texture bananaDisparo;
-    private Texture bossDisparo;
-    private Texture bananaGranada;
-
-    private boolean bossKilled = false;
-
-    private boolean powerUpVidaFlag = true;
-    private boolean powerUpGranadaFlag = true;
-
-    private boolean firstFilter=true;
-    private boolean secondFilter=true;
-
-    //Sonido
-    private Sound gunSound;
-    private Sound boomSound;
-    private Sound hitSound;
-
-    //Armas
-    private Array<Bala> listaBalas;
-    private Array<Granada> listaGranadas;
-    private Array<Bala> listaBalasBoss;
-    //Fisica Granada
-    float velocityY;     // Velocidad de la granada
-
-    //Controles del jugador
-    private ImageButton granada;
-    private ImageButton arma;
-    private ImageButton pausa;
-    private ImageButton home;
-    private ImageButton continua;
-
-    private Texture padBack;
-    private Texture padKnob;
-
-    //Power Ups
-    private Texture imgpowerUpGranada;
-    private Texture imgpowerUpVida;
-    private PowerUp powerUpGranada;
-    private PowerUp powerUpVida;
-    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
-    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-
-     //bananas Colision
-    private Bala banana1;
-    private Bala banana2;
-    private Bala banana3;
-    private Bala banana4;
-    private Bala banana5;
-    private Bala banana6;
-    private Boolean crashRight = false;
-    private Boolean crashLeft = false;
-
-    //Barra de carga balas
-    private progressBar Bar;
-    private Texture imgBarraBala;
-    private Texture imgBananaBarra;
-    private Sprite barraBala;
-    private Sprite bananaBarra;
-    */
-
     public PantallaJuego(Main main) {
         super(main);
     }
@@ -213,6 +117,10 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         fondo2 = new Fondo(fondoNivel02);
         fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
         batch = new SpriteBatch();
+
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+
+        difficulty = prefs.getFloat("Difficulty");
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
@@ -364,7 +272,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
         // Crea el pad
         Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(30,30,190,190);               // x,y - ancho,alto
+        pad.setBounds(40,30,200,200);               // x,y - ancho,alto
 
         // Comportamiento del pad
         pad.addListener(new ChangeListener() {
@@ -416,13 +324,13 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(Bar.getValue() > 0.1) {
-                    gunSound.play();
+                    if(music){gunSound.play();}
                     if (!isFliped) {
                         Bala nueva = new Bala(bananaDisparo, false);
                         nueva.set(personaje.getX() + 105, personaje.getY() + 68);
                         listaBalas.add(nueva);
                     } else {
-                        gunSound.play();
+                        if(music){gunSound.play();}
                         Bala nueva = new Bala(bananaDisparo, true);
                         nueva.set(personaje.getX(), personaje.getY() + 68);
                         listaBalas.add(nueva);
@@ -861,7 +769,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime);
+        verificarColisionBalaEnemigo(stateTime, difficulty);
         verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);

@@ -137,10 +137,10 @@ public class PantallaDeveloper extends Pantalla implements Screen {
             btnPlay.setVisible(false);
         }
 
-        btnPlay.setSize(80,80);
-        btnPlayPressed.setSize(80,80);
-        btnPlay.setPosition(ANCHO-btnPlay.getWidth()-20, ALTO-btnPlay.getHeight()-20);
-        btnPlayPressed.setPosition(ANCHO-btnPlay.getWidth()-20, ALTO-btnPlay.getHeight()-20);
+        btnPlay.setSize(100,100);
+        btnPlayPressed.setSize(100,100);
+        btnPlay.setPosition(ANCHO-btnPlay.getWidth()-30, ALTO-btnPlay.getHeight()-20);
+        btnPlayPressed.setPosition(ANCHO-btnPlay.getWidth()-30, ALTO-btnPlay.getHeight()-20);
 
         //Click en boton Play
         btnPlay.addListener(new ClickListener(){
@@ -174,7 +174,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         Texture diff = new Texture("button_difficulty.png");
         diffi = new Sprite(diff);
-        diffi.setPosition(ANCHO/2-150-diffi.getWidth(), ALTO/2-50);
+        diffi.setPosition(ANCHO/2-110-diffi.getWidth(), ALTO/2);
 
         Slider sliderDif = new Slider(0, 100, 1, false, skin);
         sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
@@ -183,7 +183,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         Texture sens = new Texture("button_sensitivity.png");
         sensi = new Sprite(sens);
-        sensi.setPosition(ANCHO/2+150, ALTO/2-50);
+        sensi.setPosition(ANCHO/2+110, ALTO/2);
 
         Slider sliderSens = new Slider(0, 100, 1, false, skin);
         sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.

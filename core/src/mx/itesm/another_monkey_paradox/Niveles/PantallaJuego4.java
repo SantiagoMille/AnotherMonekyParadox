@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -54,20 +55,16 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     int vidaEnemigo = 100;
     int vidaBoss = 500;
 
+    private float difficulty;
+
     //Escena
     private Stage stageNivel;
 
     //Textura de Cavernicola 01
-    private Texture ruso01Frame0;
-    private Texture ruso01Frame1;
-    private Texture ruso01Frame2;
-    private Texture ruso01Frame3;
-
-    //Textura de Cavernicola 02
-    private Texture ruso02Frame0;
-    private Texture ruso02Frame1;
-    private Texture ruso02Frame2;
-    private Texture ruso02Frame3;
+    private Texture alien01Frame0;
+    private Texture alien01Frame1;
+    private Texture alien01Frame2;
+    private Texture alien01Frame3;
 
     //Textura Fondos de los niveles
     private Texture fondoNivel01;
@@ -108,16 +105,20 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         fondo2 = new Fondo(fondoNivel02);
         fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
 
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+
+        difficulty = prefs.getFloat("Difficulty");
+
         batch = new SpriteBatch();
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
         for(int i=0; i<6;i++){
-            enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
+            enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
         for(int i=0; i<6;i++){
-            enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,false,i);
+            enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
 
             listaEnemigos.add(enemigo);
         }
@@ -156,7 +157,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         //textoGly = new GlyphLayout(font,"Score");
         //textoGlyGran = new GlyphLayout(font,"Score");
 
-        boss = new Texture("boss_stand.png");
+        boss = new Texture("Bosses/jefe_n4.png");
         itemBosss = new Texture("item_boss.png");
 
         bossSprite = new Sprite(boss);
@@ -262,7 +263,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
 
         // Crea el pad
         Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(30,30,190,190);               // x,y - ancho,alto
+        pad.setBounds(40,30,200,200);               // x,y - ancho,alto
 
         // Comportamiento del pad
         pad.addListener(new ChangeListener() {
@@ -314,13 +315,13 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(Bar.getValue() > 0.1) {
-                    gunSound.play();
+                    if(music){gunSound.play();}
                     if (!isFliped) {
                         Bala nueva = new Bala(bananaDisparo, false);
                         nueva.set(personaje.getX() + 105, personaje.getY() + 68);
                         listaBalas.add(nueva);
                     } else {
-                        gunSound.play();
+                        if(music){gunSound.play();}
                         Bala nueva = new Bala(bananaDisparo, true);
                         nueva.set(personaje.getX(), personaje.getY() + 68);
                         listaBalas.add(nueva);
@@ -362,15 +363,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         fondoNivel01 = assetManager.get("Fondos/NIVEL 4.1.png");
         fondoNivel02 = assetManager.get("Fondos/NIVEL 4.2.png");
 
-        ruso01Frame0 = assetManager.get("ruso1/3.png");
-        ruso01Frame1 = assetManager.get("ruso1/4.png");
-        ruso01Frame2 = assetManager.get("ruso1/2.png");
-        ruso01Frame3 = assetManager.get("ruso1/1.png");
+        alien01Frame0 = assetManager.get("Alien/ALIEN 3.png");
+        alien01Frame1 = assetManager.get("Alien/ALIEN 4.png");
+        alien01Frame2 = assetManager.get("Alien/ALIEN 2.png");
+        alien01Frame3 = assetManager.get("Alien/ALIEN 1.png");
 
-        ruso02Frame0 = assetManager.get("ruso2/ruso 3.png");
-        ruso02Frame1 = assetManager.get("ruso2/ruso 4.png");
-        ruso02Frame2 = assetManager.get("ruso2/ruso 2.png");
-        ruso02Frame3 = assetManager.get("ruso2/ruso 1.png");
     }
 
     private void crearCamara() {
@@ -416,11 +413,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,false,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
 
                 listaEnemigos.add(enemigo);
             }
@@ -430,11 +427,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,false,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
 
                 listaEnemigos.add(enemigo);
             }
@@ -444,11 +441,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,false,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -457,11 +454,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,false,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -470,11 +467,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             secondFilter=true;
             firstFilter=false;
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<6;i++){
-                enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,false,i);
+                enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -720,7 +717,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime);
+        verificarColisionBalaEnemigo(stateTime, difficulty);
         verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);

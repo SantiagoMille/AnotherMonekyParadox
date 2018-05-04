@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -72,9 +73,14 @@ public class PantallaMenu extends Pantalla implements Screen {
     public void show() {
         crearCamara();
         crearMenu();
+
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+
         batch = new SpriteBatch();
         PantallaSplash.musicMenu.setLooping(true);
-        PantallaSplash.musicMenu.play();
+        if(prefs.getBoolean("music")) {
+            PantallaSplash.musicMenu.play();
+        }
         inputMultiplexer.addProcessor(new ProcesadorEntrada());
         Gdx.input.setInputProcessor(inputMultiplexer);
 

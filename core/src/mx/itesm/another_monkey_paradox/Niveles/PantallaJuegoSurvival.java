@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox.Niveles;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -52,6 +53,8 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     //private Array<Enemigo> listaEnemigos;
     int vidaEnemigo = 100;
     int vidaBoss = 500;
+
+    private float difficulty;
 
     //Escena
     private Stage stageNivel;
@@ -224,6 +227,10 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
         //personaje = new Personaje(astroCaminata0, astroCaminata1, astroCaminata2, astroCaminata3);
 
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+
+        difficulty = prefs.getFloat("Difficulty");
+
         fondo1 = new Fondo(fondoNivel01);
         fondo2 = new Fondo(fondoNivel02);
         fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
@@ -388,7 +395,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
         // Crea el pad
         Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(20,20,160,160);               // x,y - ancho,alto
+        pad.setBounds(40,30,210,210);               // x,y - ancho,alto
 
         // Comportamiento del pad
         pad.addListener(new ChangeListener() {
@@ -440,13 +447,13 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(Bar.getValue() > 0.1) {
-                    gunSound.play();
+                    if(music){gunSound.play();}
                     if (!isFliped) {
                         Bala nueva = new Bala(bananaDisparo, false);
                         nueva.set(personaje.getX() + 105, personaje.getY() + 68);
                         listaBalas.add(nueva);
                     } else {
-                        gunSound.play();
+                        if(music){gunSound.play();}
                         Bala nueva = new Bala(bananaDisparo, true);
                         nueva.set(personaje.getX(), personaje.getY() + 68);
                         listaBalas.add(nueva);
@@ -965,7 +972,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime);
+        verificarColisionBalaEnemigo(stateTime,difficulty);
         verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
@@ -1006,105 +1013,6 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         }
     }
 
-    /*
-    private void verificarColisionPersonajeItemBoss() {
-        Rectangle rectItem = itemBoss.getBoundingRectangle();
-        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-        if(rectItem.overlaps(rectPersonaje)){
-            //PANTALLA DE VICTORIA PROVISIONAL
-            main.setScreen(new EscenaAstroGanador(main, puntosJugador));
-        }
-    }
-    */
-
-    /*
-    private void verificarColisionPersonajeItemVida() {
-        Rectangle rectItem = powerUpVida.getSprite().getBoundingRectangle();
-        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-        if(rectItem.overlaps(rectPersonaje)){
-            //PANTALLA DE VICTORIA PROVISIONAL
-            for(PowerUp vida:vidas){
-                if(!vida.isActiva()){
-                    vida.setActiva(true);
-                    break;
-                }
-            }
-            powerUpVida.setX(-500);
-        }
-    }
-    */
-
-    /*
-    private void verificarColisionPersonajeItemGranada() {
-        Rectangle rectItem = powerUpGranada.getSprite().getBoundingRectangle();
-        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-        if(rectItem.overlaps(rectPersonaje)){
-            //PANTALLA DE VICTORIA PROVISIONAL
-            maxGrandas++;
-            powerUpGranada.setX(-500);
-        }
-    }
-    */
-
-    /*
-    private void verificarVidaEnemigos() {
-        for(int i = listaEnemigos.size-1;i>=0;i--){
-            if(listaEnemigos.get(i).getVida() <= 0){
-                listaEnemigos.removeIndex(i);
-                puntosJugador += 10;
-
-            }
-        }
-    }
-    */
-
-    /*
-    private void verificarColisionBalaEnemigo(float dt) {
-        Rectangle rectEnemigo;
-        Bala bala;
-
-        for(int j =listaBalas.size-1; j>=0;j--){
-            bala = listaBalas.get(j);
-            for(int i =listaEnemigos.size-1;i>=0;i--){
-
-                enemigo = listaEnemigos.get(i);
-                if(enemigo.right) {
-                    rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-                }else{
-                    rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-                }
-                if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaBalas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - 12;
-                    enemigo.setVida(vidaEnemigo);
-                    System.out.println(vidaEnemigo);
-                }
-                verificarVidaEnemigos();
-            }
-        }
-    }
-    */
-
-    /*
-    private void verificarColisionBalaBala(float dt) {
-        Bala balaBoss;
-        Bala bala;
-
-        for(int j =listaBalas.size-1; j>=0;j--){
-            bala = listaBalas.get(j);
-            for(int i =listaBalasBoss.size-1;i>=0;i--){
-
-                balaBoss = listaBalasBoss.get(i);
-                if(bala.getSprite().getBoundingRectangle().overlaps(balaBoss.getSprite().getBoundingRectangle())){
-                    listaBalas.removeIndex(j);
-                    listaBalasBoss.removeIndex(i);
-                }
-            }
-        }
-    }
-    */
-
-
     private void verificarColisionBalaBoss(float dt) {
         Rectangle rectBoss;
         Bala bala;
@@ -1139,132 +1047,6 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             pasarDeNivel();
         }
     }
-
-    /*
-    private void verificarColisionGranadaEnemigo(float dt) {
-        Rectangle rectEnemigo;
-        Granada granada;
-        for(int j =listaGranadas.size-1; j>=0;j--){
-            granada = listaGranadas.get(j);
-            for(int i =listaEnemigos.size-1;i>=0;i--){
-                enemigo = listaEnemigos.get(i);
-                if(enemigo.right) {
-                    rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-                }else{
-                    rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-                }
-                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    boomSound.play();
-                    listaGranadas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - 100;
-                    if(enemigo.right) {
-                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
-                    } else {
-                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
-                    }
-                    enemigo.setVida(vidaEnemigo);
-                    verificarVidaEnemigos();
-                }
-            }
-        }
-    }
-    */
-
-    /*
-    private void explosionGranadaRight(float x, float y){
-        crashRight = true;
-        banana1.set(x,y);
-        banana2.set(x,y);
-        banana3.set(x,y);
-        banana4.set(x,y);
-        banana5.set(x,y);
-        banana6.set(x,y);
-    }
-    */
-
-    /*
-    private void explosionGranadaLeft(float x, float y){
-        crashLeft = true;
-        banana1.set(x,y);
-        banana2.set(x,y);
-        banana3.set(x,y);
-        banana4.set(x,y);
-        banana5.set(x,y);
-        banana6.set(x,y);
-    }
-    */
-
-    /*
-    private void verificarColisionPersonajeEnemigo(float dt) {
-        Enemigo x;
-        Rectangle rectEnemigo;
-        Rectangle rectPersonaje;
-
-        for (int i = listaEnemigos.size - 1; i >= 0; i--) {
-            x = listaEnemigos.get(i);
-            rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
-            if(!personaje.isRight()) {
-                rectPersonaje = new Rectangle(personaje.getX()+50, personaje.getY(), personaje.getWidth(), personaje.getHeight());
-            } else{
-                rectPersonaje = new Rectangle(personaje.getX()-50, personaje.getY(), personaje.getWidth(), personaje.getHeight());
-            }
-            if (rectEnemigo.overlaps(rectPersonaje)) {
-                if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
-                    for (int j = vidas.size() - 1; j >= 0; j--) {
-                        if (contador >= 55) {
-                            if (vidas.get(j).isActiva()) {
-                                hitSound.play();
-                                vidas.get(j).setActiva(false);
-                                System.out.println(vidas.get(j));
-                                contador = 0;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        contador++;
-    }
-    */
-
-    /*
-    private void verificarColisionPersonajeBalaBoss(float dt) {
-        Bala bala;
-        Rectangle rectPersonaje;
-
-        for (int i = listaBalasBoss.size - 1; i >= 0; i--) {
-            bala = listaBalasBoss.get(i);
-            rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-            if (bala.getSprite().getBoundingRectangle().overlaps(rectPersonaje)) {
-                for (int j = vidas.size() - 1; j >= 0; j--) {
-                    if(contador>=50) {
-                        if (vidas.get(j).isActiva()) {
-                            hitSound.play();
-                            vidas.get(j).setActiva(false);
-                            contador = 0;
-                        }
-                    }
-                }
-            }
-        }
-        contador++;
-    }
-    */
-
-    /*
-    private void verificarVidaAstro(){
-        int vidasFalse = 0;
-        for (int i = vidas.size() - 1; i >= 0; i--){
-            if(vidas.get(i).isActiva() == false){
-                vidasFalse++;
-            }
-        }
-        if(vidasFalse == vidas.size()){
-            escribirScore();
-            main.setScreen(new EscenaAstroMuerto(main));
-        }
-    }
-    */
 
     @Override
     public void resize(int width, int height) {
