@@ -7,7 +7,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/amp_icon"
-        android:label="AnotherMonkeyParadox"
+        android:label="Another Monkey Paradox"
         android:theme="@style/GdxTheme" >
         <activity
             android:name="mx.itesm.another_monkey_paradox.AndroidLauncher"
