@@ -74,11 +74,17 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     private Texture canervicola03Frame2;
     private Texture canervicola03Frame3;
 
-    //Textura de Cavernicola 03
+    //Textura de Caballero 03
     private Texture caballero02Frame0; //3
     private Texture caballero02Frame1; //2
     private Texture caballero02Frame2; //4
     private Texture caballero02Frame3; //1
+
+    //Textura de Ruso 2
+    private Texture ruso2Frame0; //4
+    private Texture ruso2Frame1; //3
+    private Texture ruso2Frame2; //2
+    private Texture ruso2Frame3; //1
 
     //Textura Fondos de los niveles
     private Texture fondoNivel01, fondoNivel02;
@@ -366,7 +372,6 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         home.setSize(55, 55);
         home.setPosition(ANCHO/2-continua.getWidth()/2, 680 - continua.getHeight()/2);
 
-
         Skin skin = new Skin(); // Texturas para el pad
         skin.add("fondo", padBack);
         skin.add("boton", padKnob);
@@ -497,6 +502,11 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         caballero02Frame2 =assetManager.get("caballero2/caballero 4.png", Texture.class);
         caballero02Frame3 =assetManager.get("caballero2/caballero 1.png", Texture.class);
 
+        ruso2Frame0 = assetManager.get("ruso2/ruso 1.png", Texture.class);
+        ruso2Frame1 = assetManager.get("ruso2/ruso 2.png", Texture.class);
+        ruso2Frame2 = assetManager.get("ruso2/ruso 3.png", Texture.class);
+        ruso2Frame3 = assetManager.get("ruso2/ruso 4.png", Texture.class);
+
         /*
         gunSound = assetManager.get("pew.mp3");
         boomSound = assetManager.get("boom.mp3");
@@ -575,11 +585,23 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
             for(int i=0; i<getRandomNumber(7,13);i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1,ruso2Frame2, ruso2Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<getRandomNumber(7,13);i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo1.getImagenA().getX()<-890&&fondo1.getImagenA().getX()>-1200&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<getRandomNumber(7,13);i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(7,13);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -605,7 +627,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<getRandomNumber(7,13);i++){
-                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -631,7 +653,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<getRandomNumber(7,13);i++){
-                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,false,i);
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
         }
@@ -653,7 +675,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             secondFilter=false;
             firstFilter=true;
             for(int i=0; i<getRandomNumber(7,13);i++){
-                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
             for(int i=0; i<getRandomNumber(7,13);i++){
