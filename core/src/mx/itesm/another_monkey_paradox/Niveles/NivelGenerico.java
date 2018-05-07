@@ -81,6 +81,9 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     private Texture botonContinua = assetManager.get("PlayButton.png");
     private Texture botonHome = assetManager.get("boton Home.png");
 
+    private Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+    public boolean music = prefs.getBoolean("music");
+
     //Botones TextureRegionDrawable
     private TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
     private TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(botonGranadaPressed));
@@ -216,7 +219,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         }
     }
 
-    protected void verificarColisionBalaEnemigo(float dt) {
+    protected void verificarColisionBalaEnemigo(float dt, float diff) {
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -232,7 +235,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - 12;
+                    vidaEnemigo = enemigo.getVida() - (int)(12/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -271,7 +274,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 }
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    boomSound.play();
+                    if(music){boomSound.play();}
                     listaGranadas.removeIndex(j);
                     vidaEnemigo = enemigo.getVida() - 100;
                     if(enemigo.right) {
@@ -325,7 +328,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     for (int j = vidas.size() - 1; j >= 0; j--) {
                         if (contador >= 1) {
                             if (vidas.get(j).isActiva()) {
-                                hitSound.play();
+                                if(music){hitSound.play();}
                                 vidas.get(j).setActiva(false);
                                 hit = true;
                                 contador = 0;
@@ -350,7 +353,9 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                 for (int j = vidas.size() - 1; j >= 0; j--) {
                     if(contador>=50) {
                         if (vidas.get(j).isActiva()) {
-                            hitSound.play();
+                            if(music){
+                                hitSound.play();
+                            }
                             vidas.get(j).setActiva(false);
                             contador = 0;
                         }
@@ -468,202 +473,6 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         }
     }
 
-    /*
-    Skin skin = new Skin(); // Texturas para el pad
-    skin.add("fondo", padBack);
-    skin.add("boton", padKnob);
-
-    Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
-    estilo.background = skin.getDrawable("fondo");
-    estilo.knob = skin.getDrawable("boton");
-
-    // Crea el pad
-    Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        /*
-    //For Background
-    protected Texture boss;
-    protected Sprite bossSprite;
-
-    //Fondo
-    private Fondo fondo;
-
-    //Textura Fondos de los niveles
-    private Texture fondoNivel01;
-
-    //Escena
-
-    protected float stateTime = 0;
-
-    protected boolean isMovingRight = false;
-    protected boolean isMovingLeft = false;
-
-    protected boolean isFliped;
-
-    protected Personaje personaje;
-
-    //Enemigos
-    protected Array<Enemigo> listaEnemigos;
-
-    //Barra de carga balas
-    protected progressBar Bar;
-    protected Texture imgBarraBala;
-    protected Texture imgBananaBarra;
-    protected Sprite barraBala;
-    protected Sprite bananaBarra;
-
-
-    //Vidas
-    protected ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
-    protected int contador = 0;
-
-    //Disparos Boss
-    protected int shootCounter =0;
-
-    //Escena
-    protected Stage stageNivel;
-
-    // Puntaje y texto
-    protected int puntosJugador = 0;
-    protected BitmapFont font;
-    public GlyphLayout textoGly;
-
-
-    public GlyphLayout pausaText;
-
-    //Granada y texto
-    protected int maxGrandas = 5;
-    public GlyphLayout textoGlyGran;
-
-    //Textura de Cavernicola 01
-    protected Texture canervicola01Frame0;
-    protected Texture canervicola01Frame1;
-    protected Texture canervicola01Frame2;
-    private Texture canervicola01Frame3;
-
-    //Textura de Cavernicola 02
-    private Texture canervicola02Frame0;
-    private Texture canervicola02Frame1;
-    private Texture canervicola02Frame2;
-    private Texture canervicola02Frame3;
-
-    //Textura de Cavernicola 03
-    private Texture canervicola03Frame0;
-    private Texture canervicola03Frame1;
-    private Texture canervicola03Frame2;
-    private Texture canervicola03Frame3;
-
-
-    // PAUSA
-    private EscenaPausa escenaPausa;
-
-    // Estados del juego
-    private PantallaJuego.EstadoJuego estado;
-
-    private Enemigo enemigo;
-
-    //PowerUps
-    private Random random;
-    private Texture imgpowerUpGranada;
-    private Texture imgpowerUpVida;
-    private PowerUp powerUpGranada;
-    private PowerUp powerUpVida;
-    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
-    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-    private Double randomX;
-    private Double randomX2;
-
-    Skin skin = new Skin(); // Texturas para el pad
-        skin.add("fondo", padBack);
-        skin.add("boton", padKnob);
-
-    Touchpad.TouchpadStyle estilo = new Touchpad.TouchpadStyle();
-    estilo.background = skin.getDrawable("fondo");
-    estilo.knob = skin.getDrawable("boton");
-
-    // Crea el pad
-    Touchpad pad = new Touchpad(64,estilo);     // Radio, estilo
-        pad.setBounds(-100,20,220,220); // x,y - ancho,alto
-        pad.addAction(Actions.moveTo(35,25, 0.6f));
-
-
-    protected class EscenaPausa extends Stage {
-
-        // La escena que se muestra cuando está pausado
-        public EscenaPausa(Viewport vista, SpriteBatch batch) {
-
-            // Crear rectángulo transparente
-            Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );
-            //pixmap.setColor( 135/255f, 135/255f, 135/255f, 0.8f );
-            pixmap.setColor( 0f, 0f, 0f, 0.35f );
-            pixmap.fillRectangle(0, 0, pixmap.getWidth(), pixmap.getHeight());
-            Texture texturaRectangulo = new Texture( pixmap );
-            pixmap.dispose();
-            Image imgRectangulo = new Image(texturaRectangulo);
-            imgRectangulo.setPosition(ANCHO*0.5f - imgRectangulo.getWidth()*0.5f, ALTO*2.75f/10f);
-            this.addActor(imgRectangulo);
-
-
-            // Salir
-            Texture texturaBtnSalir = new Texture("boton Home.png");
-            TextureRegionDrawable trdSalir = new TextureRegionDrawable(
-                    new TextureRegion(texturaBtnSalir));
-            ImageButton btnSalir = new ImageButton(trdSalir);
-            btnSalir.setSize(155, 155);
-            btnSalir.setPosition(ANCHO*5.4f/10f, ALTO*3f/10f);
-            btnSalir.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    // Regresa al menú
-                    main.setScreen(new PantallaMenu(main));
-                }
-            });
-            this.addActor(btnSalir);
-
-            // Continuar
-            Texture texturaBtnContinuar = new Texture("PlayButton.png");
-            TextureRegionDrawable trdContinuar = new TextureRegionDrawable(
-                    new TextureRegion(texturaBtnContinuar));
-            ImageButton btnContinuar = new ImageButton(trdContinuar);
-            btnContinuar.setSize(155, 155);
-            btnContinuar.setPosition(ANCHO*3.4f/10f, ALTO*3f/10f);
-            btnContinuar.addListener(new ClickListener(){
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    // Regresa al juego
-                    estado = PantallaJuego.EstadoJuego.JUGANDO;
-                    Gdx.input.setInputProcessor(stageNivel);
-                }
-            });
-            this.addActor(btnContinuar);
-        }
-    }
-
-
-    @Override
-    public void show() {
-
-    }
-
-    @Override
-    public void render(float delta) {
-
-    }
-
-    @Override
-    public void pause() {
-        //implementar
-    }
-
-    @Override
-    public void resume() {
-        //implementar
-    }
-
-    @Override
-    public void dispose() {
-
-    }
-    */
     @Override
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.BACK){

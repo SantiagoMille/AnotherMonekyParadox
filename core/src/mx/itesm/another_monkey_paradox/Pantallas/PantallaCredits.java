@@ -40,7 +40,7 @@ public class PantallaCredits extends Pantalla implements Screen {
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
-    private Texto title, Adrian, Santi, Fer, Diego, Brian;
+    private Texto title, Adrian, Santi, Fer, Diego, Brian, Itesm;
 
     //Fotos
     private Image foto = new Image();
@@ -68,13 +68,14 @@ public class PantallaCredits extends Pantalla implements Screen {
         Fer = new Texto(1,1,1);
         Brian = new Texto(1,1,1);
         Diego = new Texto(1,1,1);
+        Itesm = new Texto(1, 1, 1);
 
         imgBackground = new Texture("space.png");
-        adrian = new Texture("pp_s.jpeg");
-        santi = new Texture("pp_a.jpeg");
-        fernando = new Texture("pp_d.jpeg");
-        diego = new Texture("pp.jpeg");
-        brian = new Texture("pp_b.jpeg");
+        adrian = new Texture("pp_s.PNG");
+        santi = new Texture("pp_a.PNG");
+        fernando = new Texture("pp_d.PNG");
+        diego = new Texture("pp.PNG");
+        brian = new Texture("pp_b.PNG");
 
         spriteBackground = new Sprite(imgBackground);
         //spriteBackground.setAlpha(0.7f);
@@ -90,11 +91,11 @@ public class PantallaCredits extends Pantalla implements Screen {
         fer.setScale(.15f);
         bri.setScale(.15f);
 
-        adr.setPosition(600, 250);
-        bri.setPosition(600, 130);
-        die.setPosition(600, 20);
-        san.setPosition(600, -100);
-        fer.setPosition(600, -220);
+        adr.setPosition(600, 200);
+        bri.setPosition(600, 80);
+        die.setPosition(600, -30);
+        san.setPosition(600, -150);
+        fer.setPosition(600, -270);
 
         //Boton Return
         TextureRegionDrawable trdReturn = new TextureRegionDrawable(new TextureRegion(new Texture("go-back.png")));
@@ -145,6 +146,8 @@ public class PantallaCredits extends Pantalla implements Screen {
         Fer.mostratMensaje(batch,"Luis Fernando Cedenio  -  ISC",265,ALTO-420,215/255f,215/255f,215/255f);
         Adrian.mostratMensaje(batch,"Adrian Mendez  -  ISC",90,ALTO-540,215/255f,215/255f,215/255f);
         Diego.mostratMensaje(batch,"Diego Cervantes  -  LAD",140,ALTO-660,215/255f,215/255f,215/255f);
+        Itesm.mostratMensaje(batch, "Proyecto de desarollo de videojuegos \n Campus Estado de México", ANCHO/2, ALTO/2, 215/255f,215/255f,215/255f);
+        Itesm.glyph.width = 10;
         batch.end();
         stageMenu.draw();
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){

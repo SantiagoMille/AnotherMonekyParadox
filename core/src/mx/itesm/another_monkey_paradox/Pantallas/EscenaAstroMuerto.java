@@ -121,7 +121,7 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         Bacgraun.draw(batch);
-        texto.mostratMensaje(batch, "Lol u ded", 600, 420,1,1, 1);
+        texto.mostratMensaje(batch, "Lol u ded", 700, 420,1,1, 1);
         texto.mostratMensaje(batch, "Score: " + finalScore, -200, 420,1,1, 1);
         batch.end();
         stageNivel.draw();

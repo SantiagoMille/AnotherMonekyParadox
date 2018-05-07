@@ -116,8 +116,8 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("boom.mp3", Sound.class);
         assetManager.load("hit.mp3", Sound.class);
 
-        assetManager.load("Bosses/jefe n2.png", Texture.class);
-        assetManager.load("Bosses/ITEM BOSS N2.png", Texture.class);
+        assetManager.load("Bosses/jefe_n2.png", Texture.class);
+        assetManager.load("Bosses/item_boss2.png", Texture.class);
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
     }
@@ -182,8 +182,8 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("boom.mp3", Sound.class);
         assetManager.load("hit.mp3", Sound.class);
 
-        assetManager.load("Bosses/TIMETRAVELOV.png", Texture.class);
-        assetManager.load("Bosses/ITEM BOSS N3.png", Texture.class);
+        assetManager.load("Bosses/jefe_n3.png", Texture.class);
+        assetManager.load("Bosses/item_boss3.png", Texture.class);
         // Se bloquea hasta cargar los recursos
         //assetManager.finishLoading();
     }
