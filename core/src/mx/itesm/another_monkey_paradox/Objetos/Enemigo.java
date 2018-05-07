@@ -115,6 +115,8 @@ public class Enemigo {
         return this.vida;
     }
 
+    public boolean isRight(){return right;}
+
 
 
 }

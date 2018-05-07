@@ -731,7 +731,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         timeSinceCollision += dt;
         System.out.println("TimeSinceCollision: " + timeSinceCollision);
         if (timeSinceCollision > 1.8f) {
-            boolean shake = verificarColisionPersonajeEnemigo(dt);
+            boolean shake = verificarColisionPersonajeAlien(dt);
             if(shake){
                 Gdx.input.vibrate(350);
                 screenShake.update(dt, camara);

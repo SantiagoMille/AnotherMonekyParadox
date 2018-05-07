@@ -342,33 +342,6 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         }
     }
 
-    protected void verificarColisionGranadaAlien(float dt) {
-        Rectangle rectEnemigo;
-        Granada granada;
-        for(int j =listaGranadas.size-1; j>=0;j--){
-            granada = listaGranadas.get(j);
-            for(int i =listaEnemigos.size-1;i>=0;i--){
-                enemigo = listaEnemigos.get(i);
-                if(enemigo.right) {
-                    rectEnemigo = new Rectangle(enemigo.getX() + 140, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-                }else{
-                    rectEnemigo = new Rectangle(enemigo.getX() - 140, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
-                }
-                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    if(music){boomSound.play();}
-                    listaGranadas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - 100;
-                    if(enemigo.right) {
-                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
-                    } else {
-                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
-                    }
-                    enemigo.setVida(vidaEnemigo);
-                    verificarVidaEnemigos();
-                }
-            }
-        }
-    }
 
     protected void explosionGranadaRight(float x, float y){
         crashRight = true;
@@ -399,6 +372,43 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         for (int i = listaEnemigos.size - 1; i >= 0; i--) {
             x = listaEnemigos.get(i);
             rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+            if(!personaje.isRight()) {
+                rectPersonaje = new Rectangle(personaje.getX()+25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            } else{
+                rectPersonaje = new Rectangle(personaje.getX()-25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            }
+            if (rectEnemigo.overlaps(rectPersonaje)) {
+                if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
+                    for (int j = vidas.size() - 1; j >= 0; j--) {
+                        if (contador >= 1) {
+                            if (vidas.get(j).isActiva()) {
+                                if(music){hitSound.play();}
+                                vidas.get(j).setActiva(false);
+                                hit = true;
+                                contador = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        contador++;
+        return hit;
+    }
+
+    protected boolean verificarColisionPersonajeAlien(float dt) {
+        Enemigo x;
+        Rectangle rectEnemigo;
+        Rectangle rectPersonaje;
+        boolean hit = false;
+
+        for (int i = listaEnemigos.size - 1; i >= 0; i--) {
+            x = listaEnemigos.get(i);
+            if(x.isRight()){
+                rectEnemigo = new Rectangle(x.getX()+130, x.getY(), x.getWidth(), x.getHeight());
+            } else {
+                rectEnemigo = new Rectangle(x.getX()-130, x.getY(), x.getWidth(), x.getHeight());
+            }
             if(!personaje.isRight()) {
                 rectPersonaje = new Rectangle(personaje.getX()+25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
             } else{
