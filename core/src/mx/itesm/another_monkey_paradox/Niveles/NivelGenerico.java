@@ -244,6 +244,31 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         }
     }
 
+    protected void verificarColisionBalaRuso(float dt, float diff) {
+        Rectangle rectEnemigo;
+        Bala bala;
+
+        for(int j =listaBalas.size-1; j>=0;j--){
+            bala = listaBalas.get(j);
+            for(int i =listaEnemigos.size-1;i>=0;i--){
+
+                enemigo = listaEnemigos.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX()+80, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX()-80, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    listaBalas.removeIndex(j);
+                    vidaEnemigo = enemigo.getVida() - (int)(12/diff);
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
+                }
+                verificarVidaEnemigos();
+            }
+        }
+    }
+
     protected void verificarColisionBalaBala(float dt) {
         Bala balaBoss;
         Bala bala;
@@ -272,6 +297,62 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 }else{
                     rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    if(music){boomSound.play();}
+                    listaGranadas.removeIndex(j);
+                    vidaEnemigo = enemigo.getVida() - 100;
+                    if(enemigo.right) {
+                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    } else {
+                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    }
+                    enemigo.setVida(vidaEnemigo);
+                    verificarVidaEnemigos();
+                }
+            }
+        }
+    }
+
+    protected void verificarColisionGranadaRuso(float dt) {
+        Rectangle rectEnemigo;
+        Granada granada;
+        for(int j =listaGranadas.size-1; j>=0;j--){
+            granada = listaGranadas.get(j);
+            for(int i =listaEnemigos.size-1;i>=0;i--){
+                enemigo = listaEnemigos.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 84, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 84, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    if(music){boomSound.play();}
+                    listaGranadas.removeIndex(j);
+                    vidaEnemigo = enemigo.getVida() - 100;
+                    if(enemigo.right) {
+                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    } else {
+                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    }
+                    enemigo.setVida(vidaEnemigo);
+                    verificarVidaEnemigos();
+                }
+            }
+        }
+    }
+
+    protected void verificarColisionGranadaAlien(float dt) {
+        Rectangle rectEnemigo;
+        Granada granada;
+        for(int j =listaGranadas.size-1; j>=0;j--){
+            granada = listaGranadas.get(j);
+            for(int i =listaEnemigos.size-1;i>=0;i--){
+                enemigo = listaEnemigos.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 140, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 140, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 }
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     if(music){boomSound.play();}

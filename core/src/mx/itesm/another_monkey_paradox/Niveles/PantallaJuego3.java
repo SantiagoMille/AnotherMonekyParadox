@@ -729,9 +729,9 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime,difficulty);
+        verificarColisionBalaRuso(stateTime,difficulty);
         verificarColisionBalaBala(stateTime);
-        verificarColisionGranadaEnemigo(stateTime);
+        verificarColisionGranadaRuso(stateTime);
         verificarColisionBalaBoss(stateTime);
         verificarColisionGranadaBoss(stateTime);
         verificarColisionPersonajeBalaBoss(stateTime);
