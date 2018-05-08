@@ -55,7 +55,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
     int vidaEnemigo = 100;
     int vidaBoss = 500;
 
-    private int cuentaVidas = 3, cuentaGranadas = 5;
+    private int cuentaVidas = 3;
 
     private float difficulty;
 
@@ -177,7 +177,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         //pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
         for(int i=0;i<5;i++){
-            if(i<3) {
+            if(i<cuentaVidas) {
                 vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70,true));
             }else{
                 vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70, false));
@@ -771,6 +771,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
             escribirScore(true);
             main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
         }
+        cuentaVidas = 5 - vidasFalse;
     }
 
     private void verificarColisionBalaBoss(float dt) {

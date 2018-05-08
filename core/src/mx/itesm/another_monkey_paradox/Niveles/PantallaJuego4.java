@@ -49,7 +49,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     private Texture boss;
     private Sprite bossSprite;
 
-    private int cuentaVidas = 3, cuentaGranadas = 5;
+    private int cuentaVidas = 3;
 
     private Fondo fondo1, fondo2;
 
@@ -172,7 +172,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         //pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
         for(int i=0;i<5;i++){
-            if(i<3) {
+            if(i<cuentaVidas) {
                 vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70,true));
             }else{
                 vidas.add(new PowerUp(new Texture("vida.png"), camara.position.x + 10 - ANCHO / 2 + (75 * i), ALTO - 70, false));
@@ -760,6 +760,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             escribirScore(true);
             main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
         }
+        cuentaVidas = 5 - vidasFalse;
     }
 
     private void verificarColisionBalaBoss(float dt) {

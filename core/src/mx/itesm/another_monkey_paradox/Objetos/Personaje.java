@@ -25,7 +25,7 @@ public class Personaje {
         TextureRegion img2 = new TextureRegion(texture2);
         TextureRegion img3 = new TextureRegion(texture3);
         TextureRegion img4 = new TextureRegion(texture4);
-        animacion = new Animation(0.15f, img1, img2, img3, img4);
+        animacion = new Animation(0.1f, img1, img2, img3, img4);
         standingTexture = new Texture("Astro/astro.png");
         standing = new Sprite(standingTexture);
         x = PantallaJuego.ANCHO/2-texture1.getWidth()/2;

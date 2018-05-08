@@ -125,7 +125,7 @@ public class EscenaAstroGanador implements Screen {
                 }else if (nivel == 3){
                     main.setScreen(new PantallaCinematica(main,"cineL2.png",3, score, vidas));
                 }else if (nivel == 4){
-                    main.setScreen(new PantallaCinematica(main,"cineL2.png",4, score, vidas));
+                    main.setScreen(new PantallaCinematica(main,"cineL3W.png",4, score, vidas));
                 }
             }
         });
