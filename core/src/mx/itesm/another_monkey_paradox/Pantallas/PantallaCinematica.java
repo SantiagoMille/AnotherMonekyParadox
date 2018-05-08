@@ -39,15 +39,16 @@ public class PantallaCinematica extends Pantalla implements Screen {
 
     private String background;
     private int nivel;
-    private int score;
+    private int score, vidas;
 
     //background music
     private Music musicMenu = Gdx.audio.newMusic(Gdx.files.internal("loboloco.mp3"));
 
-    public PantallaCinematica(Main main, String background, int nivel, int score) {
+    public PantallaCinematica(Main main, String background, int nivel, int score, int vidas) {
         super(main);
         this.background = background;
         this.nivel = nivel;
+        this.vidas = vidas;
         this.score = score;
     }
 
@@ -77,11 +78,11 @@ public class PantallaCinematica extends Pantalla implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 if(nivel == 2) {
-                    main.setScreen(new PantallaCargandoStoryMode(main,2, score));
+                    main.setScreen(new PantallaCargandoStoryMode(main,2, score, vidas));
                 }else if(nivel == 3){
-                    main.setScreen(new PantallaCargandoStoryMode(main,2, score));
+                    main.setScreen(new PantallaCargandoStoryMode(main,2, score, vidas));
                 }else if(nivel == 4){
-                    main.setScreen(new PantallaCargandoStoryMode(main,2, score));
+                    main.setScreen(new PantallaCargandoStoryMode(main,2, score, vidas));
                 }
             }
         });

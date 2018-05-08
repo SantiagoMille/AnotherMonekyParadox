@@ -44,9 +44,13 @@ public class PantallaDeveloper extends Pantalla implements Screen {
     private float sensitivity = 0;
     private float difficulty = 0;
 
+    private Slider sliderDif, sliderSens;
+
     private Texto titulo;
 
     private boolean musicOn = true;
+
+    private float dif, sen;
 
     private Preferences prefs;
 
@@ -82,6 +86,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
 
         musicOn = prefs.getBoolean("music");
+        dif = prefs.getFloat("Difficulty");
+        sen = prefs.getFloat("Sensitivity");
 
         Skin skin = new Skin(Gdx.files.internal("skin/comic-ui.json"));
 
@@ -99,29 +105,14 @@ public class PantallaDeveloper extends Pantalla implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                difficulty = sliderDif.getPercent();
+                sensitivity = sliderSens.getPercent();
                 prefs.putFloat("Difficulty",difficulty);
                 prefs.putFloat("Sensitivity",sensitivity);
                 prefs.flush();
                 main.setScreen(new PantallaMenu(main));
             }
         });
-
-        InputListener stopTouchDown = new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                event.stop();
-                difficulty = x;
-                return false;
-            }
-        };
-
-        InputListener stopTouchDown2 = new InputListener() {
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                event.stop();
-                sensitivity = x;
-                return false;
-            }
-        };
-
 
         //Boton Play
         trdMusicPressed = new TextureRegionDrawable(new TextureRegion(new Texture("mute.png")));
@@ -176,8 +167,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         diffi = new Sprite(diff);
         diffi.setPosition(ANCHO/2-110-diffi.getWidth(), ALTO/2);
 
-        Slider sliderDif = new Slider(0, 100, 1, false, skin);
-        sliderDif.addListener(stopTouchDown); // Stops touchDown events from propagating to the FlickScrollPane.
+        sliderDif = new Slider(0, 100, 1, false, skin);
+        sliderDif.setValue(dif*100);
         sliderDif.setPosition(diffi.getX()+100,ALTO/3);
         sliderDif.setScale(2);
 
@@ -185,8 +176,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
         sensi = new Sprite(sens);
         sensi.setPosition(ANCHO/2+110, ALTO/2);
 
-        Slider sliderSens = new Slider(0, 100, 1, false, skin);
-        sliderSens.addListener(stopTouchDown2); // Stops touchDown events from propagating to the FlickScrollPane.
+        sliderSens = new Slider(0, 100, 1, false, skin);
+        sliderSens.setValue(sen*100);
         sliderSens.setPosition(sensi.getX()+100,ALTO/3);
         sliderSens.setScale(2);
 
@@ -196,6 +187,8 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         btnCreds.addListener(new ChangeListener() {
             public void changed (ChangeEvent event, Actor actor) {
+                difficulty = sliderDif.getPercent();
+                sensitivity = sliderSens.getPercent();
                 prefs.putFloat("Difficulty",difficulty);
                 prefs.putFloat("Sensitivity",sensitivity);
                 prefs.flush();

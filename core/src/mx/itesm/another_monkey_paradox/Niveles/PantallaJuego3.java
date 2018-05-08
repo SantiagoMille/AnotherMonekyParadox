@@ -55,6 +55,8 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
     int vidaEnemigo = 100;
     int vidaBoss = 500;
 
+    private int cuentaVidas = 3, cuentaGranadas = 5;
+
     private float difficulty;
 
     //Escena
@@ -89,14 +91,15 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
     Double randomX;
     Double randomX2;
 
-    public PantallaJuego3(Main main, int score) {
+    public PantallaJuego3(Main main, int score, int cuentaVidas) {
         super(main);
+        this.cuentaVidas = cuentaVidas;
         this.puntosJugador += score;
     }
 
     @Override
     public void pasarDeNivel() {
-        main.setScreen(new EscenaAstroGanador(main, puntosJugador,4));
+        main.setScreen(new EscenaAstroGanador(main, puntosJugador,4, cuentaVidas));
     }
 
     @Override
@@ -404,11 +407,11 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
         //Bar.setValue(Bar.getValue() + 0.005f);
 
-        if(!powerUpVidaFlag){
+        if(!powerUpVidaFlag && isMovingRight){
             powerUpVida.setX(powerUpVida.getX()-(delta*80));
         }
 
-        if(!powerUpGranadaFlag){
+        if(!powerUpGranadaFlag && isMovingRight){
             powerUpGranada.setX(powerUpGranada.getX()-(delta*80));
         }
 
@@ -729,7 +732,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaRuso(stateTime,difficulty);
+        verificarColisionBalaRuso(stateTime,difficulty, 3);
         verificarColisionBalaBala(stateTime);
         verificarColisionGranadaRuso(stateTime);
         verificarColisionBalaBoss(stateTime);
@@ -737,7 +740,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
-        verificarColisionPersonajeItemVida();
+        cuentaVidas = verificarColisionPersonajeItemVida(cuentaVidas);
         verificarVidaAstro();
 
         timeSinceCollision += dt;

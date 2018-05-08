@@ -51,6 +51,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     private Sprite bossSprite;
     private Fondo fondo1, fondo2;
 
+    private int cuentaVidas = 3;
+
     //Enemigos
     //private Array<Enemigo> listaEnemigos;
     int vidaEnemigo = 100;
@@ -102,7 +104,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
     @Override
     public void pasarDeNivel() {
-        main.setScreen(new EscenaAstroGanador(main, puntosJugador,2));
+        main.setScreen(new EscenaAstroGanador(main, puntosJugador,2, cuentaVidas));
     }
 
     @Override
@@ -445,11 +447,11 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
         //Bar.setValue(Bar.getValue() + 0.005f);
 
-        if(!powerUpVidaFlag){
+        if(!powerUpVidaFlag && isMovingRight){
             powerUpVida.setX(powerUpVida.getX()-(delta*80));
         }
 
-        if(!powerUpGranadaFlag){
+        if(!powerUpGranadaFlag && isMovingRight){
             powerUpGranada.setX(powerUpGranada.getX()-(delta*80));
         }
 
@@ -769,7 +771,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime, difficulty);
+        verificarColisionBalaEnemigo(stateTime, difficulty, 0);
         verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
@@ -777,7 +779,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         verificarColisionPersonajeBalaBoss(stateTime);
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
-        verificarColisionPersonajeItemVida();
+        cuentaVidas = verificarColisionPersonajeItemVida(cuentaVidas);
         verificarVidaAstro();
 
         timeSinceCollision += dt;
