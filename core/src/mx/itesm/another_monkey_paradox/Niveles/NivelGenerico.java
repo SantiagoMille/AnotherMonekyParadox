@@ -184,7 +184,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
 
     abstract public void pasarDeNivel();
 
-    protected void verificarColisionPersonajeItemVida() {
+    protected int verificarColisionPersonajeItemVida(int cuenta) {
         Rectangle rectItem = powerUpVida.getSprite().getBoundingRectangle();
         Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
         if(rectItem.overlaps(rectPersonaje)){
@@ -197,6 +197,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
             }
             powerUpVida.setX(-500);
         }
+        return cuenta + 1;
     }
 
     protected void verificarColisionPersonajeItemGranada() {
@@ -219,7 +220,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         }
     }
 
-    protected void verificarColisionBalaEnemigo(float dt, float diff) {
+    protected void verificarColisionBalaEnemigo(float dt, float diff, int difDelNivel) {
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -235,7 +236,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - (int)(12/diff);
+                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -244,7 +245,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
         }
     }
 
-    protected void verificarColisionBalaRuso(float dt, float diff) {
+    protected void verificarColisionBalaRuso(float dt, float diff, int difDelNivel) {
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -260,7 +261,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     listaBalas.removeIndex(j);
-                    vidaEnemigo = enemigo.getVida() - (int)(12/diff);
+                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
