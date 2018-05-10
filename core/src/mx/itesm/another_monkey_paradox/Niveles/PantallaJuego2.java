@@ -335,7 +335,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.3f);
+                Bar.setValue(Bar.getValue()-0.25f);
             }
         });
 
@@ -578,7 +578,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
-                    e.setX(e.getX()+(-120*delta));
+                    e.setX(e.getX()+(-100*delta));
                 }
             }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){

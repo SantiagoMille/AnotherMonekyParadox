@@ -233,6 +233,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     }
 
     protected void verificarColisionBalaEnemigo(float dt, float diff, int difDelNivel) {
+        if(diff<0.2) diff = 0.2f;
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -247,7 +248,9 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaBalas.removeIndex(j);
+                    try{
+                        listaBalas.removeIndex(j);
+                    }catch (Exception e){}
                     vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
@@ -258,6 +261,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     }
 
     protected void verificarColisionBalaRuso(float dt, float diff, int difDelNivel) {
+        if(diff<0.2) diff = 0.2f;
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -272,7 +276,13 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     rectEnemigo = new Rectangle(enemigo.getX()-80, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaBalas.removeIndex(i);
+                    try {
+                        listaBalas.removeIndex(j);
+
+                    }catch (Exception e){
+
+                    }
+
                     vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
@@ -292,8 +302,10 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
 
                 balaBoss = listaBalasBoss.get(i);
                 if(bala.getSprite().getBoundingRectangle().overlaps(balaBoss.getSprite().getBoundingRectangle())){
-                    listaBalas.removeIndex(j);
-                    listaBalasBoss.removeIndex(i);
+                    try{
+                        listaBalas.removeIndex(j);
+                        listaBalasBoss.removeIndex(i);
+                    }catch (Exception e){}
                 }
             }
         }
@@ -313,7 +325,9 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                 }
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     if(music){boomSound.play();}
-                    listaGranadas.removeIndex(j);
+                    try{
+                        listaGranadas.removeIndex(j);
+                    }catch (Exception e){}
                     vidaEnemigo = enemigo.getVida() - 100;
                     if(enemigo.right) {
                         explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
@@ -341,7 +355,9 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                 }
                 if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
                     if(music){boomSound.play();}
-                    listaGranadas.removeIndex(j);
+                    try {
+                        listaGranadas.removeIndex(j);
+                    }catch (Exception e){ }
                     vidaEnemigo = enemigo.getVida() - 100;
                     if(enemigo.right) {
                         explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);

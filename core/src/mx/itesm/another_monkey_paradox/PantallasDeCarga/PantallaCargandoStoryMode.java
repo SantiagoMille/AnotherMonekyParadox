@@ -325,7 +325,9 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
 
         //Textura del nivel 1
         assetManager.load("Fondos/NIVEL 1.1.png", Texture.class);
-        assetManager.load("Fondos/NIVEL 1.2.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 2.2.png", Texture.class);
+        assetManager.load("Fondos/NIVEL 3.1.jpg", Texture.class);
+        assetManager.load("Fondos/NIVEL 4.2.png", Texture.class);
 
         //Textura de Astro
         assetManager.load("Astro/CAMINATA 4.png", Texture.class);
@@ -429,6 +431,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         if (assetManager.update()){
             if(level==1){
                 main.setScreen(new PantallaJuego(main));//regresa true si ya terminó la carga
+                //main.setScreen(new PantallaJuego4(main,0,3,5));
                 this.dispose();
             }else if(level == 2){
                 main.setScreen(new PantallaJuego2(main,score, vidas, granadas));
@@ -440,7 +443,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
                 main.setScreen(new PantallaJuego4(main,score, vidas, granadas));
                 this.dispose();
             }else if(level==5){
-                main.setScreen(new PantallaJuegoSurvival(main));
+                main.setScreen(new PantallaJuegoSurvival(main,7));
                 this.dispose();
             }
         } else {

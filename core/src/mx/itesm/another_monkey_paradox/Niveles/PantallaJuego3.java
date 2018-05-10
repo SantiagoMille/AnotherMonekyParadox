@@ -55,7 +55,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
     int vidaEnemigo = 100;
     int vidaBoss = 500;
 
-    public boolean powerUpVidaFlag2;
+    public boolean powerUpVidaFlag2 = true;
 
     private int cuentaVidas = 3;
 
@@ -334,16 +334,16 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
                     if(music){gunSound.play();}
                     if (!isFliped) {
                         Bala nueva = new Bala(bananaDisparo, false);
-                        nueva.set(personaje.getX() + 105, personaje.getY() + 68);
+                        nueva.set(personaje.getX() + 105, personaje.getY() + 63);
                         listaBalas.add(nueva);
                     } else {
                         if(music){gunSound.play();}
                         Bala nueva = new Bala(bananaDisparo, true);
-                        nueva.set(personaje.getX(), personaje.getY() + 68);
+                        nueva.set(personaje.getX(), personaje.getY() + 63);
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.3f);
+                Bar.setValue(Bar.getValue()-0.18f);
             }
         });
 
@@ -438,11 +438,11 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
         if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<4;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
@@ -451,11 +451,11 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-1480&&fondo1.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<4;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
@@ -464,11 +464,11 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-2180&&fondo1.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<4;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
@@ -477,11 +477,11 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-2880&&fondo1.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<4;i++){
+            for(int i=0; i<8;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
+            for(int i=0; i<6;i++){
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
@@ -494,7 +494,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
                 enemigo = new Enemigo(ruso01Frame0, ruso01Frame1, ruso01Frame2, ruso01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<4;i++){
+            for(int i=0; i<6;i++){
                 enemigo = new Enemigo(ruso02Frame0, ruso02Frame1, ruso02Frame2, ruso02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
@@ -554,14 +554,12 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         for(Enemigo e:listaEnemigos){
             e.render(batch);
 
-
-
             if(estado == PantallaJuego.EstadoJuego.JUGANDO&&e.right){
 
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
-                    e.setX(e.getX()+(-80*delta));
+                    e.setX(e.getX()+(-100*delta));
                 }
             }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
@@ -580,7 +578,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
             if(shootCounter>=40&&!bossKilled){
                 shootCounter=0;
                 Bala nueva = new Bala(bossDisparo,true);
-                nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
+                nueva.set(bossSprite.getX()-5, bossSprite.getY() + 43);
                 listaBalasBoss.add(nueva);
             }
 
@@ -763,7 +761,6 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         verificarVidaAstro();
 
         timeSinceCollision += dt;
-        System.out.println("TimeSinceCollision: " + timeSinceCollision);
         if (timeSinceCollision > 1.8f) {
             boolean shake = verificarColisionPersonajeEnemigo(dt);
             if(shake){

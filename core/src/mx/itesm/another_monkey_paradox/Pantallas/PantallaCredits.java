@@ -87,7 +87,7 @@ public class PantallaCredits extends Pantalla implements Screen {
 
         spriteBackground = new Sprite(imgBackground);
         tec = new Sprite(logoTec);
-        tec.setPosition(ANCHO*0.85f, 70);
+        tec.setPosition(ANCHO*0.85f-40, 95);
 
         TextureRegionDrawable trdSan = new TextureRegionDrawable(new TextureRegion(santi));
         san = new ImageButton(trdSan);
@@ -214,7 +214,7 @@ public class PantallaCredits extends Pantalla implements Screen {
         Adrian.mostratMensaje(batch,"Adrian Mendez  -  ISC",90,ALTO-540,215/255f,215/255f,215/255f);
         Diego.mostratMensaje(batch,"Diego Cervantes  -  LAD",140,ALTO-660,215/255f,215/255f,215/255f);
         Itesm.textoPequeno();
-        Itesm.mostratMensaje(batch, "Proyecto de desarollo de videojuegos \n Campus Estado de Mexico", 750, 60, 215/255f,215/255f,215/255f);
+        Itesm.mostratMensaje(batch, "Proyecto de desarollo de videojuegos \n Campus Estado de Mexico\n\n anothermonkeyparadox@gmail.com", 750, 90, 215/255f,215/255f,215/255f);
         batch.end();
 
         stageMenu.act(Gdx.graphics.getDeltaTime());

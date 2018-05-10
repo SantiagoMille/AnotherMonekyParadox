@@ -43,7 +43,7 @@ public class Enemigo {
             TextureRegion img4 = new TextureRegion(texture4);
             this.right = right;
             animacion = new Animation(0.15f, img1, img2, img3, img4);
-            x = (PantallaJuego.ANCHO - texture1.getWidth() / 2)+(1000*mult);
+            x = (PantallaJuego.ANCHO - texture1.getWidth() / 2)+(300*mult);
             y = PantallaJuego.ALTO / 4;
             System.out.println(x);
         }else{
@@ -57,7 +57,7 @@ public class Enemigo {
             img4.flip(true,false);
             this.right = right;
             animacion = new Animation(0.2f, img1, img2, img3, img4);
-            x = (0 - texture1.getWidth())+(-1000*mult);
+            x = (0 - texture1.getWidth())+(-300*mult);
             y = PantallaJuego.ALTO / 4;
         }
         //progressBar de los enemigos

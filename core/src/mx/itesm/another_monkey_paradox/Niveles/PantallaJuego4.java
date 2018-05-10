@@ -64,7 +64,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     //Escena
     private Stage stageNivel;
 
-    public boolean powerUpVidaFlag2;
+    public boolean powerUpVidaFlag2 = true;
     protected PowerUp powerUpVida2 = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
 
     //Textura de Cavernicola 01
@@ -125,11 +125,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
-        for(int i=0; i<6;i++){
+        for(int i=0; i<10;i++){
             enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
             listaEnemigos.add(enemigo);
         }
-        for(int i=0; i<6;i++){
+        for(int i=0; i<10;i++){
             enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
 
             listaEnemigos.add(enemigo);
@@ -329,16 +329,16 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                     if(music){gunSound.play();}
                     if (!isFliped) {
                         Bala nueva = new Bala(bananaDisparo, false);
-                        nueva.set(personaje.getX() + 105, personaje.getY() + 68);
+                        nueva.set(personaje.getX() + 105, personaje.getY() + 70);
                         listaBalas.add(nueva);
                     } else {
                         if(music){gunSound.play();}
                         Bala nueva = new Bala(bananaDisparo, true);
-                        nueva.set(personaje.getX(), personaje.getY() + 68);
+                        nueva.set(personaje.getX(), personaje.getY() + 70);
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.3f);
+                Bar.setValue(Bar.getValue()-0.08f);
             }
         });
 
@@ -427,11 +427,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
 
         if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
 
                 listaEnemigos.add(enemigo);
@@ -441,11 +441,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-1480&&fondo1.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
 
                 listaEnemigos.add(enemigo);
@@ -455,11 +455,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-2180&&fondo1.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -468,11 +468,11 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-2880&&fondo1.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<6;i++){
+            for(int i=0; i<10;i++){
                 enemigo = new Enemigo(alien01Frame0, alien01Frame1, alien01Frame2, alien01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -552,7 +552,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                 if(personaje.getX()<camara.position.x){
                     e.setX(e.getX()+(-60*delta));
                 }else{
-                    e.setX(e.getX()+(-120*delta));
+                    e.setX(e.getX()+(-100*delta));
                 }
             }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
                 if(personaje.getX()<camara.position.x){
@@ -568,16 +568,16 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
 
             shootCounter++;
 
-            if(shootCounter>=35&&!bossKilled){
+            if(shootCounter>=40&&!bossKilled){
                 shootCounter=0;
                 Bala nueva = new Bala(bossDisparo,true);
-                nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
+                nueva.set(bossSprite.getX()+10, personaje.getY() + 70);
                 listaBalasBoss.add(nueva);
             }
 
             if(personaje.getX()>=camara.position.x&&isMovingRight&&!isMovingLeft) {
                 float x = bossSprite.getX();
-                bossSprite.setPosition(x - (delta * 78), ALTO/4);
+                bossSprite.setPosition(x - (delta * 78), ALTO/4-40);
             }
 
             if(vidaBoss<=0){

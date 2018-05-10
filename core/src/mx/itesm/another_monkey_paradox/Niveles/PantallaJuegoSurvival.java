@@ -45,14 +45,8 @@ import mx.itesm.another_monkey_paradox.Utils.Fondo;
 
 public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     //For Background
-    private Texture boss;
-    private Sprite bossSprite;
-    private Fondo fondo1, fondo2;
 
-    //Enemigos
-    //private Array<Enemigo> listaEnemigos;
-    int vidaEnemigo = 100;
-    int vidaBoss = 500;
+    private Fondo fondo1, fondo2, fondo3, fondo4;
 
     private float difficulty;
 
@@ -83,6 +77,8 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     private Texture caballero02Frame2; //4
     private Texture caballero02Frame3; //1
 
+    private Array<Enemigo> listaEnemigosRusos, listaEnemigosAlien;
+
     //Textura de Ruso 2
     private Texture ruso2Frame0; //4
     private Texture ruso2Frame1; //3
@@ -96,7 +92,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     private Texture alienFrame3; //1
 
     //Textura Fondos de los niveles
-    private Texture fondoNivel01, fondoNivel02;
+    private Texture fondoNivel01, fondoNivel02, fondoNivel03, fondoNivel04;
 
     // PAUSA
     private PantallaJuegoSurvival.EscenaPausa2 escenaPausa;
@@ -111,107 +107,9 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
     Double randomX;
     Double randomX2;
 
-
-    /*
-    //Vidas
-    private ArrayList<PowerUp> vidas = new ArrayList<PowerUp>();
-    int contador = 0;
-
-    //Granada y texto
-    private int maxGrandas = 5;
-    public GlyphLayout textoGlyGran;
-
-    // Puntaje y texto
-    private int puntosJugador = 0;
-    private BitmapFont font;
-    public GlyphLayout textoGly;
-    public GlyphLayout pausaText;
-
-    private boolean isMovingRight = false;
-    private boolean isMovingLeft = false;
-
-    //Item boss
-    private Texture itemBosss;
-    private Sprite itemBoss;
-
-    //Textura botones
-    private Texture botonGranada;
-    private Texture botonGranadaPressed;
-    private Texture botonDisparo;
-    private Texture botonDisparoPressed;
-    private Texture botonPausa;
-    private Texture botonContinua;
-    private Texture botonHome;
-
-    //Textura de Astro
-    private Texture astroCaminata0;
-    private Texture astroCaminata1;
-    private Texture astroCaminata2;
-    private Texture astroCaminata3;
-
-    //Textura Armas
-    private Texture bananaDisparo;
-    private Texture bossDisparo;
-    private Texture bananaGranada;
-
-    private boolean bossKilled = false;
-
-    private boolean powerUpVidaFlag = true;
-    private boolean powerUpGranadaFlag = true;
-
-    private boolean firstFilter=true;
-    private boolean secondFilter=true;
-
-    //Sonido
-    private Sound gunSound;
-    private Sound boomSound;
-    private Sound hitSound;
-
-    //Armas
-    private Array<Bala> listaBalas;
-    private Array<Granada> listaGranadas;
-    private Array<Bala> listaBalasBoss;
-    //Fisica Granada
-    float velocityY;     // Velocidad de la granada
-
-    //Controles del jugador
-    private ImageButton granada;
-    private ImageButton arma;
-    private ImageButton pausa;
-    private ImageButton home;
-    private ImageButton continua;
-
-    private Texture padBack;
-    private Texture padKnob;
-
-    //Power Ups
-    private Texture imgpowerUpGranada;
-    private Texture imgpowerUpVida;
-    private PowerUp powerUpGranada;
-    private PowerUp powerUpVida;
-    private ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
-    private ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-
-     //bananas Colision
-    private Bala banana1;
-    private Bala banana2;
-    private Bala banana3;
-    private Bala banana4;
-    private Bala banana5;
-    private Bala banana6;
-    private Boolean crashRight = false;
-    private Boolean crashLeft = false;
-
-    //Barra de carga balas
-    private progressBar Bar;
-    private Texture imgBarraBala;
-    private Texture imgBananaBarra;
-    private Sprite barraBala;
-    private Sprite bananaBarra;
-    */
-
-    public PantallaJuegoSurvival(Main main) {
+    public PantallaJuegoSurvival(Main main, int granadas) {
         super(main);
+        this.maxGrandas = granadas;
     }
 
     @Override
@@ -233,11 +131,18 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
         fondo1 = new Fondo(fondoNivel01);
         fondo2 = new Fondo(fondoNivel02);
+        fondo3 = new Fondo(fondoNivel03);
+        fondo4 = new Fondo(fondoNivel04);
         fondo2.getImagenA().setPosition(fondo1.getImagenA().getWidth(),0);
+        fondo3.getImagenA().setPosition(fondo2.getImagenA().getWidth()*2,0);
+        fondo4.getImagenA().setPosition(fondo3.getImagenA().getWidth()*3,0);
         batch = new SpriteBatch();
 
         //Lista Enemigos
         listaEnemigos = new Array<Enemigo>();
+        listaEnemigosRusos = new Array<Enemigo>();
+        listaEnemigosAlien = new Array<Enemigo>();
+
         for(int i=0; i<getRandomNumber(10,13);i++){
             enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,true,i);
             listaEnemigos.add(enemigo);
@@ -245,17 +150,14 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
         for(int i=0; i<getRandomNumber(10,13);i++){
             enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
-            listaEnemigos.add(enemigo);
+            listaEnemigosAlien.add(enemigo);
         }
 
         //Lista Balas
         listaBalas = new Array<Bala>();
-        listaBalasBoss = new Array<Bala>();
 
         //Lista Granadas
         listaGranadas = new Array<Granada>();
-
-
 
         estado = PantallaJuego.EstadoJuego.JUGANDO;
 
@@ -288,13 +190,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         //textoGly = new GlyphLayout(font,"Score");
         //textoGlyGran = new GlyphLayout(font,"Score");
 
-        boss = new Texture("boss_stand.png");
-        itemBosss = new Texture("item_boss.png");
 
-        bossSprite = new Sprite(boss);
-        bossSprite.setPosition(ANCHO,ALTO);
-        itemBoss = new Sprite(itemBosss);
-        itemBoss.setPosition(ANCHO*3/4,ALTO/4);
 
         //pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);
 
@@ -457,7 +353,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                         listaBalas.add(nueva);
                     }
                 }
-                Bar.setValue(Bar.getValue()-0.3f);
+                Bar.setValue(Bar.getValue()-0.1f);
             }
         });
 
@@ -491,7 +387,9 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         //Si llega a este punto es porque ya cargó los assets
         // Cuando termina de cargar las texturas, las leemos
         fondoNivel01 = assetManager.get("Fondos/NIVEL 1.1.png");
-        fondoNivel02 = assetManager.get("Fondos/NIVEL 1.2.png");
+        fondoNivel02 = assetManager.get("Fondos/NIVEL 2.2.png");
+        fondoNivel03 = assetManager.get("Fondos/NIVEL 3.1.jpg");
+        fondoNivel04 = assetManager.get("Fondos/NIVEL 4.2.png");
 
         canervicola01Frame0 = assetManager.get("cavernicola01/CM1 3.png");
         canervicola01Frame1 = assetManager.get("cavernicola01/CM1 4.png");
@@ -522,39 +420,6 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         alienFrame1 = assetManager.get("Alien/ALIEN 2.png", Texture.class);
         alienFrame2 = assetManager.get("Alien/ALIEN 3.png", Texture.class);
         alienFrame3 = assetManager.get("Alien/ALIEN 4.png", Texture.class);
-
-        /*
-        gunSound = assetManager.get("pew.mp3");
-        boomSound = assetManager.get("boom.mp3");
-        hitSound = assetManager.get("hit.mp3");
-
-        imgBarraBala = assetManager.get("BarraBalas/barranegra.png");
-        imgBananaBarra = assetManager.get("BarraBalas/bananabarra.png");
-
-        imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
-        imgpowerUpVida = assetManager.get("Items/VIDA.png");
-
-        astroCaminata0 = assetManager.get("Astro/CAMINATA 4.png");
-        astroCaminata1 = assetManager.get("Astro/CAMINATA 2.png");
-        astroCaminata2 = assetManager.get("Astro/CAMINATA 3.png");
-        astroCaminata3 = assetManager.get("Astro/CAMINATA 1.png");
-
-        botonGranada = assetManager.get("BotonesDisparo/granada_icon.png");
-        botonDisparo = assetManager.get("BotonesDisparo/bullet_icon.png");
-        botonDisparoPressed = assetManager.get("BotonesDisparo/bullet_icon_pressed.png");
-        botonGranadaPressed = assetManager.get("BotonesDisparo/granada_icon_pressed.png");
-
-
-        botonPausa = assetManager.get("pause-button.png");
-        botonContinua = assetManager.get("PlayButton.png");
-        botonHome = assetManager.get("boton Home.png");
-        padBack = assetManager.get("Pad/padBack.png");
-        padKnob = assetManager.get("Pad/padKnob.png");
-
-        bananaDisparo = assetManager.get("banana.png");
-        bossDisparo = assetManager.get("disparo2.png");
-        bananaGranada = assetManager.get("granana.png");
-        */
 
     }
 
@@ -597,14 +462,16 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         batch.begin();
         fondo1.render(batch);
         fondo2.render(batch);
+        fondo3.render(batch);
+        fondo4.render(batch);
 
         if(fondo1.getImagenA().getX()<-780&&fondo1.getImagenA().getX()>-882&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(ruso2Frame0, ruso2Frame1,ruso2Frame2, ruso2Frame3,true,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosRusos.add(enemigo);
             }
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,17);i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -612,13 +479,13 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
         if(fondo1.getImagenA().getX()<-890&&fondo1.getImagenA().getX()>-1200&&firstFilter){
             firstFilter=false;
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,17);i++){
                 enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,true,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosAlien.add(enemigo);
             }
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,false,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosRusos.add(enemigo);
             }
         }
 
@@ -630,7 +497,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             }
             for(int i=0; i<getRandomNumber(10,13);i++){
                 enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosAlien.add(enemigo);
             }
         }
 
@@ -638,13 +505,13 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-1480&&fondo1.getImagenA().getX()>-1582&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,false,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosRusos.add(enemigo);
             }
         }
 
@@ -657,18 +524,18 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             }
             for(int i=0; i<getRandomNumber(10,13);i++){
                 enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosAlien.add(enemigo);
             }
         }
 
         if(fondo1.getImagenA().getX()<-2180&&fondo1.getImagenA().getX()>-2282&&firstFilter){
             secondFilter=true;
             firstFilter=false;
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
                 listaEnemigos.add(enemigo);
             }
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -679,7 +546,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             firstFilter=true;
             for(int i=0; i<getRandomNumber(10,13);i++){
                 enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosRusos.add(enemigo);
             }
             for(int i=0; i<getRandomNumber(10,13);i++){
                 enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
@@ -690,11 +557,11 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         if(fondo1.getImagenA().getX()<-2880&&fondo1.getImagenA().getX()>-2982&&secondFilter){
             secondFilter=false;
             firstFilter=true;
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosRusos.add(enemigo);
             }
-            for(int i=0; i<getRandomNumber(7,13);i++){
+            for(int i=0; i<getRandomNumber(10,15);i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
             }
@@ -709,7 +576,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             }
             for(int i=0; i<getRandomNumber(10,13);i++){
                 enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
-                listaEnemigos.add(enemigo);
+                listaEnemigosAlien.add(enemigo);
             }
         }
 
@@ -718,7 +585,137 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             firstFilter=false;
             for(int i=0; i<getRandomNumber(9,15);i++){
                 enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
+                listaEnemigosRusos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(9,15);i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
                 listaEnemigos.add(enemigo);
+            }
+        }
+
+        //////////////////////////////////////
+
+        if(fondo3.getImagenA().getX()<-780&&fondo3.getImagenA().getX()>-882&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1,ruso2Frame2, ruso2Frame3,true,i);
+                listaEnemigosRusos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-890&&fondo3.getImagenA().getX()>-1200&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,true,i);
+                listaEnemigosAlien.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,false,i);
+                listaEnemigosRusos.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-900&&fondo3.getImagenA().getX()>-1450&&firstFilter){
+            firstFilter=false;
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
+                listaEnemigosAlien.add(enemigo);
+            }
+        }
+
+
+        if(fondo3.getImagenA().getX()<-1480&&fondo3.getImagenA().getX()>-1582&&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(canervicola03Frame0, canervicola03Frame1, canervicola03Frame2, canervicola03Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,false,i);
+                listaEnemigosRusos.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-1600&&fondo3.getImagenA().getX()>-2110&&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
+                listaEnemigosAlien.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-2180&&fondo3.getImagenA().getX()>-2282&&firstFilter){
+            secondFilter=true;
+            firstFilter=false;
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(canervicola02Frame0, canervicola02Frame1, canervicola02Frame2, canervicola02Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-2300&&fondo3.getImagenA().getX()>-2850&&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
+                listaEnemigosRusos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-2880&&fondo3.getImagenA().getX()>-2982&&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
+                listaEnemigosRusos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,15);i++){
+                enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
+                listaEnemigos.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-3000&&fondo3.getImagenA().getX()>-3500&secondFilter){
+            secondFilter=false;
+            firstFilter=true;
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(caballero02Frame0, caballero02Frame1, caballero02Frame2, caballero02Frame3,true,i);
+                listaEnemigos.add(enemigo);
+            }
+            for(int i=0; i<getRandomNumber(10,13);i++){
+                enemigo = new Enemigo(alienFrame0, alienFrame1, alienFrame2, alienFrame3,false,i);
+                listaEnemigosAlien.add(enemigo);
+            }
+        }
+
+        if(fondo3.getImagenA().getX()<-3580&&fondo3.getImagenA().getX()>-3600&&firstFilter){
+            secondFilter=true;
+            firstFilter=false;
+            for(int i=0; i<getRandomNumber(9,15);i++){
+                enemigo = new Enemigo(ruso2Frame0, ruso2Frame1, ruso2Frame2, ruso2Frame3,true,i);
+                listaEnemigosRusos.add(enemigo);
             }
             for(int i=0; i<getRandomNumber(9,15);i++){
                 enemigo = new Enemigo(canervicola01Frame0, canervicola01Frame1, canervicola01Frame2, canervicola01Frame3,false,i);
@@ -731,7 +728,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             powerUpVidaFlag=false;
         }
 
-        if (fondo1.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
+        if (fondo2.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
             powerUpGranada.setX(ANCHO*0.75f);
             powerUpGranadaFlag=false;
         }
@@ -764,18 +761,11 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             bala.render(batch);
         }
 
-        for(Bala balaB: listaBalasBoss){
-            if(!bossKilled){
-                balaB.render(batch);
-            }
-        }
 
         personaje.render(batch, stateTime, isMovingRight, isMovingLeft);
         //Dibuja enemigos
         for(Enemigo e:listaEnemigos){
             e.render(batch);
-
-
 
             if(estado == PantallaJuego.EstadoJuego.JUGANDO&&e.right){
 
@@ -794,31 +784,45 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             }
         }
 
-        if(fondo1.getImagenA().getX()<-3999){
+        for(Enemigo e:listaEnemigosRusos){
+            e.render(batch);
 
-            shootCounter++;
+            if(estado == PantallaJuego.EstadoJuego.JUGANDO&&e.right){
 
-            if(shootCounter>=50&&!bossKilled){
-                shootCounter=0;
-                Bala nueva = new Bala(bossDisparo,true);
-                nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
-                listaBalasBoss.add(nueva);
-            }
+                if(personaje.getX()<camara.position.x){
+                    e.setX(e.getX()+(-60*delta));
+                }else{
+                    e.setX(e.getX()+(-80*delta));
+                }
+            }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
+                if(personaje.getX()<camara.position.x){
+                    e.setX(e.getX()+(60*delta));
+                }else{
+                    e.setX(e.getX()+(15*delta));
+                }
 
-            if(personaje.getX()>=camara.position.x&&isMovingRight&&!isMovingLeft) {
-                float x = bossSprite.getX();
-                bossSprite.setPosition(x - (delta * 78), ALTO/4);
-            }
-
-            if(vidaBoss<=0){
-                itemBoss.setPosition(bossSprite.getX(),ALTO/4);
-                itemBoss.draw(batch);
-                bossKilled=true;
-            }else{
-                bossSprite.draw(batch);
             }
         }
 
+        for(Enemigo e:listaEnemigosAlien){
+            e.render(batch);
+
+            if(estado == PantallaJuego.EstadoJuego.JUGANDO&&e.right){
+
+                if(personaje.getX()<camara.position.x){
+                    e.setX(e.getX()+(-60*delta));
+                }else{
+                    e.setX(e.getX()+(-80*delta));
+                }
+            }else if(estado == PantallaJuego.EstadoJuego.JUGANDO&&!e.right){
+                if(personaje.getX()<camara.position.x){
+                    e.setX(e.getX()+(60*delta));
+                }else{
+                    e.setX(e.getX()+(15*delta));
+                }
+
+            }
+        }
 
         //Texto Score
         textoGly.setText(font, "Score: "+ puntosJugador);
@@ -873,6 +877,8 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             }else {
                 fondo1.mover(-dt * 79);
                 fondo2.mover(-dt * 79);
+                fondo3.mover(-dt * 79);
+                fondo4.mover(-dt * 79);
             }
 
         }else if(isMovingLeft&&!isMovingRight){
@@ -882,7 +888,8 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             if(fondo1.getImagenA().getX()>0) {
                 fondo1.mover(dt * 20);
                 fondo2.mover(dt * 20);
-
+                fondo3.mover(dt * 20);
+                fondo4.mover(dt * 20);
             }
         }
 
@@ -898,16 +905,6 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 bala.mover(-dt * 2);
             }
             bala.getSprite().rotate(10);
-            i++;
-        }
-
-        i=0;
-        for(Bala balaa:listaBalasBoss){
-            if(balaa.getX()>camara.position.x+ANCHO/2||balaa.getX()<camara.position.x-ANCHO/2){
-                listaBalasBoss.removeIndex(i);
-            }
-            balaa.mover(dt * 2);
-            //balaa.getSprite().rotate(10);
             i++;
         }
 
@@ -971,21 +968,23 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         }
 
         verificarColisionBalaEnemigo(stateTime,difficulty, 2);
-        verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
-        verificarColisionBalaBoss(stateTime);
-        verificarColisionGranadaBoss(stateTime);
-        verificarColisionPersonajeBalaBoss(stateTime);
-        //verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
         verificarColisionPersonajeItemVida(3);
+        verificarColisionBalaRusoo(difficulty,2);
+        verificarColisionGranadaRusoo();
+
+        verificarColisionGranadaEnemigoAlien(stateTime);
+        verificarColisionBalaEnemigoAlien(stateTime,difficulty,2);
         verificarVidaAstro();
 
         timeSinceCollision += dt;
         System.out.println("TimeSinceCollision: " + timeSinceCollision);
         if (timeSinceCollision > 1.8f) {
             boolean shake = verificarColisionPersonajeEnemigo(dt);
-            if(shake){
+            boolean shake2 = verificarColisionPersonajeAlienn(stateTime);
+            boolean shake3 = verificarColisionPersonajeEnemigoRuso(stateTime);
+            if(shake||shake2||shake3){
                 Gdx.input.vibrate(350);
                 screenShake.update(dt, camara);
                 batch.setProjectionMatrix(camara.combined);
@@ -1010,41 +1009,6 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
         }
     }
-
-    private void verificarColisionBalaBoss(float dt) {
-        Rectangle rectBoss;
-        Bala bala;
-        for(int j =listaBalas.size-1; j>=0;j--){
-            bala = listaBalas.get(j);
-            rectBoss = bossSprite.getBoundingRectangle();
-            if(bala.getSprite().getBoundingRectangle().overlaps(rectBoss)){
-                vidaBoss-=25;
-                listaBalas.removeIndex(j);
-            }
-        }
-    }
-
-    private void verificarColisionGranadaBoss(float dt) {
-        Rectangle rectBoss;
-        Granada granada;
-        for(int j =listaGranadas.size-1; j>=0;j--){
-            granada = listaGranadas.get(j);
-            rectBoss = bossSprite.getBoundingRectangle();
-            if(granada.getSprite().getBoundingRectangle().overlaps(rectBoss)){
-                vidaBoss-=100;
-                listaGranadas.removeIndex(j);
-            }
-        }
-    }
-
-    /*protected void verificarColisionPersonajeItemBoss() {
-        Rectangle rectItem = itemBoss.getBoundingRectangle();
-        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
-        if(rectItem.overlaps(rectPersonaje)){
-            //PANTALLA DE VICTORIA PROVISIONAL
-            pasarDeNivel();
-        }
-    }*/
 
     @Override
     public void resize(int width, int height) {
@@ -1128,5 +1092,217 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             this.addActor(btnContinuar);
         }
     }
+
+    protected void verificarColisionBalaRusoo(float diff, int difDelNivel) {
+        if(diff<0.2) diff = 0.2f;
+        Rectangle rectEnemigo;
+        Bala bala;
+
+        for(int j =listaBalas.size-1; j>=0;j--){
+            bala = listaBalas.get(j);
+            for(int i =listaEnemigosRusos.size-1;i>=0;i--){
+
+                enemigo = listaEnemigosRusos.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX()+80, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX()-80, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    try {
+                        listaBalas.removeIndex(j);
+
+                    }catch (Exception e){
+
+                    }
+
+                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
+                }
+                verificarVidaEnemigosR();
+            }
+        }
+    }
+
+    protected boolean verificarColisionPersonajeAlienn(float dt) {
+        Enemigo x;
+        Rectangle rectEnemigo;
+        Rectangle rectPersonaje;
+        boolean hit = false;
+
+        for (int i = listaEnemigosAlien.size - 1; i >= 0; i--) {
+            x = listaEnemigosAlien.get(i);
+            if(x.isRight()){
+                rectEnemigo = new Rectangle(x.getX()+130, x.getY(), x.getWidth(), x.getHeight());
+            } else {
+                rectEnemigo = new Rectangle(x.getX()-130, x.getY(), x.getWidth(), x.getHeight());
+            }
+            if(!personaje.isRight()) {
+                rectPersonaje = new Rectangle(personaje.getX()+25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            } else{
+                rectPersonaje = new Rectangle(personaje.getX()-25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            }
+            if (rectEnemigo.overlaps(rectPersonaje)) {
+                if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
+                    for (int j = vidas.size() - 1; j >= 0; j--) {
+                        if (contador >= 1) {
+                            if (vidas.get(j).isActiva()) {
+                                if(music){hitSound.play();}
+                                vidas.get(j).setActiva(false);
+                                hit = true;
+                                contador = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        contador++;
+        return hit;
+    }
+
+    protected boolean verificarColisionPersonajeEnemigoRuso(float dt) {
+        Enemigo x;
+        Rectangle rectEnemigo;
+        Rectangle rectPersonaje;
+        boolean hit = false;
+
+        for (int i = listaEnemigosRusos.size - 1; i >= 0; i--) {
+            x = listaEnemigosRusos.get(i);
+            rectEnemigo = new Rectangle(x.getX(), x.getY(), x.getWidth(), x.getHeight());
+            if(!personaje.isRight()) {
+                rectPersonaje = new Rectangle(personaje.getX()+25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            } else{
+                rectPersonaje = new Rectangle(personaje.getX()-25, personaje.getY(), personaje.getWidth(), personaje.getHeight());
+            }
+            if (rectEnemigo.overlaps(rectPersonaje)) {
+                if (x.getAnimacion().getKeyFrameIndex(dt) == 0){
+                    for (int j = vidas.size() - 1; j >= 0; j--) {
+                        if (contador >= 1) {
+                            if (vidas.get(j).isActiva()) {
+                                if(music){hitSound.play();}
+                                vidas.get(j).setActiva(false);
+                                hit = true;
+                                contador = 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        contador++;
+        return hit;
+    }
+
+
+    protected void verificarColisionGranadaEnemigoAlien(float dt) {
+        Rectangle rectEnemigo;
+        Granada granada;
+        for(int j =listaGranadas.size-1; j>=0;j--){
+            granada = listaGranadas.get(j);
+            for(int i =listaEnemigosAlien.size-1;i>=0;i--){
+                enemigo = listaEnemigosAlien.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    if(music){boomSound.play();}
+                    try{
+                        listaGranadas.removeIndex(j);
+                    }catch (Exception e){}
+                    vidaEnemigo = enemigo.getVida() - 100;
+                    if(enemigo.right) {
+                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    } else {
+                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    }
+                    enemigo.setVida(vidaEnemigo);
+                    verificarVidaEnemigosA();
+                }
+            }
+        }
+    }
+
+    protected void verificarColisionBalaEnemigoAlien(float dt, float diff, int difDelNivel) {
+        if(diff<0.2) diff = 0.2f;
+        Rectangle rectEnemigo;
+        Bala bala;
+
+        for(int j =listaBalas.size-1; j>=0;j--){
+            bala = listaBalas.get(j);
+            for(int i =listaEnemigosAlien.size-1;i>=0;i--){
+
+                enemigo = listaEnemigosAlien.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 210, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    try{
+                        listaBalas.removeIndex(j);
+                    }catch (Exception e){}
+                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
+                    enemigo.setVida(vidaEnemigo);
+                    System.out.println(vidaEnemigo);
+                }
+                verificarVidaEnemigosA();
+            }
+        }
+    }
+
+    protected void verificarColisionGranadaRusoo() {
+        Rectangle rectEnemigo;
+        Granada granada;
+        for(int j =listaGranadas.size-1; j>=0;j--){
+            granada = listaGranadas.get(j);
+            for(int i =listaEnemigosRusos.size-1;i>=0;i--){
+                enemigo = listaEnemigosRusos.get(i);
+                if(enemigo.right) {
+                    rectEnemigo = new Rectangle(enemigo.getX() + 84, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }else{
+                    rectEnemigo = new Rectangle(enemigo.getX() - 84, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
+                }
+                if(granada.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
+                    if(music){boomSound.play();}
+                    try {
+                        listaGranadas.removeIndex(j);
+                    }catch (Exception e){ }
+                    vidaEnemigo = enemigo.getVida() - 100;
+                    if(enemigo.right) {
+                        explosionGranadaRight(rectEnemigo.getX(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    } else {
+                        explosionGranadaLeft(rectEnemigo.getX()+enemigo.getWidth(), rectEnemigo.getY() + enemigo.getHeight()/3);
+                    }
+                    enemigo.setVida(vidaEnemigo);
+                    verificarVidaEnemigosR();
+                }
+            }
+        }
+    }
+
+    protected void verificarVidaEnemigosR() {
+        for(int i = listaEnemigosRusos.size-1;i>=0;i--){
+            if(listaEnemigosRusos.get(i).getVida() <= 0){
+                listaEnemigosRusos.removeIndex(i);
+                puntosJugador += 10;
+
+            }
+        }
+    }
+
+    protected void verificarVidaEnemigosA() {
+        for(int i = listaEnemigosAlien.size-1;i>=0;i--){
+            if(listaEnemigosAlien.get(i).getVida() <= 0){
+                listaEnemigosAlien.removeIndex(i);
+                puntosJugador += 10;
+
+            }
+        }
+    }
+
 }
 
