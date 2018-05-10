@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -90,6 +91,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     Double randomX2;
     Double randomX22;
 
+    Rectangle rectBoss;
 
     public PantallaJuego4(Main main, int score, int cuentaVidas, int granadas) {
         super(main);
@@ -566,7 +568,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
 
             shootCounter++;
 
-            if(shootCounter>=50&&!bossKilled){
+            if(shootCounter>=35&&!bossKilled){
                 shootCounter=0;
                 Bala nueva = new Bala(bossDisparo,true);
                 nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
@@ -581,6 +583,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
             if(vidaBoss<=0){
                 itemBoss.setPosition(bossSprite.getX(),ALTO/4);
                 itemBoss.draw(batch);
+                rectBoss.setPosition(-100,ALTO+100);
                 bossKilled=true;
             }else{
                 bossSprite.draw(batch);
@@ -780,27 +783,29 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     }
 
     private void verificarColisionBalaBoss(float dt) {
-        Rectangle rectBoss;
         Bala bala;
         for(int j =listaBalas.size-1; j>=0;j--){
             bala = listaBalas.get(j);
             rectBoss = bossSprite.getBoundingRectangle();
             if(bala.getSprite().getBoundingRectangle().overlaps(rectBoss)){
                 vidaBoss-=25;
-                listaBalas.removeIndex(j);
+                if(!bossKilled) {
+                    listaBalas.removeIndex(j);
+                }
             }
         }
     }
 
     private void verificarColisionGranadaBoss(float dt) {
-        Rectangle rectBoss;
         Granada granada;
         for(int j =listaGranadas.size-1; j>=0;j--){
             granada = listaGranadas.get(j);
             rectBoss = bossSprite.getBoundingRectangle();
             if(granada.getSprite().getBoundingRectangle().overlaps(rectBoss)){
                 vidaBoss-=100;
-                listaGranadas.removeIndex(j);
+                if(!bossKilled) {
+                    listaGranadas.removeIndex(j);
+                }
             }
         }
     }

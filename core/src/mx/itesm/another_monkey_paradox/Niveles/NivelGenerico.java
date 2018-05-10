@@ -272,7 +272,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     rectEnemigo = new Rectangle(enemigo.getX()-80, enemigo.getY(), enemigo.getWidth(), enemigo.getHeight());
                 }
                 if(bala.getSprite().getBoundingRectangle().overlaps(rectEnemigo)){
-                    listaBalas.removeIndex(j);
+                    listaBalas.removeIndex(i);
                     vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);

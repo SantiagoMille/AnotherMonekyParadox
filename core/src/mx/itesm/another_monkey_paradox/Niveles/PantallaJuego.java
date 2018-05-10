@@ -51,6 +51,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     private Sprite bossSprite;
     private Fondo fondo1, fondo2;
 
+    Rectangle rectBoss;
+
     private int cuentaVidas = 3;
 
     //Enemigos
@@ -615,6 +617,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
             if(vidaBoss<=0){
                 itemBoss.setPosition(bossSprite.getX(),ALTO/4);
                 itemBoss.draw(batch);
+                rectBoss.setPosition(-100,ALTO+100);
                 bossKilled=true;
             }else{
                 bossSprite.draw(batch);
@@ -911,27 +914,31 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
 
     private void verificarColisionBalaBoss(float dt) {
-        Rectangle rectBoss;
+
         Bala bala;
         for(int j =listaBalas.size-1; j>=0;j--){
             bala = listaBalas.get(j);
             rectBoss = bossSprite.getBoundingRectangle();
             if(bala.getSprite().getBoundingRectangle().overlaps(rectBoss)){
                 vidaBoss-=25;
-                listaBalas.removeIndex(j);
+                if(!bossKilled) {
+                    listaBalas.removeIndex(j);
+                }
             }
         }
     }
 
     private void verificarColisionGranadaBoss(float dt) {
-        Rectangle rectBoss;
+
         Granada granada;
         for(int j =listaGranadas.size-1; j>=0;j--){
             granada = listaGranadas.get(j);
             rectBoss = bossSprite.getBoundingRectangle();
             if(granada.getSprite().getBoundingRectangle().overlaps(rectBoss)){
                 vidaBoss-=100;
-                listaGranadas.removeIndex(j);
+                if(!bossKilled) {
+                    listaGranadas.removeIndex(j);
+                }
             }
         }
     }

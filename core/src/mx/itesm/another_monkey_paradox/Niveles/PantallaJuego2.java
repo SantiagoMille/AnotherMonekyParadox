@@ -48,6 +48,9 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
     //For Background
     private Texture boss;
     private Sprite bossSprite;
+
+    Rectangle rectBoss;
+
     private Fondo fondo1, fondo2;
 
     //Enemigos
@@ -591,7 +594,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
             shootCounter++;
 
-            if(shootCounter>=50&&!bossKilled){
+            if(shootCounter>=45&&!bossKilled){
                 shootCounter=0;
                 Bala nueva = new Bala(bossDisparo,true);
                 nueva.set(bossSprite.getX(), bossSprite.getY() + 68);
@@ -606,6 +609,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
             if(vidaBoss<=0){
                 itemBoss.setPosition(bossSprite.getX(),ALTO/4);
                 itemBoss.draw(batch);
+                rectBoss.setPosition(-100,ALTO+100);
                 bossKilled=true;
             }else{
                 bossSprite.draw(batch);
@@ -904,27 +908,29 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
 
     private void verificarColisionBalaBoss(float dt) {
-        Rectangle rectBoss;
         Bala bala;
         for(int j =listaBalas.size-1; j>=0;j--){
             bala = listaBalas.get(j);
             rectBoss = bossSprite.getBoundingRectangle();
             if(bala.getSprite().getBoundingRectangle().overlaps(rectBoss)){
                 vidaBoss-=25;
-                listaBalas.removeIndex(j);
+                if(!bossKilled) {
+                    listaBalas.removeIndex(j);
+                }
             }
         }
     }
 
     private void verificarColisionGranadaBoss(float dt) {
-        Rectangle rectBoss;
         Granada granada;
         for(int j =listaGranadas.size-1; j>=0;j--){
             granada = listaGranadas.get(j);
             rectBoss = bossSprite.getBoundingRectangle();
             if(granada.getSprite().getBoundingRectangle().overlaps(rectBoss)){
                 vidaBoss-=100;
-                listaGranadas.removeIndex(j);
+                if(!bossKilled) {
+                    listaGranadas.removeIndex(j);
+                }
             }
         }
     }
