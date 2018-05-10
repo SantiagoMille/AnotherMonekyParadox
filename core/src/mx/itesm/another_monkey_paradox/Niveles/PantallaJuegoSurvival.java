@@ -225,26 +225,12 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         randomX2 = random.nextDouble()*4000;
 
         //Barra Bala
-        //Bar = new progressBar(200, 20);
-        Bar.setPosition((ANCHO/3)-25, ALTO*0.93f);
-        //barraBala = new Sprite(imgBarraBala);
-        barraBala.setPosition((ANCHO/3)-30, (ALTO*0.92f)+3);
-        //bananaBarra = new Sprite(imgBananaBarra);
+        Bar.setPosition(745, ALTO*0.93f);
+        barraBala.setPosition(740, (ALTO*0.92f)+3);
+        bananaBarra.setPosition(700, (ALTO*0.90f));
 
-        bananaBarra.setPosition((ANCHO/3)-(imgBananaBarra.getWidth()/2)-33, (ALTO*0.90f));
-
-        //Power Ups
-        //powerUpVida = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
-        //powerUpGranada = new PowerUp(imgpowerUpGranada, -600, ALTO/4, true);
-
-        /*
-        //Boton granadas
-        TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));
-        TextureRegionDrawable btnGranadaPressed = new TextureRegionDrawable(new TextureRegion(botonGranadaPressed));
-        granada = new ImageButton(btnGranada, btnGranadaPressed);
-        */
-        granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, -100);
-        granada.addAction(Actions.moveTo(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80, 0.6f));
+        granada.setPosition(ANCHO*3/4-granada.getWidth()/2 + 25, ALTO/4-granada.getHeight()/2 - 80);
+        granadasNum.setPosition(ANCHO*0.712f-granadasNum.getWidth()/2, ALTO/4-granadasNum.getHeight()/2 - 40);
 
         /*
         //boton disparo
@@ -252,8 +238,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         TextureRegionDrawable btnArmaPressed = new TextureRegionDrawable(new TextureRegion(botonDisparoPressed));
         arma = new ImageButton(btnArma, btnArmaPressed);
         */
-        arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, -100);
-        arma.addAction(Actions.moveTo(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80, 0.6f));
+        arma.setPosition(ANCHO*3/4-arma.getWidth()/2 + arma.getWidth() + 55, ALTO/4-arma.getHeight()/2 - 80);
 
         /*
         //boton pausa
@@ -826,10 +811,11 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
         //Texto Score
         textoGly.setText(font, "Score: "+ puntosJugador);
-        font.draw(batch,textoGly, ANCHO/2 + 95,ALTO-15);
+        font.draw(batch,textoGly, ANCHO/2 + 370,ALTO-15);
 
-        textoGlyGran.setText(font, "Grenades: "+ maxGrandas);
-        font.draw(batch,textoGlyGran, ANCHO/2 + 360,ALTO-15);
+        granadasNum.draw(batch);
+        textoGlyGran.setText(font, "" + maxGrandas);
+        font.draw(batch,textoGlyGran, 899, 161);
 
         //Texto Pausa
         if(estado == PantallaJuego.EstadoJuego.PAUSADO){
