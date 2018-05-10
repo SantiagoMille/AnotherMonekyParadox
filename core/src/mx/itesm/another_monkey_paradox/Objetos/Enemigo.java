@@ -20,7 +20,7 @@ public class Enemigo {
     private float timerAnimacion;
     private Estado estado;
     private float timerMuriendo;
-    private int vida = 100;
+    private float vida = 100;
     //protected progressBar HealthBar;
 
     public Animation getAnimacion() {
@@ -107,11 +107,11 @@ public class Enemigo {
         VIVO, MURIENDO, MUERTO;
     }
 
-    public void setVida(int x){
+    public void setVida(float x){
         this.vida = x;
     }
 
-    public int getVida(){
+    public float getVida(){
         return this.vida;
     }
 

@@ -105,7 +105,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     //Enemigos
     protected Array<Enemigo> listaEnemigos;
     protected Enemigo enemigo;
-    protected int vidaEnemigo;
+    protected float vidaEnemigo;
     protected int vidaBoss;
 
     //Textura de Astro
@@ -235,7 +235,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     }
 
     protected void verificarColisionBalaEnemigo(float dt, float diff, int difDelNivel) {
-        if(diff<0.2) diff = 0.2f;
+        if(diff<0.2) diff = 0.25f;
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -253,7 +253,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                     try{
                         listaBalas.removeIndex(j);
                     }catch (Exception e){}
-                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
+                    vidaEnemigo = enemigo.getVida() - (float)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -263,7 +263,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     }
 
     protected void verificarColisionBalaRuso(float dt, float diff, int difDelNivel) {
-        if(diff<0.2) diff = 0.2f;
+        if(diff<0.2) diff = 0.3f;
         Rectangle rectEnemigo;
         Bala bala;
 
@@ -285,7 +285,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
 
                     }
 
-                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
+                    vidaEnemigo = enemigo.getVida() - (float) ((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }

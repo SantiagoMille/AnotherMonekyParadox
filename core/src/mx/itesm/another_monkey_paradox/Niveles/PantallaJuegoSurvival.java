@@ -961,15 +961,15 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime,difficulty, 2);
+        verificarColisionBalaEnemigo(stateTime,difficulty, 7);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionPersonajeItemGranada();
         verificarColisionPersonajeItemVida(3);
-        verificarColisionBalaRusoo(difficulty,2);
+        verificarColisionBalaRusoo(difficulty,7);
         verificarColisionGranadaRusoo();
 
         verificarColisionGranadaEnemigoAlien(stateTime);
-        verificarColisionBalaEnemigoAlien(stateTime,difficulty,2);
+        verificarColisionBalaEnemigoAlien(stateTime,difficulty,7);
         verificarVidaAstro();
 
         timeSinceCollision += dt;
@@ -1113,7 +1113,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
                     }
 
-                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
+                    vidaEnemigo = enemigo.getVida() - (float)((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
@@ -1242,7 +1242,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                     try{
                         listaBalas.removeIndex(j);
                     }catch (Exception e){}
-                    vidaEnemigo = enemigo.getVida() - (int)((12-difDelNivel)/diff);
+                    vidaEnemigo = enemigo.getVida() - ((12-difDelNivel)/diff);
                     enemigo.setVida(vidaEnemigo);
                     System.out.println(vidaEnemigo);
                 }
