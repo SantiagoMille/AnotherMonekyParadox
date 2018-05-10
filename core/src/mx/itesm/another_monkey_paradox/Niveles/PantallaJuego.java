@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -93,6 +95,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     // Estados del juego
     private EstadoJuego estado;
 
+    private Music musicNivel1 = Gdx.audio.newMusic(Gdx.files.internal("nivel1.mp3"));
+
     //private Enemigo enemigo;
 
     //PowerUps
@@ -145,9 +149,12 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         //Lista Granadas
         listaGranadas = new Array<Granada>();
 
-
-
         estado = EstadoJuego.JUGANDO;
+
+        musicNivel1.setLooping(true);
+        if(prefs.getBoolean("music")) {
+            musicNivel1.play();
+        }
 
         Gdx.input.setCatchBackKey(true);
 
@@ -1078,6 +1085,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     @Override
     public void pause() {
         estado = EstadoJuego.PAUSADO;
+        musicNivel1.pause();
     }
 
     @Override
@@ -1092,7 +1100,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
     @Override
     public void dispose() {
-
+        musicNivel1.stop();
+        musicNivel1.dispose();
     }
 
     enum EstadoJuego {
@@ -1148,6 +1157,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
                     // Regresa al juego
                     estado = EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
+                    musicNivel1.play();
                 }
             });
             this.addActor(btnContinuar);

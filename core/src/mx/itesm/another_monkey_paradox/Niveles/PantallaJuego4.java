@@ -83,6 +83,8 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     // Estados del juego
     private PantallaJuego.EstadoJuego estado;
 
+    private Music musicNivel4 = Gdx.audio.newMusic(Gdx.files.internal("nivel4.mp3"));
+
     //private Enemigo enemigo;
 
     //PowerUps
@@ -142,11 +144,14 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         //Lista Granadas
         listaGranadas = new Array<Granada>();
 
-
-
         estado = PantallaJuego.EstadoJuego.JUGANDO;
 
         Gdx.input.setCatchBackKey(true);
+
+        musicNivel4.setLooping(true);
+        if(prefs.getBoolean("music")) {
+            musicNivel4.play();
+        }
 
         //Gdx.input.setInputProcessor(new ProcesadorEntrada());
     }
@@ -813,6 +818,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
     @Override
     public void pause() {
         estado = PantallaJuego.EstadoJuego.PAUSADO;
+        musicNivel4.pause();
     }
 
     @Override
@@ -827,7 +833,8 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
 
     @Override
     public void dispose() {
-
+        musicNivel4.stop();
+        musicNivel4.dispose();
 
     }
 
@@ -882,6 +889,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                     // Regresa al juego
                     estado = PantallaJuego.EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
+                    musicNivel4.play();
                 }
             });
             this.addActor(btnContinuar);
