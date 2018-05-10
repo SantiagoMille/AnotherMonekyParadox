@@ -100,11 +100,12 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
 
     public PantallaJuego(Main main) {
         super(main);
+        this.maxGrandas = 5;
     }
 
     @Override
     public void pasarDeNivel() {
-        main.setScreen(new EscenaAstroGanador(main, puntosJugador,2, cuentaVidas));
+        main.setScreen(new EscenaAstroGanador(main, puntosJugador,2, cuentaVidas, maxGrandas));
     }
 
     @Override

@@ -27,10 +27,11 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
 
     // Nivel
     private int level;
-    private int score, vidas;
+    private int score, vidas, granadas;
 
-    public PantallaCargandoStoryMode(Main main, int level, int score, int vidas){
+    public PantallaCargandoStoryMode(Main main, int level, int score, int vidas, int granadas){
         super(main);
+        this.granadas = granadas;
         this.vidas = vidas;
         this.level = level;
         this.score = score;
@@ -430,13 +431,13 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
                 main.setScreen(new PantallaJuego(main));//regresa true si ya terminó la carga
                 this.dispose();
             }else if(level == 2){
-                main.setScreen(new PantallaJuego2(main,score, vidas));
+                main.setScreen(new PantallaJuego2(main,score, vidas, granadas));
                 this.dispose();
             }else if(level == 3){
-                main.setScreen(new PantallaJuego3(main,score, vidas));
+                main.setScreen(new PantallaJuego3(main,score, vidas, granadas));
                 this.dispose();
             }else if(level == 4){
-                main.setScreen(new PantallaJuego4(main,score, vidas));
+                main.setScreen(new PantallaJuego4(main,score, vidas, granadas));
                 this.dispose();
             }else if(level==5){
                 main.setScreen(new PantallaJuegoSurvival(main));

@@ -216,7 +216,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
 
     @Override
     public void pasarDeNivel() {
-        main.setScreen(new EscenaAstroGanador(main, puntosJugador,2, 3));
+
     }
 
     @Override
@@ -972,13 +972,13 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
             banana6.mover(dt*2);
         }
 
-        verificarColisionBalaEnemigo(stateTime,difficulty, 1);
+        verificarColisionBalaEnemigo(stateTime,difficulty, 2);
         verificarColisionBalaBala(stateTime);
         verificarColisionGranadaEnemigo(stateTime);
         verificarColisionBalaBoss(stateTime);
         verificarColisionGranadaBoss(stateTime);
         verificarColisionPersonajeBalaBoss(stateTime);
-        verificarColisionPersonajeItemBoss();
+        //verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
         verificarColisionPersonajeItemVida(3);
         verificarVidaAstro();
@@ -1039,14 +1039,14 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         }
     }
 
-    protected void verificarColisionPersonajeItemBoss() {
+    /*protected void verificarColisionPersonajeItemBoss() {
         Rectangle rectItem = itemBoss.getBoundingRectangle();
         Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
         if(rectItem.overlaps(rectPersonaje)){
             //PANTALLA DE VICTORIA PROVISIONAL
             pasarDeNivel();
         }
-    }
+    }*/
 
     @Override
     public void resize(int width, int height) {

@@ -58,11 +58,12 @@ public class EscenaAstroGanador implements Screen {
     private Sprite Background;
 
     private int score;
-    private int nivel, vidas;
+    private int nivel, vidas, granadas;
 
-    public EscenaAstroGanador(Main main, int score, int nivel, int vidas) {
+    public EscenaAstroGanador(Main main, int score, int nivel, int vidas, int granadas) {
         this.nivel = nivel;
         this.main = main;
+        this.granadas = granadas;
         this.score = score;
         this.vidas = vidas;
         this.assetManager = main.getAssetManager();
@@ -121,11 +122,11 @@ public class EscenaAstroGanador implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
                 if(nivel==2){
-                    main.setScreen(new PantallaCinematica(main,"cineL1.png",2, score, vidas));
+                    main.setScreen(new PantallaCinematica(main,"cineL1.png",2, score, vidas, granadas));
                 }else if (nivel == 3){
-                    main.setScreen(new PantallaCinematica(main,"cineL2.png",3, score, vidas));
+                    main.setScreen(new PantallaCinematica(main,"cineL2.png",3, score, vidas, granadas));
                 }else if (nivel == 4){
-                    main.setScreen(new PantallaCinematica(main,"cineL3W.png",4, score, vidas));
+                    main.setScreen(new PantallaCinematica(main,"cineL3W.png",4, score, vidas, granadas));
                 }
             }
         });

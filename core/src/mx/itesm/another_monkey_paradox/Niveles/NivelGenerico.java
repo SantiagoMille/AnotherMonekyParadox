@@ -173,7 +173,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     protected GlyphLayout pausaText = new GlyphLayout(font,"PAUSED",new Color(0,0,0,1),1000f,1,true);;
 
     //Granada y texto
-    protected int maxGrandas = 5;
+    protected int maxGrandas;
     protected GlyphLayout textoGlyGran = new GlyphLayout(font,"Score");
 
     //Tiempo espera entre colision
