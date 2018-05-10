@@ -45,12 +45,22 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
     private Texture imgBacgraun;
     private Sprite Bacgraun;
 
+    private boolean isThirdLevel;
+
     //Score
     private int finalScore;
 
     public EscenaAstroMuerto(Main main, int score) {
 
         super(main);
+        this.finalScore = score;
+        this.isThirdLevel = false;
+    }
+
+    public EscenaAstroMuerto(Main main, int score, boolean isThirdLevel) {
+
+        super(main);
+        this.isThirdLevel = isThirdLevel;
         this.finalScore = score;
     }
 
@@ -63,19 +73,25 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
 
 
     private void crearBackground(){
-        assetManager.load("pantallaMuerto.png", Texture.class);
-        assetManager.finishLoading();
-        imgBacgraun = assetManager.get("pantallaMuerto.png");
+        if(!isThirdLevel) {
+            assetManager.load("pantallaMuerto.png", Texture.class);
+            assetManager.finishLoading();
+            imgBacgraun = assetManager.get("pantallaMuerto.png");
+        }else{
+            assetManager.load("Cinematicas/C N3F.png", Texture.class);
+            assetManager.finishLoading();
+            imgBacgraun = assetManager.get("Cinematicas/C N3F.png");
+        }
         Bacgraun = new Sprite(imgBacgraun);
         Bacgraun.setPosition(0,0);
     }
 
     private void crearBoton() {
         assetManager.load("regresar.png", Texture.class);
-        assetManager.load("PlayButton.png", Texture.class);
+        assetManager.load("HistoriaAstro/right-arrow_w.png", Texture.class);
         assetManager.finishLoading();
         imgBoton = assetManager.get("regresar.png");
-        imgBotonHome = assetManager.get("PlayButton.png");
+        imgBotonHome = assetManager.get("HistoriaAstro/right-arrow_w.png");
 
         stageNivel = new Stage(vista);
 
@@ -83,8 +99,12 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
 
         TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(imgBoton));
         home = new ImageButton(btnHome);
-        home.setPosition(ANCHO/2-imgBoton.getWidth()/2, -100);
-        home.addAction(Actions.moveTo(ANCHO/2-imgBoton.getWidth()/2, ALTO/5-imgBoton.getHeight()/2, 0.6f));
+        if(!isThirdLevel){
+            home.setPosition(ANCHO/2-imgBoton.getWidth()/2, -100);
+            home.addAction(Actions.moveTo(ANCHO/2-imgBoton.getWidth()/2, ALTO/5-imgBoton.getHeight()/2, 0.6f));
+        }else{
+            home.setPosition(-500, -100);
+        }
         home.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -96,9 +116,11 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
 
         TextureRegionDrawable btnRregresar = new TextureRegionDrawable((new TextureRegion(imgBotonHome)));
         regresar = new ImageButton(btnRregresar);
-        regresar.setSize(128,128);
-        regresar.setPosition(-200, ALTO/5-imgBotonHome.getHeight()/2);
-        regresar.addAction(Actions.moveTo(ANCHO/2-imgBotonHome.getWidth()/2-100, ALTO/4-imgBotonHome.getHeight()/2,0.6f));
+        if(isThirdLevel) {
+            regresar.setPosition(ANCHO - 103, ALTO - 25 - regresar.getHeight());
+        }else{
+            regresar.setPosition(-500, ALTO - 30 - regresar.getHeight());
+        }
         regresar.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -109,7 +131,7 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
 
 
         stageNivel.addActor(home);
-        //stageNivel.addActor(regresar);
+        stageNivel.addActor(regresar);
 
 
         Gdx.input.setInputProcessor(stageNivel);
@@ -122,7 +144,9 @@ public class EscenaAstroMuerto extends Pantalla implements Screen {
         batch.begin();
         Bacgraun.draw(batch);
         texto.mostratMensaje(batch, "Lol u ded", 700, 420,1,1, 1);
-        texto.mostratMensaje(batch, "Score: " + finalScore, -200, 420,1,1, 1);
+        if(!isThirdLevel) {
+            texto.mostratMensaje(batch, "Score: " + finalScore, -200, 420, 1, 1, 1);
+        }
         batch.end();
         stageNivel.draw();
         stageNivel.act();

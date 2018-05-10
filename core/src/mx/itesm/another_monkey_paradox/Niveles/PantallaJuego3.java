@@ -785,7 +785,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         }
         if(vidasFalse == vidas.size()){
             escribirScore(true);
-            main.setScreen(new EscenaAstroMuerto(main, puntosJugador));
+            main.setScreen(new EscenaAstroMuerto(main, puntosJugador, true));
         }
         cuentaVidas = 5 - vidasFalse;
     }
