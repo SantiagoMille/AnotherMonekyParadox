@@ -135,10 +135,6 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     protected Texture padBack = assetManager.get("Pad/padBack.png");
     protected Texture padKnob = assetManager.get("Pad/padKnob.png");
 
-    //Power Ups
-    protected ArrayList<PowerUp> listaVidasExtra = new ArrayList<PowerUp>();
-    protected ArrayList<PowerUp> listaGranadasExtra = new ArrayList<PowerUp>();
-
     protected Texture imgpowerUpGranada = assetManager.get("Items/GRANADAS.png");
     protected Texture imgpowerUpVida = assetManager.get("Items/VIDA.png");
 
@@ -183,6 +179,22 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     protected ScreenShake screenShake = new ScreenShake(50f, 3000f);
 
     abstract public void pasarDeNivel();
+
+    protected int verificarColisionPersonajeItemVida(int cuenta, PowerUp PUvida) {
+        Rectangle rectItem = PUvida.getSprite().getBoundingRectangle();
+        Rectangle rectPersonaje = new Rectangle(personaje.getX(), personaje.getY(), personaje.getWidth(), personaje.getHeight());
+        if(rectItem.overlaps(rectPersonaje)){
+            //PANTALLA DE VICTORIA PROVISIONAL
+            for(PowerUp vida:vidas){
+                if(!vida.isActiva()){
+                    vida.setActiva(true);
+                    break;
+                }
+            }
+            PUvida.setX(-500);
+        }
+        return cuenta + 1;
+    }
 
     protected int verificarColisionPersonajeItemVida(int cuenta) {
         Rectangle rectItem = powerUpVida.getSprite().getBoundingRectangle();

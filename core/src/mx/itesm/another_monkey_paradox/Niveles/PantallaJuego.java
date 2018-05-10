@@ -143,9 +143,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         //Lista Granadas
         listaGranadas = new Array<Granada>();
 
-        //Lista PowerUps
-        listaGranadasExtra.add(powerUpGranada);
-        listaVidasExtra.add(powerUpVida);
+
 
         estado = EstadoJuego.JUGANDO;
 

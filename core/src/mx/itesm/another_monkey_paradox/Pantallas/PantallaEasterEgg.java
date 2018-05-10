@@ -2,6 +2,7 @@ package mx.itesm.another_monkey_paradox.Pantallas;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import jdk.nashorn.internal.runtime.SharedPropertyMap;
 import mx.itesm.another_monkey_paradox.Main;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 
@@ -20,22 +22,17 @@ import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
  * Created by Fernando on 08/05/18.
  */
 
-public class PantallaEasterEgg extends Pantalla implements Screen {
-
-    private Texture imgBackground;
-    private Sprite background;
-    private Stage stageEaster;
-    private Music musicEaster = Gdx.audio.newMusic(Gdx.files.internal("EasterEgg/EasterEgg.mp3"));
-
-
+public class PantallaEasterEgg extends PantallaImagenSencilla implements Screen {
 
     public PantallaEasterEgg(Main main) {
         super(main);
+
+        musicPantalla = Gdx.audio.newMusic(Gdx.files.internal("EasterEgg/EasterEgg.mp3"));
     }
 
     public void crearElementos(){
 
-        stageEaster = new Stage(vista);
+        stage = new Stage(vista);
 
         imgBackground = new Texture("EasterEgg/EGG.png");
         background = new Sprite(imgBackground);
@@ -53,14 +50,18 @@ public class PantallaEasterEgg extends Pantalla implements Screen {
             }
         });
 
-        stageEaster.addActor(back);
+        stage.addActor(back);
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
         crearElementos();
-        musicEaster.setLooping(true);
-        musicEaster.play();
+        musicPantalla.setLooping(true);
+        Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
+        if(prefs.getBoolean("music")) {
+            musicPantalla.play();
+        }
         Gdx.input.setCatchBackKey(true);
     }
 
@@ -72,7 +73,7 @@ public class PantallaEasterEgg extends Pantalla implements Screen {
         batch.begin();
         background.draw(batch);
         batch.end();
-        stageEaster.draw();
+        stage.draw();
 
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
             main.setScreen(new PantallaSplash(main));
@@ -92,6 +93,6 @@ public class PantallaEasterEgg extends Pantalla implements Screen {
 
     @Override
     public void dispose() {
-        musicEaster.stop();
+        musicPantalla.stop();
     }
 }

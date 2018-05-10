@@ -21,6 +21,7 @@ import mx.itesm.another_monkey_paradox.Niveles.PantallaJuego2;
 import mx.itesm.another_monkey_paradox.Pantallas.Pantalla;
 import mx.itesm.another_monkey_paradox.Pantallas.PantallaMenu;
 import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaCargandoStoryMode;
+import mx.itesm.another_monkey_paradox.PantallasDeCarga.PantallaSplash;
 
 /**
  * Created by adrian on 03/04/2018.
@@ -69,10 +70,11 @@ public class PantallaCinematica extends Pantalla implements Screen {
         spriteBackground = new Sprite(imgBackground);
 
         //Boton Next
-        TextureRegionDrawable trdNext = new TextureRegionDrawable(new TextureRegion(new Texture("PlayButton.png")));
+        TextureRegionDrawable trdNext = new TextureRegionDrawable(new TextureRegion(new Texture("HistoriaAstro/right-arrow_w.png")));
         ImageButton btnNext = new ImageButton(trdNext);
-        btnNext.setSize(150,150);
-        btnNext.setPosition(ANCHO*1/10, ALTO*1/10);
+
+
+        btnNext.setPosition( ANCHO-100, ALTO-30-btnNext.getHeight());
         btnNext.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -81,9 +83,11 @@ public class PantallaCinematica extends Pantalla implements Screen {
                 if(nivel == 2) {
                     main.setScreen(new PantallaCargandoStoryMode(main,2, score, vidas, granadas));
                 }else if(nivel == 3){
-                    main.setScreen(new PantallaCargandoStoryMode(main,2, score, vidas, granadas));
+                    main.setScreen(new PantallaCargandoStoryMode(main,3, score, vidas, granadas));
                 }else if(nivel == 4){
-                    main.setScreen(new PantallaCargandoStoryMode(main,2, score, vidas, granadas));
+                    main.setScreen(new PantallaCargandoStoryMode(main,4, score, vidas, granadas));
+                }else if(nivel == 44){
+                    main.setScreen(new PantallaSplash(main));
                 }
             }
         });

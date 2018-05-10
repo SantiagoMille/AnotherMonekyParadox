@@ -255,9 +255,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         //Lista Granadas
         listaGranadas = new Array<Granada>();
 
-        //Lista PowerUps
-        listaGranadasExtra.add(powerUpGranada);
-        listaVidasExtra.add(powerUpVida);
+
 
         estado = PantallaJuego.EstadoJuego.JUGANDO;
 

@@ -149,10 +149,11 @@ public class PantallaMenu extends Pantalla implements Screen {
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
                 if(isSurvivalMode){
-                    main.setScreen(new PantallaCargandoStoryMode(main, 5,0,3));
+                    main.setScreen(new PantallaCargandoStoryMode(main, 5,0,3,5));
 
                 }else {
-                    main.setScreen(new PantallaCargandoStoryMode(main, 1, 0,3));
+                    //main.setScreen(new PantallaCargandoStoryMode(main, 1, 0,3,5));
+                    main.setScreen(new PantallaHistoriaAstro(main));
                 }
             }
         });

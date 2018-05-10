@@ -101,7 +101,7 @@ public class PantallaSurvival extends Pantalla implements Screen {
                 super.clicked(event, x, y);
                 //Gdx.app.log("ClickListener","Si se clickeoooo");
                 dispose();
-                main.setScreen(new PantallaCargandoStoryMode(main,5, 0,3));
+                main.setScreen(new PantallaCargandoStoryMode(main,5, 0,3, 5));
             }
         });
 

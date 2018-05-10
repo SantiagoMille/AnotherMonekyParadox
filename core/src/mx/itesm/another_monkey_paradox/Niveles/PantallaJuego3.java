@@ -55,12 +55,16 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
     int vidaEnemigo = 100;
     int vidaBoss = 500;
 
+    public boolean powerUpVidaFlag2;
+
     private int cuentaVidas = 3;
 
     private float difficulty;
 
     //Escena
     private Stage stageNivel;
+
+    protected PowerUp powerUpVida2 = new PowerUp(imgpowerUpVida, -100, ALTO/4, true);
 
     //Textura de Cavernicola 01
     private Texture ruso01Frame0;
@@ -89,6 +93,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
     //PowerUps
     private Random random;
     Double randomX;
+    Double randomX22;
     Double randomX2;
 
     public PantallaJuego3(Main main, int score, int cuentaVidas, int granadas) {
@@ -140,9 +145,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         //Lista Granadas
         listaGranadas = new Array<Granada>();
 
-        //Lista PowerUps
-        listaGranadasExtra.add(powerUpGranada);
-        listaVidasExtra.add(powerUpVida);
+
 
         estado = PantallaJuego.EstadoJuego.JUGANDO;
 
@@ -205,6 +208,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         banana6.set(-100,-100);
 
         randomX = random.nextDouble()*4000;
+        randomX22 = random.nextDouble()*4000;
         randomX2 = random.nextDouble()*4000;
 
         //Barra Bala
@@ -412,6 +416,10 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
             powerUpVida.setX(powerUpVida.getX()-(delta*80));
         }
 
+        if(!powerUpVidaFlag2 && isMovingRight){
+            powerUpVida2.setX(powerUpVida2.getX()-(delta*80));
+        }
+
         if(!powerUpGranadaFlag && isMovingRight){
             powerUpGranada.setX(powerUpGranada.getX()-(delta*80));
         }
@@ -493,6 +501,11 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         if (fondo1.getImagenA().getX()<-randomX &&powerUpVidaFlag){
             powerUpVida.setX(ANCHO*0.75f);
             powerUpVidaFlag=false;
+        }
+
+        if (fondo1.getImagenA().getX()<-randomX22 &&powerUpVidaFlag2){
+            powerUpVida2.setX(ANCHO*0.75f);
+            powerUpVidaFlag2=false;
         }
 
         if (fondo1.getImagenA().getX()<-randomX2&&powerUpGranadaFlag){
@@ -598,6 +611,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
         powerUpGranada.render(batch);
         powerUpVida.render(batch);
+        powerUpVida2.render(batch);
         barraBala.draw(batch);
         banana1.render(batch);
         banana2.render(batch);
@@ -742,6 +756,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
         verificarColisionPersonajeItemBoss();
         verificarColisionPersonajeItemGranada();
         cuentaVidas = verificarColisionPersonajeItemVida(cuentaVidas);
+        cuentaVidas = verificarColisionPersonajeItemVida(cuentaVidas, powerUpVida2);
         verificarVidaAstro();
 
         timeSinceCollision += dt;
