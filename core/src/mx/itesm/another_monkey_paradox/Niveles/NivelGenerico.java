@@ -80,6 +80,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     private Texture botonPausa = assetManager.get("pause-button.png");
     private Texture botonContinua = assetManager.get("PlayButton.png");
     private Texture botonHome = assetManager.get("boton Home.png");
+    private Texture numGranadas = assetManager.get("BotonesDisparo/numGranadas.png");
 
     private Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
     public boolean music = prefs.getBoolean("music");
@@ -92,6 +93,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     private TextureRegionDrawable btnPausa = new TextureRegionDrawable(new TextureRegion(botonPausa));
     private TextureRegionDrawable btnContinua = new TextureRegionDrawable(new TextureRegion(botonContinua));
     private TextureRegionDrawable btnHome = new TextureRegionDrawable(new TextureRegion(botonHome));
+    protected Sprite granadasNum = new Sprite(numGranadas);
 
     //Controles del jugador
     protected final ImageButton granada = new ImageButton(btnGranada, btnGranadaPressed);
@@ -459,6 +461,8 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
                         if (vidas.get(j).isActiva()) {
                             if(music){
                                 hitSound.play();
+                                Gdx.input.vibrate(350);
+                                screenShake.update(dt, camara);
                             }
                             vidas.get(j).setActiva(false);
                             contador = 0;

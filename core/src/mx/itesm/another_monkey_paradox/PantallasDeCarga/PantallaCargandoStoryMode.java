@@ -91,6 +91,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/numGranadas.png", Texture.class);
 
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
@@ -157,6 +158,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/numGranadas.png", Texture.class);
 
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
@@ -217,6 +219,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/numGranadas.png", Texture.class);
 
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
@@ -288,6 +291,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/numGranadas.png", Texture.class);
 
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
@@ -377,6 +381,7 @@ public class PantallaCargandoStoryMode extends Pantalla implements Screen {
         assetManager.load("BotonesDisparo/bullet_icon_pressed.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon.png", Texture.class);
         assetManager.load("BotonesDisparo/granada_icon_pressed.png", Texture.class);
+        assetManager.load("BotonesDisparo/numGranadas.png", Texture.class);
 
         assetManager.load("pause-button.png", Texture.class);
         assetManager.load("Pad/padBack.png", Texture.class);
