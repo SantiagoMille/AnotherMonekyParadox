@@ -26,7 +26,7 @@ public class PantallaHistoriaAstro extends PantallaImagenSencilla {
 
     int count = 0;
 
-    private ImageButton next, nextW;
+    private ImageButton next, nextW, skip;
 
     public PantallaHistoriaAstro(Main main) {
         super(main);
@@ -48,11 +48,17 @@ public class PantallaHistoriaAstro extends PantallaImagenSencilla {
         TextureRegionDrawable trdNextW = new TextureRegionDrawable(new TextureRegion(new Texture("HistoriaAstro/right-arrow_w.png")));
         nextW = new ImageButton(trdNextW);
 
+        TextureRegionDrawable trdSkip = new TextureRegionDrawable(new TextureRegion(new Texture("HistoriaAstro/skip.png")));
+        skip = new ImageButton(trdSkip);
+
         xnext = ANCHO-100;
         ynext = ALTO-30-next.getHeight();
 
         nextW.setPosition(xnext, ynext);
         next.setPosition(xnext, ynext+500);
+
+        skip.setPosition(xnext-12, 100);
+        skip.setSize(80,80);
 
         nextW.addListener(new ClickListener() {
             @Override
@@ -63,6 +69,7 @@ public class PantallaHistoriaAstro extends PantallaImagenSencilla {
                     imgBackground = new Texture("HistoriaAstro/C 2.png");
                     background = new Sprite(imgBackground);
                     background.setPosition(0,0);
+                    skip.setPosition(-100,-100);
                 } else if(count == 2){
                     imgBackground = new Texture("HistoriaAstro/C 3.png");
                     background = new Sprite(imgBackground);
@@ -70,6 +77,14 @@ public class PantallaHistoriaAstro extends PantallaImagenSencilla {
                     next.setPosition(xnext, ynext);
                     nextW.setPosition(xnext, ynext+500);
                 }
+            }
+        });
+
+        skip.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                main.setScreen(new PantallaCargandoStoryMode(main, 1, 0,3,5));
             }
         });
 
@@ -83,6 +98,7 @@ public class PantallaHistoriaAstro extends PantallaImagenSencilla {
 
         stage.addActor(next);
         stage.addActor(nextW);
+        stage.addActor(skip);
 
         Gdx.input.setInputProcessor(stage);
     }
