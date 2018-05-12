@@ -1066,6 +1066,8 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
                     main.setScreen(new PantallaMenu(main));
+                    musicNivel5.stop();
+                    musicNivel5.dispose();
                 }
             });
             this.addActor(btnSalir);

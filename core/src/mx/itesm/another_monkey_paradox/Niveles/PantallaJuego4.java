@@ -872,6 +872,8 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
                     main.setScreen(new PantallaMenu(main));
+                    musicNivel4.stop();
+                    musicNivel4.dispose();
                 }
             });
             this.addActor(btnSalir);
