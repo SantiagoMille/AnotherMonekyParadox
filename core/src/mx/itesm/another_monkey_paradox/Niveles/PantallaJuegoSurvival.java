@@ -167,7 +167,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         Gdx.input.setCatchBackKey(true);
 
         musicNivel5.setLooping(true);
-        if(prefs.getBoolean("music")) {
+        if(prefs.getBoolean("music", true)) {
             musicNivel5.play();
         }
 

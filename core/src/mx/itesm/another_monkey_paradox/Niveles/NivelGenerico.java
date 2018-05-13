@@ -83,7 +83,7 @@ public abstract class NivelGenerico extends Pantalla implements InputProcessor{
     private Texture numGranadas = assetManager.get("BotonesDisparo/numGranadas.png");
 
     private Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-    public boolean music = prefs.getBoolean("music");
+    public boolean music = prefs.getBoolean("music", true);
 
     //Botones TextureRegionDrawable
     private TextureRegionDrawable btnGranada = new TextureRegionDrawable(new TextureRegion(botonGranada));

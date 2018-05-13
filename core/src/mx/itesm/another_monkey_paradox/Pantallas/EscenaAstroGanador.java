@@ -154,7 +154,7 @@ public class EscenaAstroGanador implements Screen {
         batch.setProjectionMatrix(camara.combined);
         batch.begin();
         Background.draw(batch);
-        texto1.mostratMensaje(batch, "LEVEL 1 COMPLETED", ANCHO/2-250, ALTO*9/10,1,1, 1);
+        texto1.mostratMensaje(batch, "LEVEL COMPLETED", ANCHO/2-250, ALTO*9/10,1,1, 1);
         texto2.mostratMensaje(batch, "SCORE: " + this.score, ANCHO/2-350, ALTO*8/10,1,1, 1);
         batch.end();
         stageNivel.draw();

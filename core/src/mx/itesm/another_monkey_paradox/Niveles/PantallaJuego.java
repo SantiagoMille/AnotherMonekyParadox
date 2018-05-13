@@ -154,7 +154,7 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
         estado = EstadoJuego.JUGANDO;
 
         musicNivel1.setLooping(true);
-        if(prefs.getBoolean("music")) {
+        if(prefs.getBoolean("music",true)) {
             musicNivel1.play();
         }
 

@@ -59,7 +59,7 @@ public class PantallaEasterEgg extends PantallaImagenSencilla implements Screen 
         crearElementos();
         musicPantalla.setLooping(true);
         Preferences prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
-        if(prefs.getBoolean("music")) {
+        if(prefs.getBoolean("music",true)) {
             musicPantalla.play();
         }
         Gdx.input.setCatchBackKey(true);

@@ -149,7 +149,7 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
         Gdx.input.setCatchBackKey(true);
 
         musicNivel4.setLooping(true);
-        if(prefs.getBoolean("music")) {
+        if(prefs.getBoolean("music", true)) {
             musicNivel4.play();
         }
 

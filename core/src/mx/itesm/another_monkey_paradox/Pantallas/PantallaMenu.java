@@ -78,7 +78,7 @@ public class PantallaMenu extends Pantalla implements Screen {
 
         batch = new SpriteBatch();
         PantallaSplash.musicMenu.setLooping(true);
-        if(prefs.getBoolean("music")) {
+        if(prefs.getBoolean("music", true)) {
             PantallaSplash.musicMenu.play();
         }
         inputMultiplexer.addProcessor(new ProcesadorEntrada());

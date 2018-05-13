@@ -85,7 +85,7 @@ public class PantallaDeveloper extends Pantalla implements Screen {
 
         prefs = Gdx.app.getPreferences("AnotherMonkeyPreferenceStory");
 
-        musicOn = prefs.getBoolean("music");
+        musicOn = prefs.getBoolean("music", true);
         dif = prefs.getFloat("Difficulty");
         sen = prefs.getFloat("Sensitivity");
 
