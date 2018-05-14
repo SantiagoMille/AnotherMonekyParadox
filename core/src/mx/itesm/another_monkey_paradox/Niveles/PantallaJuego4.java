@@ -871,9 +871,9 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    main.setScreen(new PantallaMenu(main));
                     musicNivel4.stop();
                     musicNivel4.dispose();
+                    main.setScreen(new PantallaMenu(main));
                 }
             });
             this.addActor(btnSalir);
@@ -889,9 +889,9 @@ public class PantallaJuego4 extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al juego
+                    musicNivel4.play();
                     estado = PantallaJuego.EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
-                    musicNivel4.play();
                 }
             });
             this.addActor(btnContinuar);

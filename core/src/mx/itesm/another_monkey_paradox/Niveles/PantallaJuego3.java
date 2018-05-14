@@ -110,9 +110,9 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
 
     @Override
     public void pasarDeNivel() {
-        main.setScreen(new EscenaAstroGanador(main, puntosJugador,4, cuentaVidas, maxGrandas));
         musicNivel3.stop();
         musicNivel3.dispose();
+        main.setScreen(new EscenaAstroGanador(main, puntosJugador,4, cuentaVidas, maxGrandas));
     }
 
     @Override
@@ -882,9 +882,9 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    main.setScreen(new PantallaMenu(main));
                     musicNivel3.stop();
                     musicNivel3.dispose();
+                    main.setScreen(new PantallaMenu(main));
                 }
             });
             this.addActor(btnSalir);
@@ -900,9 +900,9 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al juego
+                    musicNivel3.play();
                     estado = PantallaJuego.EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
-                    musicNivel3.play();
                 }
             });
             this.addActor(btnContinuar);
