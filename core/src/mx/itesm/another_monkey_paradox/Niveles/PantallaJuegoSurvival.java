@@ -362,7 +362,7 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                     escenaPausa = new PantallaJuegoSurvival.EscenaPausa2(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
-                dispose();
+                pause();
             }
         });
 
@@ -867,12 +867,16 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         //Movimiento del personaje
         if(isMovingRight&&!isMovingLeft){
             if(personaje.getX()<camara.position.x){
-                personaje.setX(personaje.getX()+(dt*110));
+                if(fondo4.getImagenA().getX()+fondo4.getImagenA().getWidth()>camara.position.x+ANCHO/2){
+                    personaje.setX(personaje.getX()+(dt*110));
+                }
             }else {
-                fondo1.mover(-dt * 109);
-                fondo2.mover(-dt * 109);
-                fondo3.mover(-dt * 109);
-                fondo4.mover(-dt * 109);
+                if(fondo4.getImagenA().getX()+fondo4.getImagenA().getWidth()>camara.position.x+ANCHO/2) {
+                    fondo1.mover(-dt * 109);
+                    fondo2.mover(-dt * 109);
+                    fondo3.mover(-dt * 109);
+                    fondo4.mover(-dt * 109);
+                }
             }
 
         }else if(isMovingLeft&&!isMovingRight){

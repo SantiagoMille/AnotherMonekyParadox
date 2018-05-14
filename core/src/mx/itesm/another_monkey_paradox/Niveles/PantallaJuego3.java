@@ -352,7 +352,7 @@ public class PantallaJuego3 extends NivelGenerico implements Screen  {
                     escenaPausa = new PantallaJuego3.EscenaPausa3(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
-                dispose();
+                pause();
             }
         });
 

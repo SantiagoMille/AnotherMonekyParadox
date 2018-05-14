@@ -346,7 +346,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
                     escenaPausa = new PantallaJuego2.EscenaPausa2(vista,batch);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
-                dispose();
+                pause();
             }
         });
 

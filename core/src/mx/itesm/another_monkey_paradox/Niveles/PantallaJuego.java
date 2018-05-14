@@ -350,7 +350,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
                     escenaPausa = new EscenaPausa(vista);
                 }
                 Gdx.input.setInputProcessor(escenaPausa);
-                dispose();
+                //dispose();
+                pause();
             }
         });
 
