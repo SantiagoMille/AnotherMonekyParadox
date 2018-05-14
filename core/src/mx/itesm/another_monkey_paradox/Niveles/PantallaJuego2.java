@@ -965,7 +965,7 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
     public void dispose() {
         musicNivel2.stop();
         musicNivel2.dispose();
-
+        assetManager.dispose();
     }
 
     enum EstadoJuego {
@@ -977,6 +977,8 @@ public class PantallaJuego2 extends NivelGenerico implements Screen  {
 
         // La escena que se muestra cuando está pausado
         public EscenaPausa2(Viewport vista, SpriteBatch batch) {
+
+            super(vista);
 
             // Crear rectángulo transparente
             Pixmap pixmap = new Pixmap((int)(ANCHO*0.5f), (int)(ALTO*0.45f), Pixmap.Format.RGBA8888 );

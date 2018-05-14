@@ -1104,6 +1104,8 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
     public void dispose() {
         musicNivel1.stop();
         musicNivel1.dispose();
+        assetManager.dispose();
+
     }
 
     enum EstadoJuego {
@@ -1162,7 +1164,6 @@ public class PantallaJuego extends NivelGenerico implements Screen  {
                     musicNivel1.play();
                     estado = EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
-
                 }
             });
             this.addActor(btnContinuar);
