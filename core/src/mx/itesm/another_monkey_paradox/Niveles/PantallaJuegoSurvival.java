@@ -867,17 +867,17 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
         //Movimiento del personaje
         if(isMovingRight&&!isMovingLeft){
             if(personaje.getX()<camara.position.x){
-                personaje.setX(personaje.getX()+(dt*80));
+                personaje.setX(personaje.getX()+(dt*110));
             }else {
-                fondo1.mover(-dt * 79);
-                fondo2.mover(-dt * 79);
-                fondo3.mover(-dt * 79);
-                fondo4.mover(-dt * 79);
+                fondo1.mover(-dt * 109);
+                fondo2.mover(-dt * 109);
+                fondo3.mover(-dt * 109);
+                fondo4.mover(-dt * 109);
             }
 
         }else if(isMovingLeft&&!isMovingRight){
             if(personaje.getX()>(camara.position.x - ANCHO/2)){
-                personaje.setX(personaje.getX()+(dt*-80));
+                personaje.setX(personaje.getX()+(dt*-110));
             }
             if(fondo1.getImagenA().getX()>0) {
                 fondo1.mover(dt * 20);
