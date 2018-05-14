@@ -1065,9 +1065,9 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al menú
-                    main.setScreen(new PantallaMenu(main));
                     musicNivel5.stop();
                     musicNivel5.dispose();
+                    main.setScreen(new PantallaMenu(main));
                 }
             });
             this.addActor(btnSalir);
@@ -1083,9 +1083,9 @@ public class PantallaJuegoSurvival extends NivelGenerico implements Screen  {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     // Regresa al juego
+                    musicNivel5.play();
                     estado = PantallaJuego.EstadoJuego.JUGANDO;
                     Gdx.input.setInputProcessor(stageNivel);
-                    musicNivel5.play();
                 }
             });
             this.addActor(btnContinuar);
